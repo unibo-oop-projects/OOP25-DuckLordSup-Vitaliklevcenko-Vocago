@@ -1,9 +1,9 @@
 package it.unibo.vocago.model.progress;
 
-import it.unibo.vocago.model.progress.api.LearningProgress;
+import it.unibo.vocago.model.progress.api.Progress;
 import it.unibo.vocago.model.types.MasteryLevel;
 
-public class WordProgress implements LearningProgress{
+public class WordProgress implements Progress{
 
     private MasteryLevel masteryLevel;
     private int correctAnswers;
