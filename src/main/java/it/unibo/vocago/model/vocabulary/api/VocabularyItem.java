@@ -7,9 +7,11 @@ import it.unibo.vocago.model.types.Direction;
 
 public interface VocabularyItem {
 
-    public List<Word> getFirstLanguageWords();
+    List<Word> getFirstLanguageWords();
 
-    public List<Word> getSecondLanguageWords();
+    List<Word> getSecondLanguageWords();
 
-    public Progress getProgress(final Direction direction);
+    Progress getProgress(final Direction direction);
+
+    Boolean isValid();
 }

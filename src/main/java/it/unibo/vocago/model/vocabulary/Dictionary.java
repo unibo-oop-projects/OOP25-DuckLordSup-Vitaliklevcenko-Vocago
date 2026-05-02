@@ -26,8 +26,6 @@ public class Dictionary implements Vocabulary {
         this.items = new ArrayList<>(items);
     }
 
-    
-
     @Override
     public void addItem(final VocabularyItem item) {
         this.items.add(Objects.requireNonNull(item, "item must not be null"));
@@ -56,7 +54,7 @@ public class Dictionary implements Vocabulary {
     @Override
     public Boolean isValid() {
         for (VocabularyItem item : getItems()) {
-            if (!item.getFirstLanguageWords().isEmpty() && !item.getSecondLanguageWords().isEmpty()) {
+            if (item.isValid()) {
                 return true;
             }
         }

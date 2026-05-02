@@ -53,4 +53,12 @@ public class DictionaryEntry implements VocabularyItem {
             case SECOND_TO_FIRST -> this.secondProgress;
         };
     }
+    
+    @Override
+    public Boolean isValid() {
+        if (!getFirstLanguageWords().isEmpty() && !getSecondLanguageWords().isEmpty()) {
+            return true;
+        }
+        return false;
+    }
 }
