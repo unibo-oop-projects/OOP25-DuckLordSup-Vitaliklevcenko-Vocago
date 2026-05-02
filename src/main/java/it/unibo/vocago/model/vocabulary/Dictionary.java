@@ -19,12 +19,14 @@ public class Dictionary implements Vocabulary {
     // in case we already have the whole vocabulary and we want to add it with all the words and progresses
     public Dictionary(final List<VocabularyItem> items) {
         Objects.requireNonNull(items, "items must not be null");
-        
+
         if (items.stream().anyMatch(Objects::isNull)) {
             throw new IllegalArgumentException("items cannot contain null values");
         }
         this.items = new ArrayList<>(items);
     }
+
+    
 
     @Override
     public void addItem(final VocabularyItem item) {
@@ -49,5 +51,15 @@ public class Dictionary implements Vocabulary {
     @Override
     public int size() {
         return this.items.size();
+    }
+
+    @Override
+    public Boolean isValid() {
+        for (VocabularyItem item : getItems()) {
+            if (!item.getFirstLanguageWords().isEmpty() && !item.getSecondLanguageWords().isEmpty()) {
+                return true;
+            }
+        }
+        return false;
     }
 }
