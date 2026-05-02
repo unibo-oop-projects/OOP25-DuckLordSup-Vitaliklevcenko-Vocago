@@ -7,8 +7,6 @@ import it.unibo.vocago.model.types.Direction;
 
 public interface VocabularyItem {
 
-    public List<Word> getItemsByDirection(Direction direction);
-
     public List<Word> getFirstLanguageWords();
 
     public List<Word> getSecondLanguageWords();

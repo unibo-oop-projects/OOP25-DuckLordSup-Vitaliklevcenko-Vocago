@@ -37,14 +37,6 @@ public class DictionaryEntry implements VocabularyItem {
     }
 
     @Override
-    public List<Word> getItemsByDirection(Direction direction) {
-        return switch (direction) {
-            case FIRST_TO_SECOND -> getFirstLanguageWords();
-            case SECOND_TO_FIRST -> getSecondLanguageWords();
-        };
-    }
-
-    @Override
     public List<Word> getFirstLanguageWords() {
         return this.firstLanguageWords; //already stored as copy, no need for extra copy
     }
