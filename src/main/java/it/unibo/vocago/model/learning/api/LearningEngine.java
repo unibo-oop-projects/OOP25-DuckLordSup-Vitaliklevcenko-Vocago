@@ -15,7 +15,5 @@ public interface LearningEngine {
 
     Question nextQuestion(final Direction direction);
 
-    Boolean vocabularyIsValid();
-
     void progressUpdate(final Question question, final String userAnswer);
 }
