@@ -11,6 +11,9 @@ public enum MasteryLevel {
         if (this == MASTER) {
             return this;
         }
+        else if (this == NEW) {
+            return MEDIUM;
+        }
         return values()[this.ordinal() + 1];
     }
 
@@ -19,6 +22,9 @@ public enum MasteryLevel {
             return this;
         } else if (this == NEW) {
             return BAD;
+        }
+        else if(this == MASTER){
+            return MEDIUM;
         }
         return values()[this.ordinal() - 1];
     }

@@ -46,30 +46,17 @@ public class WordProgress implements Progress{
     @Override
     public void registerCorrectAnswer() {
         this.correctAnswers++;
-        if (this.masteryLevel == MasteryLevel.NEW) {
-            this.masteryLevel = MasteryLevel.MEDIUM;
-            return;
-        }
         if ((this.masteryLevel == MasteryLevel.MEDIUM && correctAnswers < 3)
                 || (this.masteryLevel == MasteryLevel.GOOD && correctAnswers < 5)) {
             return;
         }
-        if (this.masteryLevel != MasteryLevel.MASTER) {
-            this.masteryLevel = this.masteryLevel.next();
-        }
+        this.masteryLevel = this.masteryLevel.next();
+
     }
 
     @Override
     public void registerWrongAnswer() {
         this.wrongAnswers++;
-
-        if (this.masteryLevel == MasteryLevel.MASTER) {
-            this.masteryLevel = MasteryLevel.MEDIUM;
-            return;
-        }
-        if (this.masteryLevel != MasteryLevel.BAD) {
-
-            this.masteryLevel = this.masteryLevel.previous();
-        }
+        this.masteryLevel = this.masteryLevel.previous();
     }
 }
