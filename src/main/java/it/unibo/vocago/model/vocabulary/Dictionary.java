@@ -18,10 +18,8 @@ public class Dictionary implements Vocabulary {
 
     // in case we already have the whole vocabulary and we want to add it with all the words and progresses
     public Dictionary(final List<VocabularyItem> items) {
-        Objects.requireNonNull(items, "items must not be null");
-
-        if (items.stream().anyMatch(Objects::isNull)) {
-            throw new IllegalArgumentException("items cannot contain null values");
+        if (items == null || items.stream().anyMatch(Objects::isNull)) {
+            throw new IllegalArgumentException("items cannot be null or contain null values");
         }
         this.items = new ArrayList<>(items);
     }

@@ -55,7 +55,7 @@ public class LearningEngineImpl implements LearningEngine{
             randomDirection = Direction.SECOND_TO_FIRST;
         }
 
-        return this.nextQuestion(randomDirection);
+        return this.getQuestion(randomDirection);
     }
 
     //can add selectNextQuestionByMastery
@@ -64,6 +64,9 @@ public class LearningEngineImpl implements LearningEngine{
 
         Objects.requireNonNull(direction, "direction must not be null");
         Objects.requireNonNull(validItems, "validItem must not be null");
+        if (validItems.isEmpty()) {
+            throw new IllegalStateException("No valid vocabulary items available");
+        }
 
         final List<VocabularyItem> newItems = new ArrayList<>();
         for (VocabularyItem item : validItems) {
@@ -131,26 +134,32 @@ public class LearningEngineImpl implements LearningEngine{
     }
 
     @Override
-    public Question nextQuestion(final Direction direction) {
+    public Question getQuestion(final Direction direction) {
         Objects.requireNonNull(direction, "direction must not be null");
 
         // already asked items can be removed after a while
-        int maxRemembered = Math.min(20, this.vocabulary.getItems().size() / 2);
-        if (this.lastItems.size() > maxRemembered) {
+        final int maxRemembered = Math.min(20, this.vocabulary.getItems().size() / 2);
+        while (this.lastItems.size() > maxRemembered) {
             this.lastItems.poll();
         }
         
+        List<VocabularyItem> candidates = validCandidates();
+        if (candidates.isEmpty() && !this.lastItems.isEmpty()) {
+            this.lastItems.clear();
+            candidates = validCandidates();
+        }
+        return selectNextQuestion(candidates, direction);
+    }
+    
+    private List<VocabularyItem> validCandidates() {
         final List<VocabularyItem> validCandidates = new ArrayList<>();
         for (VocabularyItem item : this.vocabulary.getItems()) {
-            if (!item.getFirstLanguageWords().isEmpty() && !item.getSecondLanguageWords().isEmpty()
-                    && !this.lastItems.contains(item)) {
+            if (item.isValid() && !this.lastItems.contains(item)) {
                 validCandidates.add(item);
             }
         }
-        return selectNextQuestion(validCandidates, direction);
+        return validCandidates;
     }
-
-    
 
     @Override
     public void progressUpdate(final Question question, final String userAnswer) {

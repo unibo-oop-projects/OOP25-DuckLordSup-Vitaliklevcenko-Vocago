@@ -13,7 +13,7 @@ public interface LearningEngine {
 
     Question selectNextQuestion(final List<VocabularyItem> validItems, final Direction direction);
 
-    Question nextQuestion(final Direction direction);
+    Question getQuestion(final Direction direction);
 
     void progressUpdate(final Question question, final String userAnswer);
 }

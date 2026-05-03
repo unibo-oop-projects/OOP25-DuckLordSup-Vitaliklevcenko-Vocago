@@ -1,5 +1,7 @@
 package it.unibo.vocago.model.progress;
 
+import java.util.Objects;
+
 import it.unibo.vocago.model.progress.api.Progress;
 import it.unibo.vocago.model.types.MasteryLevel;
 
@@ -18,14 +20,10 @@ public class WordProgress implements Progress{
     }
 
     public WordProgress(final MasteryLevel masteryLevel, final int correctAnswers, final int wrongAnswers) {
-        if (masteryLevel == null) {
-            throw new IllegalArgumentException("masteryLevel must not be null");
-        }
         if (correctAnswers < 0 || wrongAnswers < 0) {
             throw new IllegalArgumentException("Answer counters must not be negative");
         }
-
-        this.masteryLevel = masteryLevel;
+        this.masteryLevel = Objects.requireNonNull(masteryLevel, "masteryLevel must not be null");
         this.correctAnswers = correctAnswers;
         this.wrongAnswers = wrongAnswers;
     }
