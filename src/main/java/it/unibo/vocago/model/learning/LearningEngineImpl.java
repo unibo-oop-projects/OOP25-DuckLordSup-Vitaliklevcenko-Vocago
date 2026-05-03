@@ -33,7 +33,7 @@ public class LearningEngineImpl implements LearningEngine{
         Objects.requireNonNull(question, "question must not be null");
 
         // check that the user enter a valid answer
-        if (userAnswer == null || userAnswer.isBlank()) {
+        if (userAnswer.equals(null) || userAnswer.isBlank()) {
             return false;
         }
 
@@ -142,7 +142,7 @@ public class LearningEngineImpl implements LearningEngine{
         while (this.lastItems.size() > maxRemembered) {
             this.lastItems.poll();
         }
-        
+
         List<VocabularyItem> candidates = validCandidates();
         if (candidates.isEmpty() && !this.lastItems.isEmpty()) {
             this.lastItems.clear();

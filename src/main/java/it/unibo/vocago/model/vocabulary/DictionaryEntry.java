@@ -23,10 +23,10 @@ public class DictionaryEntry implements VocabularyItem {
 
     public DictionaryEntry(final List<Word> firstLanguageWords, final List<Word> secondLanguageWords,
             final Progress firstProgress, final Progress secondProgress) {
-        if (firstLanguageWords == null || firstLanguageWords.stream().anyMatch(Objects::isNull)) {
+        if (firstLanguageWords.equals(null) || firstLanguageWords.stream().anyMatch(Objects::isNull)) {
             throw new IllegalArgumentException("First language words cannot be null or contain null values");
         }
-        if (secondLanguageWords == null || secondLanguageWords.stream().anyMatch(Objects::isNull)) {
+        if (secondLanguageWords.equals(null) || secondLanguageWords.stream().anyMatch(Objects::isNull)) {
             throw new IllegalArgumentException("Second language words cannot be null or contain null values");
         }
 
