@@ -42,9 +42,36 @@ public class LearningEngineImpl implements LearningEngine{
         return false;
     }
 
-    //can add selectNextQuestionByMastery
+    
     @Override
-    public Question selectNextQuestion(final List<VocabularyItem> validItems, final Direction direction) {
+    public Question getQuestion(final Direction direction, final Vocabulary vocabulary) {
+        Objects.requireNonNull(direction, "direction must not be null");
+        Objects.requireNonNull(vocabulary, "vocabulary must not be null");
+
+        trimSeenItems(validCandidates(vocabulary));
+        return selectNextQuestion(validCandidates(vocabulary), direction);
+    }
+    
+    private void trimSeenItems(final List<VocabularyItem> vocabulary) {
+        // already asked items can be removed after a while
+        final int maxRemembered = Math.min(20, vocabulary.size() / 2);
+        while (this.lastItems.size() > maxRemembered) {
+            this.lastItems.poll();
+        }
+    }
+
+    private List<VocabularyItem> validCandidates(final Vocabulary vocabulary) {
+        final List<VocabularyItem> validCandidates = new ArrayList<>();
+        for (VocabularyItem item : vocabulary.getItems()) {
+            if (item.isValid() && !this.lastItems.contains(item)) {
+                validCandidates.add(item);
+            }
+        }
+        return validCandidates;
+    }
+
+    // can add selectNextQuestionByMastery
+    private Question selectNextQuestion(final List<VocabularyItem> validItems, final Direction direction) {
         Objects.requireNonNull(direction, "direction must not be null");
         Objects.requireNonNull(validItems, "validItem must not be null");
         if (validItems.isEmpty()) {
@@ -64,7 +91,8 @@ public class LearningEngineImpl implements LearningEngine{
             return new FlashCard(chosenItem, direction);
         }
 
-        record WeightedWord(VocabularyItem item, double weight) {}
+        record WeightedWord(VocabularyItem item, double weight) {
+        }
         final List<WeightedWord> weightedWords = new ArrayList<>();
 
         WeightedWord smallestWeight = new WeightedWord(validItems.get(0), 1);
@@ -115,33 +143,6 @@ public class LearningEngineImpl implements LearningEngine{
         final VocabularyItem chosenItem = candidates.get(random.nextInt(candidates.size()));
         this.lastItems.add(chosenItem);
         return new FlashCard(chosenItem, direction);
-    }
-
-    @Override
-    public Question getQuestion(final Direction direction, final Vocabulary vocabulary) {
-        Objects.requireNonNull(direction, "direction must not be null");
-        Objects.requireNonNull(vocabulary, "vocabulary must not be null");
-
-        trimSeenItems(validCandidates(vocabulary));
-        return selectNextQuestion(validCandidates(vocabulary), direction);
-    }
-    
-    private void trimSeenItems(final List<VocabularyItem> vocabulary) {
-        // already asked items can be removed after a while
-        final int maxRemembered = Math.min(20, vocabulary.size() / 2);
-        while (this.lastItems.size() > maxRemembered) {
-            this.lastItems.poll();
-        }
-    }
-
-    private List<VocabularyItem> validCandidates(final Vocabulary vocabulary) {
-        final List<VocabularyItem> validCandidates = new ArrayList<>();
-        for (VocabularyItem item : vocabulary.getItems()) {
-            if (item.isValid() && !this.lastItems.contains(item)) {
-                validCandidates.add(item);
-            }
-        }
-        return validCandidates;
     }
 
     @Override
