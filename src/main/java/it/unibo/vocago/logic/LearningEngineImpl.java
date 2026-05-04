@@ -25,7 +25,7 @@ public class LearningEngineImpl implements LearningEngine{
     }
 
     @Override
-    public boolean isCorrectAnswer(final Question question, final String userAnswer) {
+    public boolean checkAnswer(final Question question, final String userAnswer) {
         Objects.requireNonNull(question, "question must not be null");
 
         // check that the user enter a valid answer
@@ -149,7 +149,7 @@ public class LearningEngineImpl implements LearningEngine{
     public void progressUpdate(final Question question, final String userAnswer) {
         Objects.requireNonNull(question, "question must not be null");
         final Progress progress = question.getItem().getProgress(question.getDirection());
-        if (isCorrectAnswer(question, userAnswer)) {
+        if (checkAnswer(question, userAnswer)) {
             progress.registerCorrectAnswer();
         } else {
             progress.registerWrongAnswer();

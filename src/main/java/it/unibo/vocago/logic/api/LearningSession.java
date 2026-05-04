@@ -8,13 +8,13 @@ public interface LearningSession {
 
     boolean checkAnswer(String answer);
 
-    String showAnswer();
+    String getCorrectAnswer();
 
     void switchDirection();
 
     int getCountAnsweredQuestions();
 
-    long getElapsedSeconds();
+    long getTime();
 
     Direction getDirection();
 }

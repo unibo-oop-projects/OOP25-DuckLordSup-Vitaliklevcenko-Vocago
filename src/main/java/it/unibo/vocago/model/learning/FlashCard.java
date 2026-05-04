@@ -18,21 +18,25 @@ public class FlashCard implements Question {
         this.direction = Objects.requireNonNull(direction, "direction must not be null");
     }
 
+    @Override
     public VocabularyItem getItem() {
         return this.item;
     }
 
+    @Override
     public Direction getDirection() {
         return this.direction;
     }
 
-    public List<Word> getPromptWords() {
+    @Override
+    public List<Word> getQuestion() {
         return switch (this.direction) {
             case FIRST_TO_SECOND -> this.item.getFirstLanguageWords();
             case SECOND_TO_FIRST -> this.item.getSecondLanguageWords();
         };
     }
 
+    @Override
     public List<Word> getCorrectAnswer() {
         return switch (this.direction) {
             case FIRST_TO_SECOND -> this.item.getSecondLanguageWords();

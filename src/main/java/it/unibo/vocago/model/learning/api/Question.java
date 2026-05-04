@@ -12,7 +12,7 @@ public interface Question {
 
     Direction getDirection();
 
-    List<Word> getPromptWords();
+    List<Word> getQuestion();
 
     List<Word> getCorrectAnswer();
 
