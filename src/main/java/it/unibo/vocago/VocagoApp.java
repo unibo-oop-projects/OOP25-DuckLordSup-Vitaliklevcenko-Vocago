@@ -1,6 +1,6 @@
 package it.unibo.vocago;
 
-import it.unibo.vocago.controller.impl.ControllerImpl;
+import it.unibo.vocago.controller.ControllerImpl;
 
 public class VocagoApp {
 

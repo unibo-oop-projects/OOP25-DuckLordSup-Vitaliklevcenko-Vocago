@@ -1,4 +1,4 @@
-package it.unibo.vocago.controller.impl;
+package it.unibo.vocago.controller;
 
 import it.unibo.vocago.controller.api.Controller;
 

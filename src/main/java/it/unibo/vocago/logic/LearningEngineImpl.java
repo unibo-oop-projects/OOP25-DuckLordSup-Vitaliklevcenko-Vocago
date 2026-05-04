@@ -1,4 +1,4 @@
-package it.unibo.vocago.model.learning;
+package it.unibo.vocago.logic;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -7,7 +7,8 @@ import java.util.Objects;
 import java.util.Queue;
 import java.util.Random;
 
-import it.unibo.vocago.model.learning.api.LearningEngine;
+import it.unibo.vocago.logic.api.LearningEngine;
+import it.unibo.vocago.model.learning.FlashCard;
 import it.unibo.vocago.model.learning.api.Question;
 import it.unibo.vocago.model.progress.api.Progress;
 import it.unibo.vocago.model.types.Direction;
@@ -44,8 +45,6 @@ public class LearningEngineImpl implements LearningEngine{
     //can add selectNextQuestionByMastery
     @Override
     public Question selectNextQuestion(final List<VocabularyItem> validItems, final Direction direction) {
-
-        
         Objects.requireNonNull(direction, "direction must not be null");
         Objects.requireNonNull(validItems, "validItem must not be null");
         if (validItems.isEmpty()) {
@@ -134,7 +133,7 @@ public class LearningEngineImpl implements LearningEngine{
             this.lastItems.poll();
         }
     }
-    
+
     private List<VocabularyItem> validCandidates(final Vocabulary vocabulary) {
         final List<VocabularyItem> validCandidates = new ArrayList<>();
         for (VocabularyItem item : vocabulary.getItems()) {

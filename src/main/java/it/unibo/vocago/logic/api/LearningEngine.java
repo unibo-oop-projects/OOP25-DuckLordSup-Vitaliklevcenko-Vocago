@@ -1,7 +1,8 @@
-package it.unibo.vocago.model.learning.api;
+package it.unibo.vocago.logic.api;
 
 import java.util.List;
 
+import it.unibo.vocago.model.learning.api.Question;
 import it.unibo.vocago.model.types.Direction;
 import it.unibo.vocago.model.vocabulary.api.Vocabulary;
 import it.unibo.vocago.model.vocabulary.api.VocabularyItem;

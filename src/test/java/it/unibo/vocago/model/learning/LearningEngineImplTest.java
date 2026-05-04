@@ -12,6 +12,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import it.unibo.vocago.logic.LearningEngineImpl;
 import it.unibo.vocago.model.learning.api.Question;
 import it.unibo.vocago.model.progress.WordProgress;
 import it.unibo.vocago.model.types.Direction;
