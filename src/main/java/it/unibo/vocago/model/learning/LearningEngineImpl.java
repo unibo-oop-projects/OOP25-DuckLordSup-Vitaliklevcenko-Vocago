@@ -18,13 +18,8 @@ import it.unibo.vocago.model.vocabulary.api.Word;
 
 public class LearningEngineImpl implements LearningEngine{
 
-    private final Vocabulary vocabulary;
-    private final Random random;
     private final Queue<VocabularyItem> lastItems;
-
-    public LearningEngineImpl(final Vocabulary vocabulary) {
-        this.vocabulary = Objects.requireNonNull(vocabulary, "vocabulary must not be null");
-        this.random = new Random();
+    public LearningEngineImpl() {
         this.lastItems = new ArrayDeque<>();
     }
 
@@ -33,7 +28,7 @@ public class LearningEngineImpl implements LearningEngine{
         Objects.requireNonNull(question, "question must not be null");
 
         // check that the user enter a valid answer
-        if (userAnswer.equals(null) || userAnswer.isBlank()) {
+        if (userAnswer == null || userAnswer.isBlank()) {
             return false;
         }
 
@@ -46,28 +41,18 @@ public class LearningEngineImpl implements LearningEngine{
         return false;
     }
 
-    @Override
-    public Question randomQuestion() {
-        final Direction randomDirection;
-        if (this.random.nextBoolean()) {
-            randomDirection = Direction.FIRST_TO_SECOND;
-        } else {
-            randomDirection = Direction.SECOND_TO_FIRST;
-        }
-
-        return this.getQuestion(randomDirection);
-    }
-
     //can add selectNextQuestionByMastery
     @Override
     public Question selectNextQuestion(final List<VocabularyItem> validItems, final Direction direction) {
 
+        
         Objects.requireNonNull(direction, "direction must not be null");
         Objects.requireNonNull(validItems, "validItem must not be null");
         if (validItems.isEmpty()) {
             throw new IllegalStateException("No valid vocabulary items available");
         }
 
+        Random random = new Random();
         final List<VocabularyItem> newItems = new ArrayList<>();
         for (VocabularyItem item : validItems) {
             if (item.getProgress(direction).getMasteryLevel() == MasteryLevel.NEW) {
@@ -75,7 +60,7 @@ public class LearningEngineImpl implements LearningEngine{
             }
         }
         if (!newItems.isEmpty()) {
-            VocabularyItem chosenItem = newItems.get(this.random.nextInt(newItems.size()));
+            VocabularyItem chosenItem = newItems.get(random.nextInt(newItems.size()));
             this.lastItems.add(chosenItem);
             return new FlashCard(chosenItem, direction);
         }
@@ -117,7 +102,7 @@ public class LearningEngineImpl implements LearningEngine{
             weightedWords.add(new WeightedWord(item, weightResult));
 
         }
-        double cutoff = this.random.nextDouble();
+        double cutoff = random.nextDouble();
         final List<VocabularyItem> candidates = new ArrayList<>();
         for (WeightedWord word : weightedWords) {
             if (word.weight() <= cutoff) {
@@ -128,32 +113,31 @@ public class LearningEngineImpl implements LearningEngine{
             this.lastItems.add(smallestWeight.item());
             return new FlashCard(smallestWeight.item(), direction);
         }
-        final VocabularyItem chosenItem = candidates.get(this.random.nextInt(candidates.size()));
+        final VocabularyItem chosenItem = candidates.get(random.nextInt(candidates.size()));
         this.lastItems.add(chosenItem);
         return new FlashCard(chosenItem, direction);
     }
 
     @Override
-    public Question getQuestion(final Direction direction) {
+    public Question getQuestion(final Direction direction, final Vocabulary vocabulary) {
         Objects.requireNonNull(direction, "direction must not be null");
+        Objects.requireNonNull(vocabulary, "vocabulary must not be null");
 
+        trimSeenItems(validCandidates(vocabulary));
+        return selectNextQuestion(validCandidates(vocabulary), direction);
+    }
+    
+    private void trimSeenItems(final List<VocabularyItem> vocabulary) {
         // already asked items can be removed after a while
-        final int maxRemembered = Math.min(20, this.vocabulary.getItems().size() / 2);
+        final int maxRemembered = Math.min(20, vocabulary.size() / 2);
         while (this.lastItems.size() > maxRemembered) {
             this.lastItems.poll();
         }
-
-        List<VocabularyItem> candidates = validCandidates();
-        if (candidates.isEmpty() && !this.lastItems.isEmpty()) {
-            this.lastItems.clear();
-            candidates = validCandidates();
-        }
-        return selectNextQuestion(candidates, direction);
     }
     
-    private List<VocabularyItem> validCandidates() {
+    private List<VocabularyItem> validCandidates(final Vocabulary vocabulary) {
         final List<VocabularyItem> validCandidates = new ArrayList<>();
-        for (VocabularyItem item : this.vocabulary.getItems()) {
+        for (VocabularyItem item : vocabulary.getItems()) {
             if (item.isValid() && !this.lastItems.contains(item)) {
                 validCandidates.add(item);
             }
