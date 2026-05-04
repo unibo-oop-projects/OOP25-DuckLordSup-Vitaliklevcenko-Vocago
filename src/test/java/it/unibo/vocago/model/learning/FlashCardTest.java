@@ -19,11 +19,11 @@ class FlashCardTest {
 
         assertSame(item, flashCard.getItem());
         assertEquals(Direction.FIRST_TO_SECOND, flashCard.getDirection());
-        assertEquals("house", (flashCard.getPromptWords().get(0)).getWord());
+        assertEquals("house", (flashCard.getQuestion().get(0)).getWord());
         assertEquals("casa", (flashCard.getCorrectAnswer().get(0)).getWord());
 
         flashCard = new FlashCard(item, Direction.SECOND_TO_FIRST);
-        assertEquals("casa", (flashCard.getPromptWords().get(0)).getWord());
+        assertEquals("casa", (flashCard.getQuestion().get(0)).getWord());
         assertEquals("house", (flashCard.getCorrectAnswer().get(0)).getWord());
     }
 
