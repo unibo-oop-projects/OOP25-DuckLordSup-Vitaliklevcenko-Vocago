@@ -42,7 +42,16 @@ public class LearningEngineImpl implements LearningEngine{
         return false;
     }
 
-    
+    @Override
+    public void progressUpdate(final Question question, final boolean correctAnswer) {
+    final Progress progress = question.getItem().getProgress(question.getDirection());
+    if (correctAnswer) {
+        progress.registerCorrectAnswer();
+    } else {
+        progress.registerWrongAnswer();
+    }
+}
+
     @Override
     public Question getNextQuestion(final Direction direction, final Vocabulary vocabulary) {
         Objects.requireNonNull(direction, "direction must not be null");
@@ -127,8 +136,8 @@ public class LearningEngineImpl implements LearningEngine{
                 weightResult = 0.99;
             }
             weightedWords.add(new WeightedWord(item, weightResult));
-
         }
+
         double cutoff = random.nextDouble();
         final List<VocabularyItem> candidates = new ArrayList<>();
         for (WeightedWord word : weightedWords) {
@@ -136,25 +145,14 @@ public class LearningEngineImpl implements LearningEngine{
                 candidates.add(word.item());
             }
         }
+
         if (candidates.isEmpty()) {
             this.lastItems.add(smallestWeight.item());
             return new FlashCard(smallestWeight.item(), direction);
         }
+
         final VocabularyItem chosenItem = candidates.get(random.nextInt(candidates.size()));
         this.lastItems.add(chosenItem);
         return new FlashCard(chosenItem, direction);
     }
-
-    @Override
-    public void progressUpdate(final Question question, final String userAnswer) {
-        Objects.requireNonNull(question, "question must not be null");
-        final Progress progress = question.getItem().getProgress(question.getDirection());
-        if (checkAnswer(question, userAnswer)) {
-            progress.registerCorrectAnswer();
-        } else {
-            progress.registerWrongAnswer();
-        }
-    }
-
-
 }

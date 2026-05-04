@@ -7,9 +7,11 @@ import it.unibo.vocago.model.vocabulary.api.Vocabulary;
 
 public interface LearningEngine {
 
-    boolean checkAnswer(final Question question, final String userAnswer);
+    boolean checkAnswer(Question question, String userAnswer);
 
-    Question getNextQuestion(final Direction direction, final Vocabulary vocabulary);
+    void progressUpdate(Question question, boolean correctAnswer);
 
-    void progressUpdate(final Question question, final String userAnswer);
+    Question getNextQuestion( Direction direction, Vocabulary vocabulary);
+
+    
 }

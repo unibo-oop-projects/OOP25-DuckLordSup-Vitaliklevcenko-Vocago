@@ -6,7 +6,7 @@ public interface LearningSession {
 
     String getNextQuestion();
 
-    boolean checkAnswer(String answer);
+    boolean evaluateAnswer(String answer);
 
     String getCorrectAnswer();
 
