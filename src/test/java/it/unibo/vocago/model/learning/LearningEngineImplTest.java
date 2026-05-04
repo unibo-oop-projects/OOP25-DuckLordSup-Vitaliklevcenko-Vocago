@@ -45,7 +45,8 @@ class LearningEngineImplTest {
         final DictionaryEntry item = entry("house", "casa");
         final LearningEngineImpl engine = new LearningEngineImpl();
 
-        engine.progressUpdate(new FlashCard(item, Direction.FIRST_TO_SECOND), "casa");
+
+        engine.progressUpdate(new FlashCard(item, Direction.FIRST_TO_SECOND), true);
         
         assertEquals(1, item.getProgress(Direction.FIRST_TO_SECOND).getCorrectAnswers());
         assertEquals(0, item.getProgress(Direction.SECOND_TO_FIRST).getCorrectAnswers());
@@ -56,7 +57,7 @@ class LearningEngineImplTest {
         assertEquals(0, item.getProgress(Direction.FIRST_TO_SECOND).getWrongAnswers());
         
 
-        engine.progressUpdate(new FlashCard(item, Direction.FIRST_TO_SECOND), "wrong");
+        engine.progressUpdate(new FlashCard(item, Direction.FIRST_TO_SECOND), false);
         assertEquals(1, item.getProgress(Direction.FIRST_TO_SECOND).getWrongAnswers());
         assertEquals(MasteryLevel.BAD, item.getProgress(Direction.FIRST_TO_SECOND).getMasteryLevel());
     }
