@@ -44,7 +44,7 @@ public class LearningEngineImpl implements LearningEngine{
 
     
     @Override
-    public Question getQuestion(final Direction direction, final Vocabulary vocabulary) {
+    public Question getNextQuestion(final Direction direction, final Vocabulary vocabulary) {
         Objects.requireNonNull(direction, "direction must not be null");
         Objects.requireNonNull(vocabulary, "vocabulary must not be null");
 

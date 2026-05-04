@@ -4,7 +4,7 @@ import it.unibo.vocago.model.types.Direction;
 
 public interface LearningSession {
 
-    String nextQuestionPrompt();
+    String getNextQuestion();
 
     boolean checkAnswer(String answer);
 
@@ -12,7 +12,7 @@ public interface LearningSession {
 
     void switchDirection();
 
-    int getAnsweredQuestions();
+    int getCountAnsweredQuestions();
 
     long getElapsedSeconds();
 

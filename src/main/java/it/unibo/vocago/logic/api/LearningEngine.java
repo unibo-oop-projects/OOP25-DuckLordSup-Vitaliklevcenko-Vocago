@@ -9,7 +9,7 @@ public interface LearningEngine {
 
     boolean isCorrectAnswer(final Question question, final String userAnswer);
 
-    Question getQuestion(final Direction direction, final Vocabulary vocabulary);
+    Question getNextQuestion(final Direction direction, final Vocabulary vocabulary);
 
     void progressUpdate(final Question question, final String userAnswer);
 }
