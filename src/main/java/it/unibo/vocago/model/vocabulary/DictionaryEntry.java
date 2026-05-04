@@ -23,10 +23,10 @@ public class DictionaryEntry implements VocabularyItem {
 
     public DictionaryEntry(final List<Word> firstLanguageWords, final List<Word> secondLanguageWords,
             final Progress firstProgress, final Progress secondProgress) {
-        if (firstLanguageWords.equals(null) || firstLanguageWords.stream().anyMatch(Objects::isNull)) {
+        if (firstLanguageWords == null || firstLanguageWords.stream().anyMatch(Objects::isNull)) {
             throw new IllegalArgumentException("First language words cannot be null or contain null values");
         }
-        if (secondLanguageWords.equals(null) || secondLanguageWords.stream().anyMatch(Objects::isNull)) {
+        if (secondLanguageWords == null || secondLanguageWords.stream().anyMatch(Objects::isNull)) {
             throw new IllegalArgumentException("Second language words cannot be null or contain null values");
         }
 
@@ -56,8 +56,14 @@ public class DictionaryEntry implements VocabularyItem {
     
     @Override
     public Boolean isValid() {
-        if (!getFirstLanguageWords().isEmpty() && !getSecondLanguageWords().isEmpty()) {
-            return true;
+        return (hasNonBlankWord(getFirstLanguageWords()) && hasNonBlankWord(getSecondLanguageWords()));
+    }
+    
+    private boolean hasNonBlankWord(final List<Word> words) {
+        for (final Word word : words) {
+            if (!word.getWord().isBlank()) {
+                return true;
+            }
         }
         return false;
     }

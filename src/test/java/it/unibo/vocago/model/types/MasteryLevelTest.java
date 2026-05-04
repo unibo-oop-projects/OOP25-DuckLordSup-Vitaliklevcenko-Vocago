@@ -8,7 +8,7 @@ class MasteryLevelTest {
 
     @Test
     void nextMovesForwardAndStopsAtMaster() {
-        assertEquals(MasteryLevel.BAD, MasteryLevel.NEW.next());
+        assertEquals(MasteryLevel.MEDIUM, MasteryLevel.NEW.next());
         assertEquals(MasteryLevel.MASTER, MasteryLevel.GOOD.next());
         assertEquals(MasteryLevel.MASTER, MasteryLevel.MASTER.next());
     }

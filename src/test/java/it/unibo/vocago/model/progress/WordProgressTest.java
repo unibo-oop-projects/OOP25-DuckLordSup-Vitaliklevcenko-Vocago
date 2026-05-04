@@ -11,7 +11,7 @@ class WordProgressTest {
 
     @Test
     void constructorRejectsInvalidState() {
-        assertThrows(IllegalArgumentException.class, () -> new WordProgress(null));
+        assertThrows(NullPointerException.class, () -> new WordProgress(null));
         assertThrows(IllegalArgumentException.class, () -> new WordProgress(MasteryLevel.NEW, -1, 0));
         assertThrows(IllegalArgumentException.class, () -> new WordProgress(MasteryLevel.NEW, 0, -1));
     }

@@ -19,7 +19,7 @@ public class Profile implements User {
 
     public Profile(final String userName, final Vocabulary vocabulary, final String firstLanguage,
             final String secondLanguage) {
-        if (userName.equals(null) || userName.isBlank()) {
+        if (userName == null || userName.isBlank()) {
             throw new IllegalArgumentException("User name must not be blank or null");
         }
 
