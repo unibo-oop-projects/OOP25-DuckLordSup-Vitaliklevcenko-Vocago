@@ -14,7 +14,7 @@ dependencies {
 }
 
 application {
-    mainClass.set("it.unibo.vocago.main")
+    mainClass.set("it.unibo.vocago.VocagoApp")
 }
 
 tasks.test {
