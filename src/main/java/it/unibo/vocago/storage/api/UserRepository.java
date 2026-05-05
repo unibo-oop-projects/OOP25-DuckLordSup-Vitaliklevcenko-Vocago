@@ -1,18 +1,14 @@
 package it.unibo.vocago.storage.api;
 
-import java.util.ArrayList;
-
+import java.util.List;
 import it.unibo.vocago.model.user.api.User;
 
 public interface UserRepository {
-
-    void createUser(User user);
-
-    void saveVocabulary(User user);
+    void save(User user);
 
     boolean userExists(String userName);
 
     boolean deleteUser(String userName);
 
-    ArrayList<User> getExistingUsers();
+    List<User> getExistingUsers();
 }

@@ -1,4 +1,4 @@
-package it.unibo.vocago.logic;
+package it.unibo.vocago.logic.learning;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -7,7 +7,7 @@ import java.util.Objects;
 import java.util.Queue;
 import java.util.Random;
 
-import it.unibo.vocago.logic.api.LearningEngine;
+import it.unibo.vocago.logic.learning.api.LearningEngine;
 import it.unibo.vocago.model.learning.FlashCard;
 import it.unibo.vocago.model.learning.api.Question;
 import it.unibo.vocago.model.progress.api.Progress;

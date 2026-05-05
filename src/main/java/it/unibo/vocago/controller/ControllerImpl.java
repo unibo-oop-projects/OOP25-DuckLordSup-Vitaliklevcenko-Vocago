@@ -1,7 +1,7 @@
 package it.unibo.vocago.controller;
 
 import it.unibo.vocago.controller.api.Controller;
-import it.unibo.vocago.logic.api.LearningSession;
+import it.unibo.vocago.logic.learning.api.LearningSession;
 import it.unibo.vocago.model.user.api.User;
 import it.unibo.vocago.view.AppFrame;
 
@@ -20,5 +20,4 @@ public class ControllerImpl implements Controller {
     public void showStartPanel() {
         this.appFrame.showStartPanel();
     }
-
 }

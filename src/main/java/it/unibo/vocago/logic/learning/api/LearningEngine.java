@@ -1,4 +1,4 @@
-package it.unibo.vocago.logic.api;
+package it.unibo.vocago.logic.learning.api;
 
 
 import it.unibo.vocago.model.learning.api.Question;
@@ -12,6 +12,4 @@ public interface LearningEngine {
     void progressUpdate(Question question, boolean correctAnswer);
 
     Question getNextQuestion( Direction direction, Vocabulary vocabulary);
-
-    
 }
