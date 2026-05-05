@@ -4,6 +4,7 @@ import java.awt.CardLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import it.unibo.vocago.controller.api.Controller;
+import it.unibo.vocago.view.panels.CreateNewUserPanel;
 import it.unibo.vocago.view.panels.StartPanel;
 
 public class AppFrame extends JFrame {
@@ -12,7 +13,7 @@ public class AppFrame extends JFrame {
     private final CardLayout cardLayout;
     private final Controller controller;
     private StartPanel startPanel;
-
+    private CreateNewUserPanel createNewUserPanel;
     public AppFrame(final Controller controller) {
         this.controller = controller;
         this.cardLayout = new CardLayout();
@@ -35,6 +36,16 @@ public class AppFrame extends JFrame {
         }
         this.startPanel = new StartPanel(this.controller);
         showPanel(this.startPanel, "StartPanel");
+    }
+
+    public void showCreateNewUserPanel() {
+        this.setSize(800, 600);
+        this.setLocationRelativeTo(null);
+        if (this.createNewUserPanel != null) {
+            this.mainPanel.remove(this.startPanel);
+        }
+        this.createNewUserPanel = new CreateNewUserPanel(this.controller);
+        showPanel(this.startPanel, "CreateNewUserPanel");
     }
 
     private void showPanel(final JPanel panel, final String cardName) {
