@@ -15,27 +15,35 @@ public class LearningSessionImpl implements LearningSession {
     private final long time;
     private Direction direction;
     private Question question;
-    private int countAnsweredQuestions;
+    private boolean currentQuestionAnswered;
+    private int correctAnsweredQuestions;
 
     public LearningSessionImpl(final Vocabulary vocabulary){
         this.vocabulary = vocabulary;
         this.learningEngine = new LearningEngineImpl();
         this.time = System.currentTimeMillis();
         direction = Direction.FIRST_TO_SECOND;
-        this.countAnsweredQuestions = 0;
+        this.currentQuestionAnswered = false;
+        this.correctAnsweredQuestions = 0;
     }
 
     @Override
     public String getNextQuestion() {
         this.question = this.learningEngine.getNextQuestion(direction, vocabulary);
+        this.currentQuestionAnswered = false;
         return toString(this.question.getQuestion());
     }
 
     @Override
     public boolean evaluateAnswer(String answer) {
         boolean correctAnswer = this.learningEngine.checkAnswer(this.question, answer);
-        this.learningEngine.progressUpdate(this.question, correctAnswer);
-        this.countAnsweredQuestions++;
+        if (this.currentQuestionAnswered == false) {
+            this.learningEngine.progressUpdate(this.question, correctAnswer);
+            if (correctAnswer) {
+                this.correctAnsweredQuestions++;
+                this.currentQuestionAnswered = true;
+            }
+        }
         return correctAnswer;
     }
 
@@ -50,8 +58,8 @@ public class LearningSessionImpl implements LearningSession {
     }
 
     @Override
-    public int getCountAnsweredQuestions() {
-        return this.countAnsweredQuestions;
+    public int getCorrectAnsweredQuestions() {
+        return this.correctAnsweredQuestions;
     }
 
     @Override

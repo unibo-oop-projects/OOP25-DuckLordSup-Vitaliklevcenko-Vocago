@@ -12,7 +12,7 @@ public interface LearningSession {
 
     void switchDirection();
 
-    int getCountAnsweredQuestions();
+    int getCorrectAnsweredQuestions();
 
     long getTime();
 
