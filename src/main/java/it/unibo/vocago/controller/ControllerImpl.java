@@ -1,6 +1,6 @@
 package it.unibo.vocago.controller;
-import java.util.List;
 
+import java.util.List;
 import it.unibo.vocago.controller.api.Controller;
 import it.unibo.vocago.logic.learning.api.LearningSession;
 import it.unibo.vocago.logic.profile.ProfileManagerImpl;
@@ -28,11 +28,11 @@ public class ControllerImpl implements Controller {
         if (getExistingUsers().isEmpty()) {
             this.appFrame.showCreateNewUserPanel();
         } else {
-            showCreateNewProfilePanel();
+            showCreateNewUserPanel();
         }
     }
 
-    public void showCreateNewProfilePanel() {
+    public void showCreateNewUserPanel() {
         this.appFrame.showCreateNewUserPanel();
     }
     

@@ -20,6 +20,7 @@ import it.unibo.vocago.model.vocabulary.api.Word;
 public class LearningEngineImpl implements LearningEngine{
 
     private final Queue<VocabularyItem> lastItems;
+    private final Random random = new Random();
     public LearningEngineImpl() {
         this.lastItems = new ArrayDeque<>();
     }
@@ -80,79 +81,57 @@ public class LearningEngineImpl implements LearningEngine{
     }
 
     // can add selectNextQuestionByMastery
-    private Question selectNextQuestion(final List<VocabularyItem> validItems, final Direction direction) {
+    private Question selectNextQuestion(final List<VocabularyItem> candidates, final Direction direction) {
         Objects.requireNonNull(direction, "direction must not be null");
-        Objects.requireNonNull(validItems, "validItem must not be null");
-        if (validItems.isEmpty()) {
+        Objects.requireNonNull(candidates, "candidates must not be null");
+
+        if (candidates.isEmpty()) {
             throw new IllegalStateException("No valid vocabulary items available");
         }
 
-        Random random = new Random();
         final List<VocabularyItem> newItems = new ArrayList<>();
-        for (VocabularyItem item : validItems) {
+        for (VocabularyItem item : candidates) {
             if (item.getProgress(direction).getMasteryLevel() == MasteryLevel.NEW) {
                 newItems.add(item);
             }
         }
+        
         if (!newItems.isEmpty()) {
-            VocabularyItem chosenItem = newItems.get(random.nextInt(newItems.size()));
-            this.lastItems.add(chosenItem);
-            return new FlashCard(chosenItem, direction);
+            return createQuestion(newItems.get(this.random.nextInt(newItems.size())), direction);
         }
 
-        record WeightedWord(VocabularyItem item, double weight) {
-        }
-        final List<WeightedWord> weightedWords = new ArrayList<>();
+        double lowestWeight = 1;
+        VocabularyItem lowestWeightedItem = candidates.get(0);
+        final double cutoff = this.random.nextDouble();
+        final List<VocabularyItem> filteredCandidates = new ArrayList<>();
 
-        WeightedWord smallestWeight = new WeightedWord(validItems.get(0), 1);
+        for (final VocabularyItem item : candidates) {
+            final Progress progress = item.getProgress(direction);
+            final int correctAnswers = progress.getCorrectAnswers();
+            final int wrongAnswers = progress.getWrongAnswers();
 
-        for (VocabularyItem item : validItems) {
-            int correctAnswers = item.getProgress(direction).getCorrectAnswers();
-            int wrongAnswers = item.getProgress(direction).getWrongAnswers();
+            double weight = Math.min(0.99,correctAnswers * progress.getMasteryLevel().getMultiplier()
+                    / (correctAnswers + wrongAnswers + 1));
 
-            double baseMultiplier = 0;
-            switch (item.getProgress(direction).getMasteryLevel()) {
-                case MasteryLevel.BAD:
-                    baseMultiplier = 0.8;
-                    break;
-                case MasteryLevel.MEDIUM:
-                    baseMultiplier = 0.9;
-                    break;
-                case MasteryLevel.GOOD:
-                    baseMultiplier = 1.05;
-                    break;
-                case MasteryLevel.MASTER:
-                    baseMultiplier = 1.35;
-                    break;
-                default:
-                    baseMultiplier = 0;
-                    break;
+            if (weight < lowestWeight) {
+                lowestWeight = weight;
+                lowestWeightedItem = item;
             }
-            double weightResult = correctAnswers * baseMultiplier / (correctAnswers + wrongAnswers + 1);
-            if (weightResult < smallestWeight.weight()) {
-                smallestWeight = new WeightedWord(item, weightResult);
-            }
-            if (weightResult > 1) {
-                weightResult = 0.99;
-            }
-            weightedWords.add(new WeightedWord(item, weightResult));
-        }
 
-        double cutoff = random.nextDouble();
-        final List<VocabularyItem> candidates = new ArrayList<>();
-        for (WeightedWord word : weightedWords) {
-            if (word.weight() <= cutoff) {
-                candidates.add(word.item());
+            if (weight <= cutoff) {
+                filteredCandidates.add(item);
             }
         }
 
-        if (candidates.isEmpty()) {
-            this.lastItems.add(smallestWeight.item());
-            return new FlashCard(smallestWeight.item(), direction);
+        if (filteredCandidates.isEmpty()) {
+            return createQuestion(lowestWeightedItem, direction);
         }
 
-        final VocabularyItem chosenItem = candidates.get(random.nextInt(candidates.size()));
-        this.lastItems.add(chosenItem);
-        return new FlashCard(chosenItem, direction);
+        return createQuestion(filteredCandidates.get(this.random.nextInt(filteredCandidates.size())), direction);
+    }
+
+    private Question createQuestion(final VocabularyItem item, final Direction direction) {
+        this.lastItems.add(item);
+        return new FlashCard(item, direction);
     }
 }
