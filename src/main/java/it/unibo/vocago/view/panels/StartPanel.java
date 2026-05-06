@@ -5,8 +5,8 @@ import javax.swing.JPanel;
 import it.unibo.vocago.controller.api.Controller;
 import it.unibo.vocago.view.panels.api.PanelLayout;
 
-public class StartPanel extends JPanel implements PanelLayout {
-
+public class StartPanel extends JPanel implements PanelLayout { 
+    // TODO
     final private Controller controller;
     public StartPanel(final Controller controller) {
         this.controller = controller;
