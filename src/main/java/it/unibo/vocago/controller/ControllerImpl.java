@@ -30,7 +30,7 @@ public class ControllerImpl implements Controller {
         if (getExistingUsers().isEmpty()) {
             this.appFrame.showCreateNewUserPanel();
         } else {
-            showCreateNewUserPanel();
+            this.appFrame.showStartPanel();
         }
     }
 

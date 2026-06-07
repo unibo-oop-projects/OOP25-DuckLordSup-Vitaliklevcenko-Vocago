@@ -37,19 +37,19 @@ public class StartPanel extends JPanel implements PanelLayout {
 
             switch (usersCount) {
                 case 0:
-                    iconPath = "data/pictures/bunny.png";
+                    iconPath = "src/main/data/resources/pictures/bunny.png";
                     break;
                 case 1:
-                    iconPath = "data/pictures/owl.png";
+                    iconPath = "src/main/data/resources/pictures/owl.png";
                     break;
                 case 2:
-                    iconPath = "data/pictures/fox.png";
+                    iconPath = "src/main/data/resources/pictures/fox.png";
                     break;
                 case 3:
-                    iconPath = "data/pictures/bear.png";
+                    iconPath = "src/main/data/resources/pictures/bear.png";
                     break;
                 default:
-                    iconPath = "data/pictures/plus.png";
+                    iconPath = "src/main/data/resources/pictures/plus.png";
                     break;
             }
 
