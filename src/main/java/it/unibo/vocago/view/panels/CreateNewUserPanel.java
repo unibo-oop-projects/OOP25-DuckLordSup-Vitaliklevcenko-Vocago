@@ -1,27 +1,115 @@
 package it.unibo.vocago.view.panels;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.io.IOException;
+
+import javax.swing.Box;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import it.unibo.vocago.controller.api.Controller;
 import it.unibo.vocago.view.panels.api.PanelLayout;
+import it.unibo.vocago.view.util.UIConstants;
+import it.unibo.vocago.view.util.UIFactory;
 
 public class CreateNewUserPanel extends JPanel implements PanelLayout {
     
-    final private Controller controller;
+    private final Controller controller;
+    private final JButton createNewUserButton;
+    private final JTextField usernameTextField;
+    private final JComboBox<String> firstLanguageComboBox;
+    private final JComboBox<String> secondLanguageComboBox;
+    private final JButton goBackButton;
+
     public CreateNewUserPanel(final Controller controller) {
+
         this.controller = controller;
+        UIFactory.stylePanel(this);
+        this.createNewUserButton = UIFactory.createButton("Create");
+        this.goBackButton = UIFactory.createButton("", "src/main/data/resources/pictures/back.png", 60, UIConstants.BACKGROUND, 60, 70,
+                true, true, true, UIConstants.FONT);
+        this.usernameTextField = UIFactory.createTextField();
+        this.firstLanguageComboBox = UIFactory.createComboBox(new String[] {
+                "English", "Italian", "German", "French", "Spanish",
+                "Portuguese", "Dutch", "Polish", "Japanese", "Chinese"
+        });
+
+        this.secondLanguageComboBox = UIFactory.createComboBox(new String[] {
+                "Italian", "English", "German", "French", "Spanish",
+                "Portuguese", "Dutch", "Polish", "Japanese", "Chinese"
+        });
+
         buildLayout();
-    }
-    @Override
-    public void buildLayout() {
-        // TODO
-        throw new UnsupportedOperationException("Unimplemented method 'buildLayout'");
+        this.usernameTextField.addActionListener(e -> buttonActionRegister());
+        this.createNewUserButton.addActionListener(e -> buttonActionRegister());
+
+        this.goBackButton.addActionListener(e -> {
+            this.controller.showStartPanel();
+        });
+
     }
 
-    @Override
-    public void actionRegister() {
-        // TODO
-        throw new UnsupportedOperationException("Unimplemented method 'actionRegister'");
+    public void buildLayout() {
+        setLayout(new BorderLayout());
+        //UIFactory.stylePanel(this);
+
+        JLabel titleLabel = UIFactory.createLabel("Create New User", UIConstants.TITLE_FONT);
+        JPanel titlePanel = UIFactory.createPanel(new FlowLayout(FlowLayout.CENTER, 0, 40));
+        titlePanel.add(titleLabel);
+        add(titlePanel, BorderLayout.NORTH);
+
+        JPanel contentPanel = UIFactory.createPanel();
+        contentPanel.add(Box.createVerticalStrut(10));
+
+        Dimension comboSize = new Dimension(220, 32);
+        this.firstLanguageComboBox.setMaximumSize(comboSize);
+        this.secondLanguageComboBox.setMaximumSize(comboSize);
+
+        JPanel LanguagePanel = UIFactory.createPanel();
+        UIFactory.brighter(LanguagePanel);
+
+        LanguagePanel.add(Box.createVerticalStrut(20));
+        LanguagePanel.add(UIFactory.createLabel("choose a language you want to study", UIConstants.FONT));
+        LanguagePanel.add(Box.createVerticalStrut(10));
+        LanguagePanel.add(this.firstLanguageComboBox);
+        LanguagePanel.add(Box.createVerticalStrut(20));
+        LanguagePanel.add(UIFactory.createLabel("choose a language you already know", UIConstants.FONT));
+        LanguagePanel.add(Box.createVerticalStrut(10));
+        LanguagePanel.add(this.secondLanguageComboBox);
+        LanguagePanel.add(Box.createVerticalStrut(20));
+
+        contentPanel.add(LanguagePanel);
+        contentPanel.add(Box.createVerticalStrut(10));
+
+        JPanel usernamePanel = UIFactory.createPanel(new FlowLayout(FlowLayout.CENTER, 12, 40));
+        usernamePanel.add(UIFactory.createLabel("nickname:", UIConstants.FONT));
+        usernamePanel.add(this.usernameTextField);
+        usernamePanel.add(this.createNewUserButton);
+
+        contentPanel.add(usernamePanel);
+
+        add(contentPanel, BorderLayout.CENTER);
+
+        JPanel bottomPanel = UIFactory.createPanel(new FlowLayout(FlowLayout.LEFT, 20, 20));
+
+        bottomPanel.add(this.goBackButton);
+        add(bottomPanel, BorderLayout.SOUTH);
+
+    }
+
+    private void buttonActionRegister() {
+        String newUser = this.usernameTextField.getText();
+
+        if (newUser != null && !(this.controller.userExists(newUser))) {
+            this.controller.createUser(newUser, (String) this.firstLanguageComboBox.getSelectedItem(),
+                    (String) this.secondLanguageComboBox.getSelectedItem());
+        }
+
     }
 
 }

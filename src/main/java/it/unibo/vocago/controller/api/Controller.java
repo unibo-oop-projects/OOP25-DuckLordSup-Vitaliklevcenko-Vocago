@@ -30,6 +30,8 @@ List<User> getExistingUsers();
 
 boolean userExists(String userName);
 
+void createUser(String userName, String firstLanguage, String secondLanguage);
+
 void saveVocabulary(Vocabulary vocabulary);
 
 void deleteUser();

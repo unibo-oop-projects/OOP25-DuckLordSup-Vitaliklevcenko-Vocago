@@ -2,6 +2,9 @@ package it.unibo.vocago.controller;
 
 import java.io.UncheckedIOException;
 import java.util.List;
+
+import javax.swing.JOptionPane;
+
 import it.unibo.vocago.controller.api.Controller;
 import it.unibo.vocago.logic.learning.api.LearningSession;
 import it.unibo.vocago.logic.profile.ProfileManagerImpl;
@@ -74,13 +77,21 @@ public class ControllerImpl implements Controller {
         return getLearningSession().getCorrectAnsweredQuestions();
     }
 
-            // profile Manager geters //
+            // profile Manager geters and setters //
     public List<User> getExistingUsers() {
         try {
             return this.profileManager.getExistingUsers();
         } catch (UncheckedIOException exception) {
-            //later:this.appFrame.showMessage("Could not load saved user profiles.");
+            this.appFrame.showMessage("user error", "Could not load saved user profiles.", JOptionPane.ERROR_MESSAGE);
             return List.of();
+        }
+    }
+    
+    public void createUser(final String userName, final  String firstLanguage, final String secondLanguage) {
+        try{
+            this.profileManager.createUser(userName, firstLanguage, secondLanguage);
+        } catch (UncheckedIOException exception) {
+            this.appFrame.showMessage("user error","Could not create user profile, try again!", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -93,7 +104,7 @@ public class ControllerImpl implements Controller {
             this.profileManager.saveVocabulary(vocabulary);
         } catch (RuntimeException exception) {
             exception.printStackTrace();
-            // later: this.appFrame.showMessage("Could not save vocabulary.");
+            this.appFrame.showMessage("save error", "Could not save changes, try again!", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -105,7 +116,7 @@ public class ControllerImpl implements Controller {
             }
         } catch (RuntimeException exception) {
             exception.printStackTrace();
-            // later: this.appFrame.showMessage("Could not delete user.");
+            this.appFrame.showMessage("user error", "Could not delete user, try again!", JOptionPane.ERROR_MESSAGE);
         }
     }
 

@@ -2,6 +2,7 @@ package it.unibo.vocago.view.panels;
 
 import java.awt.Dimension;
 import java.io.IOException;
+import java.util.List;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -16,107 +17,85 @@ import it.unibo.vocago.view.util.UIConstants;
 import it.unibo.vocago.view.util.UIFactory;
 
 public class StartPanel extends JPanel implements PanelLayout {
-    
+
+    private static final String[] PROFILE_ICONS = {
+            "src/main/data/resources/pictures/bunny.png",
+            "src/main/data/resources/pictures/owl.png",
+            "src/main/data/resources/pictures/fox.png",
+            "src/main/data/resources/pictures/bear.png"
+    };
+
+    private static final String ADD_ICON = "src/main/data/resources/pictures/plus.png";
+
     final private Controller controller;
     public StartPanel(final Controller controller) {
         this.controller = controller;
         buildLayout();
     }
     
-    private JPanel showExistingUsers() throws IOException {
-
-        JPanel usersPanel = UIFactory.createPanel();
-        UIFactory.brighter(usersPanel);
-
-        int usersCount = 0;
-        for (User user : this.controller.getExistingUsers()) {
-            if (usersCount >= MAX_USERS) {
-                break;
-            }
-            String iconPath;
-
-            switch (usersCount) {
-                case 0:
-                    iconPath = "src/main/data/resources/pictures/bunny.png";
-                    break;
-                case 1:
-                    iconPath = "src/main/data/resources/pictures/owl.png";
-                    break;
-                case 2:
-                    iconPath = "src/main/data/resources/pictures/fox.png";
-                    break;
-                case 3:
-                    iconPath = "src/main/data/resources/pictures/bear.png";
-                    break;
-                default:
-                    iconPath = "src/main/data/resources/pictures/plus.png";
-                    break;
-            }
-
-            JButton userButton = UIFactory.createButton("   Profile:  " + user.getUserName(), iconPath,
-                    60, UIConstants.BUTTON_BACKGROUND, 90, 400,true,true, true, UIConstants.FONT);
-            userButton.setHorizontalAlignment(SwingConstants.LEFT);
-            userButton.setBorderPainted(true);
-            usersPanel.add(userButton);
-            userButton.addActionListener(e -> this.controller.chooseUser(user));
-
-            usersPanel.add(Box.createVerticalStrut(10));
-
-            usersCount++;
-        }
-
-        for (int i = usersCount; i < MAX_USERS; i++) {
-            JButton button = UIFactory.createButton("ADD NEW PROFILE", "data/pictures/plus.png",
-                    60, UIConstants.BUTTON_BACKGROUND, 90, 400,true,true, true, UIConstants.FONT);
-            button.setHorizontalAlignment(SwingConstants.CENTER);
-            button.setBorderPainted(true);
-            button.addActionListener(e -> this.controller.showCreateNewUserPanel());
-            usersPanel.add(button);
-            usersPanel.add(Box.createVerticalStrut(10));
-        }
-        return usersPanel;
-    }
-
-    @Override
     public void buildLayout() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         UIFactory.stylePanel(this);
 
-        JPanel titlePanel = UIFactory.createPanel(new BorderLayout());
+        final List<User> users = this.controller.getExistingUsers();
+
+        final JPanel titlePanel = UIFactory.createPanel(new BorderLayout());
         titlePanel.add(UIFactory.createLabel("Welcome to VocaGo!", UIConstants.TITLE_FONT));
         UIFactory.highlight(titlePanel);
         titlePanel.setPreferredSize(new Dimension(Integer.MAX_VALUE, 100));
         add(titlePanel);
 
-        JPanel contentPanel = UIFactory.createPanel();
+        final JPanel contentPanel = UIFactory.createPanel();
         UIFactory.brighter(contentPanel);
         contentPanel.add(Box.createVerticalStrut(15));
-
         contentPanel.add(UIFactory.createLabel("Select your profile:", UIConstants.FONT));
         contentPanel.add(Box.createVerticalStrut(15));
 
-        int usersCount = 0;
-        try {
-            usersCount = this.controller.getExistingUsers().size();
-            contentPanel.add(showExistingUsers());
-        } catch (IOException e) {
-            e.printStackTrace();
+        final JPanel usersPanel = UIFactory.createPanel();
+        UIFactory.brighter(usersPanel);
+
+        final int visibleUsers = Math.min(users.size(), MAX_USERS);
+
+        for (int index = 0; index < visibleUsers; index++) {
+            usersPanel.add(createUserButton(users.get(index), PROFILE_ICONS[index]));
+            usersPanel.add(Box.createVerticalStrut(10));
         }
 
-        if (usersCount >= MAX_USERS) {
-            contentPanel.add(
-                    UIFactory.createLabel("Maximum of 4 profiles reached. Delete a profile to add a new one.",
-                            UIConstants.FONT));
+        for (int index = visibleUsers; index < MAX_USERS; index++) {
+            usersPanel.add(createAddProfileButton());
+            usersPanel.add(Box.createVerticalStrut(10));
         }
+
+        contentPanel.add(usersPanel);
+
+        if (users.size() >= MAX_USERS) {
+            contentPanel.add(UIFactory.createLabel(
+                    "Maximum of 4 profiles reached. Delete a profile to add a new one.",
+                    UIConstants.FONT));
+        }
+
         contentPanel.add(Box.createVerticalStrut(20));
         add(contentPanel);
-
-        actionRegister();
-
     }
 
-    @Override
-    public void actionRegister() {
+    private JButton createUserButton(final User user, final String iconPath) {
+        final JButton button = createProfileButton("   Profile:  " + user.getUserName(), iconPath);
+        button.setHorizontalAlignment(SwingConstants.LEFT);
+        button.addActionListener(event -> this.controller.chooseUser(user));
+        return button;
+    }
 
+    private JButton createAddProfileButton() {
+        final JButton button = createProfileButton("ADD NEW PROFILE", ADD_ICON);
+        button.setHorizontalAlignment(SwingConstants.CENTER);
+        button.addActionListener(event -> this.controller.showCreateNewUserPanel());
+        return button;
+    }
+
+    private JButton createProfileButton(final String text, final String iconPath) {
+        final JButton button = UIFactory.createButton(text,iconPath,60,UIConstants.BUTTON_BACKGROUND,90,
+                400, true, true, true, UIConstants.FONT);
+        button.setBorderPainted(true);
+        return button;
     }
 }

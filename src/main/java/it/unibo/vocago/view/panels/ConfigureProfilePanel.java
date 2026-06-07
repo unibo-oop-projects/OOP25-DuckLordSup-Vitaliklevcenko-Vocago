@@ -19,7 +19,7 @@ public class ConfigureProfilePanel  extends JPanel implements PanelLayout {
         throw new UnsupportedOperationException("Unimplemented method 'buildLayout'");
     }
 
-    @Override
+    
     public void actionRegister() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'actionRegister'");
