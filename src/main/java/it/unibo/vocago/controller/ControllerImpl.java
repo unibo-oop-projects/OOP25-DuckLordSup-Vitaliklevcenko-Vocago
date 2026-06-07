@@ -1,5 +1,6 @@
 package it.unibo.vocago.controller;
 
+import java.io.UncheckedIOException;
 import java.util.List;
 import it.unibo.vocago.controller.api.Controller;
 import it.unibo.vocago.logic.learning.api.LearningSession;
@@ -21,6 +22,7 @@ public class ControllerImpl implements Controller {
         this.appFrame = new AppFrame(this);
         this.learningSession = null;
         this.profileManager = new ProfileManagerImpl(new UserCsvStorage());//depends on the data base we choose (sql/csv file)
+        showStartPanel();
     }
 
             //panel space//
@@ -48,7 +50,7 @@ public class ControllerImpl implements Controller {
         return getLearningSession().getNextQuestion();
     }
 
-    public Boolean evaluateAnswer(final String userAnswer) {
+    public boolean evaluateAnswer(final String userAnswer) {
         return getLearningSession().evaluateAnswer(userAnswer);
     }
 
@@ -72,28 +74,42 @@ public class ControllerImpl implements Controller {
         return getLearningSession().getCorrectAnsweredQuestions();
     }
 
-
             // profile Manager geters //
     public List<User> getExistingUsers() {
-        return this.profileManager.getExistingUsers();
+        try {
+            return this.profileManager.getExistingUsers();
+        } catch (UncheckedIOException exception) {
+            //later:this.appFrame.showMessage("Could not load saved user profiles.");
+            return List.of();
+        }
     }
 
-    public Boolean userExists(final String user) {
+    public boolean userExists(final String user) {
         return this.profileManager.userExists(user);
     }
 
     public void saveVocabulary(final Vocabulary vocabulary) {
-        this.profileManager.saveVocabulary(vocabulary);
-    }
-
-    public void deleteUser() {
-        if (this.profileManager.deleteCurrentUser()) { //should add warning if you sure you want to delete user
-            this.learningSession = null;
-            showStartPanel();
+        try {
+            this.profileManager.saveVocabulary(vocabulary);
+        } catch (RuntimeException exception) {
+            exception.printStackTrace();
+            // later: this.appFrame.showMessage("Could not save vocabulary.");
         }
     }
 
-    public Boolean vocabularyIsValid() {
+    public void deleteUser() {
+        try { //add warning are you sure?
+            if (this.profileManager.deleteCurrentUser()) {
+                this.learningSession = null;
+                showStartPanel();
+            }
+        } catch (RuntimeException exception) {
+            exception.printStackTrace();
+            // later: this.appFrame.showMessage("Could not delete user.");
+        }
+    }
+
+    public boolean vocabularyIsValid() {
         return this.profileManager.vocabularyIsValid();
     }
 
@@ -106,6 +122,5 @@ public class ControllerImpl implements Controller {
     public User getCurrentUser() {
         return this.profileManager.getCurrentUser();
     }
-
 
 }

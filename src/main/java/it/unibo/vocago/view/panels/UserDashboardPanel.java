@@ -5,23 +5,22 @@ import javax.swing.JPanel;
 import it.unibo.vocago.controller.api.Controller;
 import it.unibo.vocago.view.panels.api.PanelLayout;
 
-public class CreateNewUserPanel extends JPanel implements PanelLayout {
+public class UserDashboardPanel extends JPanel implements PanelLayout {
     
-    final private Controller controller;
-    public CreateNewUserPanel(final Controller controller) {
+    private final Controller controller;
+    public UserDashboardPanel(final Controller controller) {
         this.controller = controller;
-        buildLayout();
     }
+
     @Override
     public void buildLayout() {
-        // TODO
+        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'buildLayout'");
     }
 
     @Override
     public void actionRegister() {
-        // TODO
+        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'actionRegister'");
     }
-
 }
