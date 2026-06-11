@@ -31,7 +31,7 @@ public class CreateNewUserPanel extends JPanel implements PanelLayout {
         this.controller = controller;
         UIFactory.stylePanel(this);
         this.createNewUserButton = UIFactory.createButton("Create");
-        this.goBackButton = UIFactory.createButton("", "src/main/data/resources/pictures/back.png", 60, UIConstants.BACKGROUND, 60, 70,
+        this.goBackButton = UIFactory.createButton("", "data/resources/pictures/back.png", 60, UIConstants.BACKGROUND, 60, 70,
                 true, true, true, UIConstants.FONT);
         this.usernameTextField = UIFactory.createTextField();
         this.firstLanguageComboBox = UIFactory.createComboBox(new String[] {

@@ -19,13 +19,13 @@ import it.unibo.vocago.view.util.UIFactory;
 public class StartPanel extends JPanel implements PanelLayout {
 
     private static final String[] PROFILE_ICONS = {
-            "src/main/data/resources/pictures/bunny.png",
-            "src/main/data/resources/pictures/owl.png",
-            "src/main/data/resources/pictures/fox.png",
-            "src/main/data/resources/pictures/bear.png"
+            "data/resources/pictures/bunny.png",
+            "data/resources/pictures/owl.png",
+            "data/resources/pictures/fox.png",
+            "data/resources/pictures/bear.png"
     };
 
-    private static final String ADD_ICON = "src/main/data/resources/pictures/plus.png";
+    private static final String ADD_ICON = "data/resources/pictures/plus.png";
 
     final private Controller controller;
     public StartPanel(final Controller controller) {
