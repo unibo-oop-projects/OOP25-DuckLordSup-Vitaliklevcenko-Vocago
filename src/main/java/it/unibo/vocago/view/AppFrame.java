@@ -45,7 +45,7 @@ public class AppFrame extends JFrame {
         this.setTitle("Vocago");
         this.setSize(800, 600);
         this.setLocationRelativeTo(null);
-        ImageIcon icon = UIFactory.loadIcon("data/pictures/wizard.png");
+        ImageIcon icon = UIFactory.loadIcon("data/resources/pictures/wizard.png");
         this.setIconImage(icon.getImage());
 
         // nulling the panels

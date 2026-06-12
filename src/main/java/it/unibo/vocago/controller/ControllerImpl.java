@@ -1,5 +1,6 @@
 package it.unibo.vocago.controller;
 
+import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.util.List;
 
@@ -40,6 +41,10 @@ public class ControllerImpl implements Controller {
     public void showCreateNewUserPanel() {
         this.appFrame.showCreateNewUserPanel();
     }
+
+    public void showUserDashboardPanel() {
+        this.appFrame.showUserDashboardPanel();
+    }
     
         // Learning Session geters //
     public LearningSession getLearningSession() {
@@ -77,26 +82,40 @@ public class ControllerImpl implements Controller {
         return getLearningSession().getCorrectAnsweredQuestions();
     }
 
-            // profile Manager geters and setters //
+    // profile Manager geters and setters //
     public List<User> getExistingUsers() {
         try {
             return this.profileManager.getExistingUsers();
         } catch (UncheckedIOException exception) {
-            this.appFrame.showMessage("user error", "Could not load saved user profiles.", JOptionPane.ERROR_MESSAGE);
+            this.appFrame.showMessage("User Error", "Could not load saved user profiles.", JOptionPane.ERROR_MESSAGE);
             return List.of();
         }
     }
     
-    public void createUser(final String userName, final  String firstLanguage, final String secondLanguage) {
-        try{
-            this.profileManager.createUser(userName, firstLanguage, secondLanguage);
-        } catch (UncheckedIOException exception) {
-            this.appFrame.showMessage("user error","Could not create user profile, try again!", JOptionPane.ERROR_MESSAGE);
+    public void createUser(final String userName, final String firstLanguage, final String secondLanguage) {
+        if (userName == null || userName.trim().isBlank()) {
+            this.appFrame.showMessage(
+                    "Username Invalid",
+                    "Please enter a valid username.",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
         }
-    }
-
-    public boolean userExists(final String user) {
-        return this.profileManager.userExists(user);
+        try {
+            if (this.profileManager.userExists(userName)) {
+                    this.appFrame.showMessage(
+                        "User Error",
+                        "This user already exists!",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            this.profileManager.createUser(userName, firstLanguage, secondLanguage);
+            showUserDashboardPanel();
+        } catch (UncheckedIOException exception) {
+            this.appFrame.showMessage(
+                    "User Error",
+                    "Could not create user profile, try again!",
+                    JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     public void saveVocabulary(final Vocabulary vocabulary) {
@@ -104,19 +123,23 @@ public class ControllerImpl implements Controller {
             this.profileManager.saveVocabulary(vocabulary);
         } catch (RuntimeException exception) {
             exception.printStackTrace();
-            this.appFrame.showMessage("save error", "Could not save changes, try again!", JOptionPane.ERROR_MESSAGE);
+            this.appFrame.showMessage("Save Failed", "Could not save changes, try again!", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     public void deleteUser() {
-        try { //add warning are you sure?
-            if (this.profileManager.deleteCurrentUser()) {
-                this.learningSession = null;
-                showStartPanel();
+        final int answer = JOptionPane.showConfirmDialog(this.appFrame, "Are you sure?", "Delete Profile",
+                    JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+        if (answer == JOptionPane.YES_OPTION) {
+            try {
+                if (this.profileManager.deleteCurrentUser()) {
+                    this.learningSession = null;
+                    showStartPanel();
+                }
+            } catch (RuntimeException exception) {
+                exception.printStackTrace();
+                this.appFrame.showMessage("Delete Failed", "The profile could not be deleted, try again!", JOptionPane.ERROR_MESSAGE);
             }
-        } catch (RuntimeException exception) {
-            exception.printStackTrace();
-            this.appFrame.showMessage("user error", "Could not delete user, try again!", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -127,7 +150,7 @@ public class ControllerImpl implements Controller {
     public void chooseUser(final User user) {
         this.profileManager.chooseUser(user);
         this.learningSession = null;
-        //stats a new profilePanel
+        showUserDashboardPanel();
     }
 
     public User getCurrentUser() {

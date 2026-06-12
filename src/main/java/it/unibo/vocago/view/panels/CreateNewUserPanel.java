@@ -3,8 +3,6 @@ package it.unibo.vocago.view.panels;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.io.IOException;
-
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -47,17 +45,11 @@ public class CreateNewUserPanel extends JPanel implements PanelLayout {
         buildLayout();
         this.usernameTextField.addActionListener(e -> buttonActionRegister());
         this.createNewUserButton.addActionListener(e -> buttonActionRegister());
-
-        this.goBackButton.addActionListener(e -> {
-            this.controller.showStartPanel();
-        });
-
+        this.goBackButton.addActionListener(e -> this.controller.showStartPanel());
     }
 
     public void buildLayout() {
         setLayout(new BorderLayout());
-        //UIFactory.stylePanel(this);
-
         JLabel titleLabel = UIFactory.createLabel("Create New User", UIConstants.TITLE_FONT);
         JPanel titlePanel = UIFactory.createPanel(new FlowLayout(FlowLayout.CENTER, 0, 40));
         titlePanel.add(titleLabel);
@@ -103,13 +95,10 @@ public class CreateNewUserPanel extends JPanel implements PanelLayout {
     }
 
     private void buttonActionRegister() {
-        String newUser = this.usernameTextField.getText();
-
-        if (newUser != null && !(this.controller.userExists(newUser))) {
-            this.controller.createUser(newUser, (String) this.firstLanguageComboBox.getSelectedItem(),
-                    (String) this.secondLanguageComboBox.getSelectedItem());
-        }
-
+        this.controller.createUser(
+                (String) this.usernameTextField.getText(),
+                (String) this.firstLanguageComboBox.getSelectedItem(),
+                (String) this.secondLanguageComboBox.getSelectedItem());
     }
-
+    
 }
