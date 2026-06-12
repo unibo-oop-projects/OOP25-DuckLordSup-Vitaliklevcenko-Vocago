@@ -1,19 +1,19 @@
 package it.unibo.vocago.controller;
 
-import java.io.IOException;
+
 import java.io.UncheckedIOException;
+import java.time.LocalDate;
 import java.util.List;
-
 import javax.swing.JOptionPane;
-
 import it.unibo.vocago.controller.api.Controller;
 import it.unibo.vocago.logic.learning.api.LearningSession;
 import it.unibo.vocago.logic.profile.ProfileManagerImpl;
 import it.unibo.vocago.logic.profile.api.ProfileManager;
+import it.unibo.vocago.model.progress.ProfileStats;
+import it.unibo.vocago.model.progress.api.Stats;
 import it.unibo.vocago.model.types.Direction;
 import it.unibo.vocago.model.user.api.User;
 import it.unibo.vocago.model.vocabulary.api.Vocabulary;
-import it.unibo.vocago.storage.UserCsvStorage;
 import it.unibo.vocago.view.AppFrame;
 
 public class ControllerImpl implements Controller {
@@ -25,7 +25,7 @@ public class ControllerImpl implements Controller {
     public ControllerImpl() {
         this.appFrame = new AppFrame(this);
         this.learningSession = null;
-        this.profileManager = new ProfileManagerImpl(new UserCsvStorage());//depends on the data base we choose (sql/csv file)
+        this.profileManager = new ProfileManagerImpl();//depends on the data base we choose (sql/csv file)
         showStartPanel();
     }
 
@@ -103,7 +103,7 @@ public class ControllerImpl implements Controller {
         try {
             if (this.profileManager.userExists(userName)) {
                     this.appFrame.showMessage(
-                        "User Error",
+                        "Username Invalid",
                         "This user already exists!",
                         JOptionPane.ERROR_MESSAGE);
                 return;
@@ -121,8 +121,7 @@ public class ControllerImpl implements Controller {
     public void saveVocabulary(final Vocabulary vocabulary) {
         try {
             this.profileManager.saveVocabulary(vocabulary);
-        } catch (RuntimeException exception) {
-            exception.printStackTrace();
+        } catch (UncheckedIOException exception) {
             this.appFrame.showMessage("Save Failed", "Could not save changes, try again!", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -136,8 +135,7 @@ public class ControllerImpl implements Controller {
                     this.learningSession = null;
                     showStartPanel();
                 }
-            } catch (RuntimeException exception) {
-                exception.printStackTrace();
+            } catch (UncheckedIOException exception) {
                 this.appFrame.showMessage("Delete Failed", "The profile could not be deleted, try again!", JOptionPane.ERROR_MESSAGE);
             }
         }
@@ -157,4 +155,21 @@ public class ControllerImpl implements Controller {
         return this.profileManager.getCurrentUser();
     }
 
+    //progress file geters//
+    public Stats getDashboardStats() {
+        try{
+            return this.profileManager.getDashboardStats();
+        } catch (RuntimeException exception) {
+            this.appFrame.showMessage("Progress Error", "Your progress has been corrupted", JOptionPane.ERROR_MESSAGE);
+            return new ProfileStats(
+                    0,
+                    0,
+                    0,
+                    0,
+                    0.0,
+                    LocalDate.now(),
+                    0,
+                    0L);
+        }
+    }
 }

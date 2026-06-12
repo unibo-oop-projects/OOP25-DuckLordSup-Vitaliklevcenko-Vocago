@@ -1,6 +1,8 @@
 package it.unibo.vocago.logic.profile.api;
 
 import java.util.List;
+
+import it.unibo.vocago.model.progress.api.Stats;
 import it.unibo.vocago.model.user.api.User;
 import it.unibo.vocago.model.vocabulary.api.Vocabulary;
 
@@ -23,4 +25,6 @@ public interface ProfileManager {
     void saveVocabulary(Vocabulary vocabulary);
 
     boolean deleteCurrentUser();
+
+    Stats getDashboardStats();
 }

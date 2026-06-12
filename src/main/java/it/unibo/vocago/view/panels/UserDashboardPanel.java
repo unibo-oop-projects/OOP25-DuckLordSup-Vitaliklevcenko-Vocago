@@ -54,7 +54,6 @@ public class UserDashboardPanel extends JPanel implements PanelLayout {
         add(titlePanel);
 
         JPanel centerPanel = UIFactory.createPanel(new GridLayout(1, 2));
-
         centerPanel.add(leftPanel());
         centerPanel.add(rightPanel());
         add(centerPanel);
@@ -75,7 +74,7 @@ public class UserDashboardPanel extends JPanel implements PanelLayout {
         statsPanel.setBorder(new EmptyBorder(15, 15, 15, 15));
         UIFactory.brighter(statsPanel);
 
-        /* Stats dashboardStats = this.controller.getDashboardStats();
+        Stats dashboardStats = this.controller.getDashboardStats();
         statsPanel.add(statPanel("Mastered", dashboardStats.getMasteredItems() + " Words",
                 "data/resources/pictures/star.png"));
         statsPanel.add(statPanel("Accuracy", String.format("%.1f%%", dashboardStats.getAccuracyPercent()),
@@ -83,7 +82,7 @@ public class UserDashboardPanel extends JPanel implements PanelLayout {
         statsPanel.add(statPanel("Streak", dashboardStats.getCurrentStreak() + " Days",
                 "data/resources/pictures/streak.png"));
         statsPanel.add(statPanel("Time Study", formatStudyTime(dashboardStats.getTotalStudyTime()),
-                "data/resources/pictures/clock.png")); */
+                "data/resources/pictures/clock.png"));
         leftPanel.add(statsPanel);
 
         leftPanel.add(Box.createVerticalStrut(30));

@@ -7,7 +7,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-
 import it.unibo.vocago.model.progress.WordProgress;
 import it.unibo.vocago.model.progress.api.Progress;
 import it.unibo.vocago.model.types.Direction;
