@@ -10,8 +10,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.List;
-
-import it.unibo.vocago.model.user.api.User;
 import it.unibo.vocago.storage.api.ProgressRepository;
 
 public class ProgressFileStorage implements ProgressRepository {
@@ -97,5 +95,5 @@ public class ProgressFileStorage implements ProgressRepository {
     private static Path fileFor(final String userName) {
         return USERS_DIRECTORY.resolve(userName.trim() + ".progress");
     }
-    
+
 }

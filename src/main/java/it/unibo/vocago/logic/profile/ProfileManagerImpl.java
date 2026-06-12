@@ -83,8 +83,8 @@ public class ProfileManagerImpl implements ProfileManager{
         if (!this.userRepository.deleteUser(userName)) {
             return false;
         }
-        this.progressRepository.deleteProgress(userName);
         this.currentUser = null;
+        this.progressRepository.deleteProgress(userName);
         return true;
     }
 

@@ -86,7 +86,7 @@ public class ControllerImpl implements Controller {
     public List<User> getExistingUsers() {
         try {
             return this.profileManager.getExistingUsers();
-        } catch (UncheckedIOException exception) {
+        } catch (RuntimeException exception) {
             this.appFrame.showMessage("User Error", "Could not load saved user profiles.", JOptionPane.ERROR_MESSAGE);
             return List.of();
         }
@@ -110,7 +110,7 @@ public class ControllerImpl implements Controller {
             }
             this.profileManager.createUser(userName, firstLanguage, secondLanguage);
             showUserDashboardPanel();
-        } catch (UncheckedIOException exception) {
+        } catch (RuntimeException exception) {
             this.appFrame.showMessage(
                     "User Error",
                     "Could not create user profile, try again!",
@@ -121,7 +121,7 @@ public class ControllerImpl implements Controller {
     public void saveVocabulary(final Vocabulary vocabulary) {
         try {
             this.profileManager.saveVocabulary(vocabulary);
-        } catch (UncheckedIOException exception) {
+        } catch (RuntimeException exception) {
             this.appFrame.showMessage("Save Failed", "Could not save changes, try again!", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -135,7 +135,7 @@ public class ControllerImpl implements Controller {
                     this.learningSession = null;
                     showStartPanel();
                 }
-            } catch (UncheckedIOException exception) {
+            } catch (RuntimeException exception) {
                 this.appFrame.showMessage("Delete Failed", "The profile could not be deleted, try again!", JOptionPane.ERROR_MESSAGE);
             }
         }
