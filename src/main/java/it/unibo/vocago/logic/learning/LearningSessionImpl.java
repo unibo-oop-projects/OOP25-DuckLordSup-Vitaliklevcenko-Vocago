@@ -55,7 +55,7 @@ public class LearningSessionImpl implements LearningSession {
 
     @Override
     public void switchDirection() {
-        this.direction.opposite();
+        this.direction = this.direction.opposite();
     }
 
     @Override
