@@ -19,6 +19,8 @@ public interface Controller {
 
     void showLearningPanel();
     
+    void closeLearningSession();
+
     String getNextQuestion();
 
     boolean evaluateAnswer(String userAnswer);

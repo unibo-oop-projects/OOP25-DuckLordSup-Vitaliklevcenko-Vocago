@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 import javax.swing.JOptionPane;
 import it.unibo.vocago.controller.api.Controller;
+import it.unibo.vocago.logic.learning.LearningSessionImpl;
 import it.unibo.vocago.logic.learning.api.LearningSession;
 import it.unibo.vocago.logic.profile.ProfileManagerImpl;
 import it.unibo.vocago.logic.profile.api.ProfileManager;
@@ -49,7 +50,26 @@ public class ControllerImpl implements Controller {
     }
 
     public void showLearningPanel() {
+        if (this.learningSession == null) {
+            if (!vocabularyIsValid()) {
+                this.appFrame.showMessage(
+                        "No Valid Words",
+                        "There are no valid words available, add more words to your vocabulary",
+                        JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            this.learningSession = new LearningSessionImpl(getCurrentUser().getVocabulary());
+        }
         this.appFrame.showLearningPanel();
+    }
+    
+    public void closeLearningSession() {
+        if (this.learningSession != null) {
+            saveLearningStats();
+            saveVocabulary(getCurrentUser().getVocabulary());
+            this.learningSession = null;
+        }
+        showUserDashboardPanel();
     }
     
         // Learning Session geters //
@@ -88,7 +108,7 @@ public class ControllerImpl implements Controller {
         return getLearningSession().getCorrectAnsweredQuestions();
     }
 
-    // profile Manager geters and setters //
+    // profile Manager getters and setters //
     public List<User> getExistingUsers() {
         try {
             return this.profileManager.getExistingUsers();
@@ -168,7 +188,7 @@ public class ControllerImpl implements Controller {
         return this.profileManager.getCurrentUser();
     }
 
-    //progress file geters//
+    //progress file getters and setters//
     public Stats getDashboardStats() {
         try {
             return this.profileManager.getDashboardStats();
