@@ -1,7 +1,5 @@
 package it.unibo.vocago.controller;
 
-
-import java.io.UncheckedIOException;
 import java.time.LocalDate;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -44,6 +42,14 @@ public class ControllerImpl implements Controller {
 
     public void showUserDashboardPanel() {
         this.appFrame.showUserDashboardPanel();
+    }
+
+    public void showVocabularyEditorPanel() {
+        this.appFrame.showVocabularyEditorPanel();
+    }
+
+    public void showLearningPanel() {
+        this.appFrame.showLearningPanel();
     }
     
         // Learning Session geters //
@@ -136,8 +142,15 @@ public class ControllerImpl implements Controller {
                     showStartPanel();
                 }
             } catch (RuntimeException exception) {
-                this.appFrame.showMessage("Delete Failed", "The profile could not be deleted, try again!", JOptionPane.ERROR_MESSAGE);
-            }
+                if (getCurrentUser() == null) {
+                    this.appFrame.showMessage("Delete Failed", "The progress could not be deleted, try again!",
+                            JOptionPane.ERROR_MESSAGE);
+                    showStartPanel();
+                } else {
+                    this.appFrame.showMessage("Delete Failed", "The profile could not be deleted, try again!",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+             }
         }
     }
 
@@ -157,7 +170,7 @@ public class ControllerImpl implements Controller {
 
     //progress file geters//
     public Stats getDashboardStats() {
-        try{
+        try {
             return this.profileManager.getDashboardStats();
         } catch (RuntimeException exception) {
             this.appFrame.showMessage("Progress Error", "Your progress has been corrupted", JOptionPane.ERROR_MESSAGE);
@@ -170,6 +183,30 @@ public class ControllerImpl implements Controller {
                     LocalDate.now(),
                     0,
                     0L);
+        }
+    }
+
+    public void saveLearningStats() {
+        try{
+            this.profileManager.saveLearningStats(learningSession, getCurrentQuestionNumber());
+        } catch(RuntimeException exception) {
+            System.err.println("Could not save progress file");
+            exception.printStackTrace();
+        }
+    }
+    
+    public void resetStats() {
+        final int answer = JOptionPane.showConfirmDialog(this.appFrame, "Are you sure?", "Reset Progress",
+                    JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+        if (answer == JOptionPane.YES_OPTION) {
+            try {
+                this.profileManager.resetStats();
+                this.appFrame.showMessage("Progress Reset", "Your progress has been reset",
+                        JOptionPane.ERROR_MESSAGE);
+            } catch (RuntimeException exception) {
+                this.appFrame.showMessage("Progress Error", "Failed to reset your progress, try again!",
+                        JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 }

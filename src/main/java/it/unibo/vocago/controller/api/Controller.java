@@ -9,38 +9,45 @@ import it.unibo.vocago.model.vocabulary.api.Vocabulary;
 
 public interface Controller {
 
-void showStartPanel();
+    void showStartPanel();
 
-void showCreateNewUserPanel();
+    void showCreateNewUserPanel();
 
-String getNextQuestion();
+    void showUserDashboardPanel();
 
-boolean evaluateAnswer(String userAnswer);
+    void showVocabularyEditorPanel();
 
-String getCorrectAnswer();
+    void showLearningPanel();
+    
+    String getNextQuestion();
 
-void switchDirection();
+    boolean evaluateAnswer(String userAnswer);
 
-Direction getDirection();
+    String getCorrectAnswer();
 
-long getLearningStartTime();
+    void switchDirection();
 
-int getCurrentQuestionNumber();
+    Direction getDirection();
 
-List<User> getExistingUsers();
+    long getLearningStartTime();
 
-void createUser(String userName, String firstLanguage, String secondLanguage);
+    int getCurrentQuestionNumber();
 
-void saveVocabulary(Vocabulary vocabulary);
+    List<User> getExistingUsers();
 
-void deleteUser();
+    void createUser(String userName, String firstLanguage, String secondLanguage);
 
-boolean vocabularyIsValid();
+    void saveVocabulary(Vocabulary vocabulary);
 
-void chooseUser(User user);
+    void deleteUser();
 
-User getCurrentUser();
+    boolean vocabularyIsValid();
 
-Stats getDashboardStats();
+    void chooseUser(User user);
 
+    User getCurrentUser();
+
+    Stats getDashboardStats();
+
+    void saveLearningStats();
 }

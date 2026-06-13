@@ -41,7 +41,14 @@ public class ProfileManagerImpl implements ProfileManager{
     public void createUser(final String userName, final String firstLanguage, final String secondLanguage) {
         final User user = new Profile(userName, firstLanguage, secondLanguage);
         this.userRepository.save(user);
-        this.progressRepository.createProgressFile(userName);
+
+        try {
+            this.progressRepository.createProgressFile(user.getUserName());
+        } catch (RuntimeException exception) {
+            // profile has been created but the progress could not be created, the program continue with no disruption.
+            System.err.println("Could not create progress file for user: " + userName);
+            exception.printStackTrace();
+        }
         this.currentUser = user;
     }
 
@@ -84,11 +91,17 @@ public class ProfileManagerImpl implements ProfileManager{
             return false;
         }
         this.currentUser = null;
-        this.progressRepository.deleteProgress(userName);
+
+        try {
+            this.progressRepository.deleteProgress(userName);
+        } catch (RuntimeException exception) {
+            // The profile was deleted; leftover progress should not block deletion.
+            System.err.println("Could not delete progress file for user: " + userName);
+            exception.printStackTrace();
+        }
         return true;
     }
 
-    @Override
     public Stats getDashboardStats() {
         if (!hasCurrentUser()) {
             throw new IllegalStateException("No current user selected.");
@@ -138,17 +151,19 @@ public class ProfileManagerImpl implements ProfileManager{
     }
     
     public void resetStats() {
-        this.progressRepository.saveStats(this.currentUser.getUserName(), LocalDate.now(), 0, 0L);
+        if (hasCurrentUser()) {
+            this.progressRepository.saveStats(this.currentUser.getUserName(), LocalDate.now(), 0, 0L);
+        }
     }
 
     public void saveLearningStats(final LearningSession session, final int requiredCorrectAnswers) {
-        if (session == null || session.getCorrectAnsweredQuestions() < requiredCorrectAnswers) {
+        if (!hasCurrentUser() || session == null || session.getCorrectAnsweredQuestions() < requiredCorrectAnswers) {
             return;
         }
-
+        final String userName = this.currentUser.getUserName();
         final LocalDate today = LocalDate.now();
-        final LocalDate lastStudyDate = this.progressRepository.getLastStudyDate(this.currentUser.getUserName());
-        int streak = this.progressRepository.getCurrentStreak(this.currentUser.getUserName());
+        final LocalDate lastStudyDate = this.progressRepository.getLastStudyDate(userName);
+        int streak = this.progressRepository.getCurrentStreak(userName);
 
         if (today.equals(lastStudyDate)) {
             streak = Math.max(streak, 1);
@@ -158,7 +173,6 @@ public class ProfileManagerImpl implements ProfileManager{
             streak = 1;
         }
 
-        final String userName = this.currentUser.getUserName();
         this.progressRepository.saveStats(
                 userName,
                 today,
