@@ -226,6 +226,14 @@ public class VocabularyEditorPanel extends JPanel implements PanelLayout {
     }
     
     private void askBeforeLeaving() {
-        
+        final int answer = JOptionPane.showConfirmDialog(this, "Save changes?", "Before Exit",
+                JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+        if (answer == JOptionPane.YES_OPTION && !saveChanges()) {
+            return;
+        }
+        if (answer != JOptionPane.CANCEL_OPTION) {
+            this.controller.showUserDashboardPanel();
+        }
     }
 }
