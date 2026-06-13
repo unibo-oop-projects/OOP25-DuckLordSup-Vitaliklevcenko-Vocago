@@ -1,7 +1,6 @@
 package it.unibo.vocago.view.panels;
 
 import javax.swing.JPanel;
-
 import it.unibo.vocago.controller.api.Controller;
 import it.unibo.vocago.view.panels.api.PanelLayout;
 

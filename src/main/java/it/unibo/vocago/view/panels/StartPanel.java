@@ -1,9 +1,7 @@
 package it.unibo.vocago.view.panels;
 
 import java.awt.Dimension;
-import java.io.IOException;
 import java.util.List;
-
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;

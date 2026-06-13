@@ -8,11 +8,9 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.Insets;
 import java.awt.LayoutManager;
 import java.awt.event.MouseAdapter;
 import java.net.URL;
-
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JComboBox;

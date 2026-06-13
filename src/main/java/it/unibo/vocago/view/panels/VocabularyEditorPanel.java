@@ -9,7 +9,6 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -152,10 +151,6 @@ public class VocabularyEditorPanel extends JPanel implements PanelLayout {
         addRowOnKeyPress();
     }
 
-    private void askBeforeLeaving() {
-        
-    }
-
     private boolean saveChanges() {
         if (!stopTableEditing()) {
             return false;
@@ -176,7 +171,23 @@ public class VocabularyEditorPanel extends JPanel implements PanelLayout {
     }
 
     private void deleteSelectedRows() {
-        
+        if (!stopTableEditing()) {
+            return;
+        }
+
+        final int[] selectedRows = this.table.getSelectedRows();
+        if (selectedRows.length == 0) {
+            return;
+        }
+
+        for (int i = selectedRows.length - 1; i >= 0; i--) {
+            final int modelRow = this.table.convertRowIndexToModel(selectedRows[i]);
+            this.model.removeRow(modelRow);
+        }
+
+        if (this.model.getRowCount() == 0) {
+            addEmptyRow();
+        }
     }
 
     private boolean stopTableEditing() {
@@ -184,10 +195,21 @@ public class VocabularyEditorPanel extends JPanel implements PanelLayout {
     }
 
     private void addRowOnKeyPress() {
-        
+        this.table.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(final KeyEvent event) {
+                if (event.getKeyCode() == KeyEvent.VK_ENTER && stopTableEditing()) {
+                    addEmptyRow();
+                }
+            }
+        });
     }
 
     private void findWordInTable() {
+        
+    }
+    
+    private void askBeforeLeaving() {
         
     }
 }
