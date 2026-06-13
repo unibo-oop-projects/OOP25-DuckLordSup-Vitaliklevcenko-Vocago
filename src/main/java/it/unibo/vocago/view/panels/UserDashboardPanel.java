@@ -152,7 +152,7 @@ public class UserDashboardPanel extends JPanel implements PanelLayout {
 
     
     private void ButtonActionRegister() {
-        //this.editVocabularyButton.addActionListener(e -> this.controller.showVocabularyEditorPanel());
+        this.editVocabularyButton.addActionListener(e -> this.controller.showVocabularyEditorPanel());
         //this.startButton.addActionListener(e -> this.controller.showNewLearningSession());
         this.deleteUserButton.addActionListener(e -> this.controller.deleteUser());
         this.switchUserButton.addActionListener(e -> this.controller.showStartPanel());

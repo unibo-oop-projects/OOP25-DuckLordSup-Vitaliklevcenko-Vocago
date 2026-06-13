@@ -41,6 +41,8 @@ public interface Controller {
 
     void deleteUser();
 
+    boolean resetStats();
+
     boolean vocabularyIsValid();
 
     void chooseUser(User user);

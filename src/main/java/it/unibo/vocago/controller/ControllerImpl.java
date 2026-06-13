@@ -134,7 +134,7 @@ public class ControllerImpl implements Controller {
 
     public void deleteUser() {
         final int answer = JOptionPane.showConfirmDialog(this.appFrame, "Are you sure?", "Delete Profile",
-                    JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (answer == JOptionPane.YES_OPTION) {
             try {
                 if (this.profileManager.deleteCurrentUser()) {
@@ -195,18 +195,20 @@ public class ControllerImpl implements Controller {
         }
     }
     
-    public void resetStats() {
+    public boolean resetStats() {
         final int answer = JOptionPane.showConfirmDialog(this.appFrame, "Are you sure?", "Reset Progress",
                     JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         if (answer == JOptionPane.YES_OPTION) {
             try {
                 this.profileManager.resetStats();
                 this.appFrame.showMessage("Progress Reset", "Your progress has been reset",
-                        JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.INFORMATION_MESSAGE);
+                return true;
             } catch (RuntimeException exception) {
                 this.appFrame.showMessage("Progress Error", "Failed to reset your progress, try again!",
                         JOptionPane.ERROR_MESSAGE);
             }
         }
+        return false;
     }
 }
