@@ -232,7 +232,7 @@ public class VocabularyEditorPanel extends JPanel implements PanelLayout {
         if (answer == JOptionPane.YES_OPTION && !saveChanges()) {
             return;
         }
-        if (answer != JOptionPane.CANCEL_OPTION) {
+        if (answer != JOptionPane.CANCEL_OPTION && answer != JOptionPane.CLOSED_OPTION) {
             this.controller.showUserDashboardPanel();
         }
     }
