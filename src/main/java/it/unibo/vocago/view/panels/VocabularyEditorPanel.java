@@ -206,7 +206,23 @@ public class VocabularyEditorPanel extends JPanel implements PanelLayout {
     }
 
     private void findWordInTable() {
-        
+        final String searchText = this.searchTextField.getText().trim().toLowerCase();
+        if (searchText.isEmpty()) {
+            return;
+        }
+
+        for (int row = 0; row < this.table.getRowCount(); row++) {
+            final String firstColumn = VocabularyEditorHelper.cellToText(
+                    this.table.getValueAt(row, VocabularyEditorHelper.FIRST_WORDS_COLUMN)).toLowerCase();
+            final String secondColumn = VocabularyEditorHelper.cellToText(
+                    this.table.getValueAt(row, VocabularyEditorHelper.SECOND_WORDS_COLUMN)).toLowerCase();
+
+            if (firstColumn.contains(searchText) || secondColumn.contains(searchText)) {
+                this.table.setRowSelectionInterval(row, row);
+                this.table.scrollRectToVisible(this.table.getCellRect(row, 0, true));
+                return;
+            }
+        }
     }
     
     private void askBeforeLeaving() {
