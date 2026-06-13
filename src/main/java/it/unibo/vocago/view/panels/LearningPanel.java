@@ -42,7 +42,7 @@ public class LearningPanel extends JPanel implements PanelLayout {
 
         this.switchLanguageButton = UIFactory.createButton(
                 "SWITCH LANGUAGE",
-                "data/pictures/arrow.png",
+                "data/resources/pictures/arrow.png",
                 40,
                 UIConstants.BACKGROUND,
                 100,
@@ -78,7 +78,7 @@ public class LearningPanel extends JPanel implements PanelLayout {
 
         this.goBackButton = UIFactory.createButton(
                 "",
-                "data/pictures/back.png",
+                "data/resources/pictures/back.png",
                 60,
                 UIConstants.BACKGROUND,
                 180,
@@ -98,52 +98,118 @@ public class LearningPanel extends JPanel implements PanelLayout {
         setLayout(new BorderLayout());
 
         add(createHeaderPanel(), BorderLayout.NORTH);
+        // add(Box.createVerticalStrut(20));
         add(createMainPanel(), BorderLayout.CENTER);
+        // add(Box.createVerticalStrut(20));
         add(createButtonsPanel(), BorderLayout.SOUTH);
     }
     
     private JPanel createHeaderPanel() {
+        JPanel welcomPanel = UIFactory.createPanel(new GridLayout());
+        // UIFactory.highlight(welcomPanel);
+        // UIFactory.brighter(welcomPanel);
+        welcomPanel.setPreferredSize(new Dimension(Integer.MAX_VALUE, UIConstants.HEADER_HEIGHT));
 
+        final JPanel leftPanel = UIFactory.createPanel(new BorderLayout());
+        //UIFactory.brighter(leftPanel);
+        leftPanel.add(this.goBackButton, BorderLayout.WEST);
+        welcomPanel.add(leftPanel);
+
+        if (10 >= this.controller.getCurrentQuestionNumber()) {
+            welcomPanel.add(UIFactory.createLabel(
+                    "WORD " + this.controller.getCurrentQuestionNumber() + " OUT OF " + 10,
+                    UIConstants.TITLE_FONT), BorderLayout.CENTER);
+        } else {
+            welcomPanel.add(UIFactory.createLabel("GOOD JOB!", UIConstants.TITLE_FONT), BorderLayout.CENTER);
+        }
+
+        final JPanel rightPanel = UIFactory.createPanel(new FlowLayout(FlowLayout.RIGHT, 12, 12));
+        rightPanel.add(this.timerLabel);
+        // UIFactory.brighter(rightPanel);
+        welcomPanel.add(rightPanel, BorderLayout.EAST);
+        return welcomPanel;
     }
     
     private JPanel createMainPanel() {
+        JPanel mainPanel = UIFactory.createPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
+        // UIFactory.brighter(mainPanel);
+        mainPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, UIConstants.LANGUAGE_PANEL_HEIGHT));
 
+        JPanel firstLanguagePanel = UIFactory.createPanel(new BorderLayout());
+        firstLanguagePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, UIConstants.LANGUAGE_PANEL_HEIGHT));
+        firstLanguagePanel.setPreferredSize(new Dimension(500, 200));
+        UIFactory.highlight(firstLanguagePanel);
+
+        JPanel secondLanguagePanel = UIFactory.createPanel(new BorderLayout());
+        secondLanguagePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, UIConstants.LANGUAGE_PANEL_HEIGHT));
+        secondLanguagePanel.setPreferredSize(new Dimension(500, 200));
+        UIFactory.highlight(secondLanguagePanel);
+
+        firstLanguagePanel.add(UIFactory.createLabel(this.controller.getCurrentUser().getFirstLanguage(),
+                UIConstants.PROMPT_FONT), BorderLayout.NORTH);
+        secondLanguagePanel.add(UIFactory.createLabel(this.controller.getCurrentUser().getSecondLanguage(),
+                UIConstants.PROMPT_FONT), BorderLayout.NORTH);
+
+        JPanel textFieldPanel = UIFactory.createPanel(new GridBagLayout());
+        UIFactory.brighter(textFieldPanel);
+        // textFieldPanel.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0,
+        // UIConstants.PANEL_BORDER));
+        textFieldPanel.add(this.userAnswer);
+
+        if (this.controller.getDirection() == Direction.FIRST_TO_SECOND) {
+            JPanel labelPanel = UIFactory.createPanel(new GridLayout());
+            labelPanel.add(UIFactory.createLabel(this.controller.getNextQuestion(), UIConstants.BIG_PROMT_FONT));
+            UIFactory.brighter(labelPanel);
+            // labelPanel.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0,
+            // UIConstants.PANEL_BORDER));
+            firstLanguagePanel.add(labelPanel);
+            secondLanguagePanel.add(textFieldPanel);
+            this.switchLanguageButton = UIFactory.createButton("Switch Language", "data/pictures/arrow.png", 40,
+                    UIConstants.BACKGROUND, 100, 160, false, true, true, UIConstants.FONT);
+        } else {
+            firstLanguagePanel.add(textFieldPanel);
+            JPanel labelPanel = UIFactory.createPanel(new GridLayout());
+            labelPanel.add(UIFactory.createLabel(this.controller.getNextQuestion(), UIConstants.BIG_PROMT_FONT));
+            UIFactory.brighter(labelPanel);
+            // labelPanel.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0,
+            // UIConstants.PANEL_BORDER));
+            secondLanguagePanel.add(labelPanel);
+            this.switchLanguageButton = UIFactory.createButton("Switch Language", "data/pictures/back.png", 40,
+                    UIConstants.BACKGROUND, 100, 160, false, true, true, UIConstants.FONT);
+        }
+        this.switchLanguageButton.setHorizontalTextPosition(SwingConstants.CENTER);
+        this.switchLanguageButton.setVerticalTextPosition(SwingConstants.BOTTOM);
+        mainPanel.add(firstLanguagePanel);
+        mainPanel.add(this.switchLanguageButton);
+        mainPanel.add(secondLanguagePanel);
+
+        this.answerPanel.setMaximumSize(new Dimension(
+                Integer.MAX_VALUE, UIConstants.ANSWER_PANEL_HEIGHT));
+        this.answerPanel.add(this.answerLabel);
+        // this.answerPanel.setBackground(getBackground());
+        // UIFactory.highlight(this.answerPanel);
+        JPanel centerPanel = UIFactory.createPanel();
+        centerPanel.add(Box.createVerticalStrut(60));
+        centerPanel.add(mainPanel);
+        centerPanel.add(this.answerPanel);
+        // UIFactory.brighter(centerPanel);
+        return centerPanel;
     }
     
     private JPanel createButtonsPanel() {
-
+        JPanel buttonsPanel = UIFactory.createPanel(new GridLayout());
+        buttonsPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, UIConstants.BUTTON_PANEL_HEIGHT));
+        buttonsPanel.setPreferredSize(new Dimension(Integer.MAX_VALUE, UIConstants.BUTTON_PANEL_HEIGHT));
+        UIFactory.highlight(buttonsPanel);
+        this.showAnswerButton.setBorderPainted(true);
+        this.nextWordButton.setBorderPainted(true);
+        buttonsPanel.add(this.showAnswerButton);
+        buttonsPanel.add(this.nextWordButton);
+        return buttonsPanel;
     }
     
     public void actionRegister() {
-        this.goBackButton.addActionListener(e -> {
-            this.controller.saveLearningStats();// should update the timer
-            this.controller.saveVocabulary(this.controller.getCurrentUser().getVocabulary());
-            this.controller.showUserDashboardPanel();
-        });
-
-        this.switchLanguageButton.addActionListener(e -> {
-            this.controller.switchDirection();
-            this.controller.showLearningPanel();
-        });
-
-        this.userAnswer.addActionListener(e -> {
-            if (this.userAnswer.getText().isEmpty()) {
-                this.answerPanel.setBackground(UIConstants.BLUE);
-                this.answerLabel.setText("Please enter an answer first!");
-            } else {
-                // should skip to the next question if correct
-            }
-
-        });
-
-        this.showAnswerButton.addActionListener(e -> {
-            this.answerPanel.setBackground(UIConstants.BLUE);
-            this.answerLabel.setText("the correct answer is: " + this.controller.getCorrectAnswer());
-        });
-
-        this.nextWordButton.addActionListener(e -> {
-            this.controller.showLearningPanel();
-        });
+        
     }
 
     private void startTimer() {
