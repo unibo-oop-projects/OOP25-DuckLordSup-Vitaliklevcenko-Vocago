@@ -23,7 +23,7 @@ import it.unibo.vocago.storage.api.UserRepository;
 public class UserCsvStorage implements UserRepository {
 
     private static final Path USERS_DIRECTORY = Path.of("data", "users");
-    private static final String WORD_SEPARATOR = "\\|";
+    private static final String WORD_SEPARATOR = ",";
 
     @Override
     public void save(final User user) {
@@ -111,18 +111,28 @@ public class UserCsvStorage implements UserRepository {
 
     private static VocabularyItem fromCsvLine(final String line) {
         final List<String> values = splitCsv(line);
+        if (values.size() < 2) {
+            throw new IllegalArgumentException("Vocabulary row must contain at least two columns.");
+        }
+
         return new DictionaryEntry(
                 splitWords(values.get(0)),
                 splitWords(values.get(1)),
-                parseProgress(values.get(2)),
-                parseProgress(values.get(3)));
+                progressAt(values, 2),
+                progressAt(values, 3));
     }
 
     private static String joinWords(final List<Word> words) {
-        return words.stream()
-                .map(Word::getWord)
-                .reduce((a, b) -> a + "|" + b)
-                .orElse("");
+        final StringBuilder text = new StringBuilder();
+
+        for (final Word word : words) {
+            if (text.length() > 0) {
+                text.append(",");
+            }
+            text.append(word.getWord());
+        }
+
+        return text.toString();
     }
 
     private static List<Word> splitWords(final String text) {
@@ -132,9 +142,19 @@ public class UserCsvStorage implements UserRepository {
 
         final List<Word> words = new ArrayList<>();
         for (final String word : text.split(WORD_SEPARATOR)) {
-            words.add(new WordEntry(word));
+            final String trimmed = word.trim();
+            if (!trimmed.isBlank()) {
+                words.add(new WordEntry(trimmed));
+            }
         }
         return words;
+    }
+
+    private static Progress progressAt(final List<String> values, final int index) {
+        if (values.size() <= index || values.get(index).isBlank()) {
+            return new WordProgress();
+        }
+        return parseProgress(values.get(index));
     }
 
     private static String serializeProgress(final Progress progress) {
@@ -152,7 +172,16 @@ public class UserCsvStorage implements UserRepository {
     }
 
     private static String csvLine(final String... values) {
-        return String.join(",", List.of(values).stream().map(UserCsvStorage::escapeCsv).toList());
+        final StringBuilder line = new StringBuilder();
+
+        for (int i = 0; i < values.length; i++) {
+            if (i > 0) {
+                line.append(",");
+            }
+            line.append(escapeCsv(values[i]));
+        }
+
+        return line.toString();
     }
 
     private static String escapeCsv(final String value) {
