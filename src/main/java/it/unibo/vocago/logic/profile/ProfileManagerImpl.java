@@ -170,14 +170,31 @@ public class ProfileManagerImpl implements ProfileManager{
         } else if (lastStudyDate != null && lastStudyDate.equals(today.minusDays(1))) {
             streak++;
         } else {
-            streak = 1;
+            streak = 0;
         }
 
         this.progressRepository.saveStats(
                 userName,
                 today,
                 streak,
-                this.progressRepository.getTotalStudyTime(userName) + (System.currentTimeMillis() - session.getTime()) / 1000);
+                this.progressRepository.getTotalStudyTime(userName)
+                        + (System.currentTimeMillis() - session.getTime()) / 1000);
     }
-
+    
+    public void updateExpiredStreak() {
+        if (!hasCurrentUser()) {
+            return;
+        }
+        final String userName = this.currentUser.getUserName();
+        final LocalDate today = LocalDate.now();
+        final LocalDate lastStudyDate = this.progressRepository.getLastStudyDate(userName);
+        final int currentStreak = this.progressRepository.getCurrentStreak(userName);
+        if (currentStreak > 0 && !lastStudyDate.equals(today) && !lastStudyDate.equals(today.minusDays(1))) {
+            this.progressRepository.saveStats(
+                    userName,
+                    lastStudyDate,
+                    0,
+                    this.progressRepository.getTotalStudyTime(userName));
+        }
+    }
 }

@@ -42,6 +42,7 @@ public class ControllerImpl implements Controller {
     }
 
     public void showUserDashboardPanel() {
+        this.profileManager.updateExpiredStreak();
         this.appFrame.showUserDashboardPanel();
     }
 

@@ -19,7 +19,7 @@ public class LearningSessionImpl implements LearningSession {
     private boolean currentQuestionEvaluated;
     private int correctAnsweredQuestions;
 
-    public LearningSessionImpl(final Vocabulary vocabulary){
+    public LearningSessionImpl(final Vocabulary vocabulary) {
         this.vocabulary = vocabulary;
         this.learningEngine = new LearningEngineImpl();
         this.time = System.currentTimeMillis();

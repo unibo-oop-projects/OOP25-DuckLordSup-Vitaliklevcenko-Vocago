@@ -32,5 +32,7 @@ public interface ProfileManager {
     void resetStats();
 
     void saveLearningStats(LearningSession session, int requiredCorrectAnswers);
+
+    void updateExpiredStreak();
     
 }
