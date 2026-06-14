@@ -215,11 +215,13 @@ public class ControllerImpl implements Controller {
     }
 
     public void saveLearningStats() {
-        try{
-            this.profileManager.saveLearningStats(learningSession, getCurrentQuestionNumber());
-        } catch(RuntimeException exception) {
-            System.err.println("Could not save progress file");
-            exception.printStackTrace();
+        if (this.learningSession != null) {
+            try {
+                this.profileManager.saveLearningStats(learningSession, getCurrentQuestionNumber());
+            } catch (RuntimeException exception) {
+                System.err.println("Could not save progress file");
+                exception.printStackTrace();
+            }
         }
     }
     
@@ -241,6 +243,13 @@ public class ControllerImpl implements Controller {
     }
 
     public void closeApp() {
+        if (this.profileManager.hasCurrentUser() && getCurrentUser().getVocabulary() != null) {
+            saveVocabulary(getCurrentUser().getVocabulary());
+        }
+        if (this.learningSession != null) {
+            saveLearningStats();
+            this.learningSession = null;
+        }
         System.exit(0);
     }
 }

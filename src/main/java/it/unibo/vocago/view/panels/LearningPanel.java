@@ -213,6 +213,7 @@ public class LearningPanel extends JPanel implements PanelLayout {
         this.revealAnswerButton.addActionListener(e -> {
             this.controller.evaluateAnswer("");
             showFeedback(UIConstants.BLUE, "The correct answer is: " + this.controller.getCorrectAnswer());
+            this.controller.saveVocabulary(this.controller.getCurrentUser().getVocabulary());
         });
         this.nextWordButton.addActionListener(e -> this.controller.showLearningPanel());
         this.switchLanguageButton.addActionListener(e -> {
