@@ -64,8 +64,9 @@ public class ControllerImpl implements Controller {
         this.appFrame.showLearningPanel();
     }
     
-    
-    
+    public void showconfigureProfilePanel() {
+        this.appFrame.showConfigureProfilePanel();
+    }
         // Learning Session getters and setters //
     public LearningSession getLearningSession() {
         if (this.learningSession == null) {

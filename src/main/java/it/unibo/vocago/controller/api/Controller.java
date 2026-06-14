@@ -18,6 +18,8 @@ public interface Controller {
     void showVocabularyEditorPanel();
 
     void showLearningPanel();
+
+    void showconfigureProfilePanel();
     
     void closeLearningSession();
 
