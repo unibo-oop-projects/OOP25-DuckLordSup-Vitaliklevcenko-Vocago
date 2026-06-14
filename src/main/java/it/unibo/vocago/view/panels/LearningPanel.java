@@ -260,6 +260,12 @@ public class LearningPanel extends JPanel implements PanelLayout {
         this.answerLabel.setText(text);
     }
 
-    
+    @Override
+    public void removeNotify() {
+        if (this.timer != null) {
+            this.timer.stop();
+        }
+        super.removeNotify();
+    }
 }
 
