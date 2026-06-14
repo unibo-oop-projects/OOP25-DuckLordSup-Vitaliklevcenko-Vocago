@@ -2,7 +2,7 @@ package it.unibo.vocago.view;
 
 import java.awt.CardLayout;
 import java.awt.Dimension;
-
+import java.awt.event.WindowAdapter;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -39,8 +39,12 @@ public class AppFrame extends JFrame {
         this.mainPanel = UIFactory.createPanel(this.cardLayout);
 
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-
-        //SHOULD ADD CONTROLLER CLOSEDAPP LISTENER
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                controller.closeApp();
+            }
+        });
         
         this.setTitle("Vocago");
         this.setSize(800, 600);

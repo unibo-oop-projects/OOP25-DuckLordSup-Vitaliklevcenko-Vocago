@@ -16,7 +16,7 @@ public class LearningSessionImpl implements LearningSession {
     private final long time;
     private Direction direction;
     private Question question;
-    private boolean currentQuestionAnswered;
+    private boolean currentQuestionEvaluated;
     private int correctAnsweredQuestions;
 
     public LearningSessionImpl(final Vocabulary vocabulary){
@@ -24,25 +24,25 @@ public class LearningSessionImpl implements LearningSession {
         this.learningEngine = new LearningEngineImpl();
         this.time = System.currentTimeMillis();
         direction = Direction.FIRST_TO_SECOND;
-        this.currentQuestionAnswered = false;
+        this.currentQuestionEvaluated = false;
         this.correctAnsweredQuestions = 0;
     }
 
     @Override
     public String getNextQuestion() {
         this.question = this.learningEngine.getNextQuestion(direction, vocabulary);
-        this.currentQuestionAnswered = false;
+        this.currentQuestionEvaluated = false;
         return toString(this.question.getQuestion());
     }
 
     @Override
     public boolean evaluateAnswer(String answer) {
         boolean correctAnswer = this.learningEngine.checkAnswer(this.question, answer);
-        if (this.currentQuestionAnswered == false) {
+        if (this.currentQuestionEvaluated == false) {
             this.learningEngine.progressUpdate(this.question, correctAnswer);
+            this.currentQuestionEvaluated = true;
             if (correctAnswer) {
                 this.correctAnsweredQuestions++;
-                this.currentQuestionAnswered = true;
             }
         }
         return correctAnswer;
@@ -71,6 +71,11 @@ public class LearningSessionImpl implements LearningSession {
     @Override
     public Direction getDirection() {
         return this.direction;
+    }
+
+    @Override
+    public boolean currentQuestionEvaluated() {
+        return this.currentQuestionEvaluated;
     }
 
     private String toString(final List<Word> words) {

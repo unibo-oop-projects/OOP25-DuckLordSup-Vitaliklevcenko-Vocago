@@ -10,6 +10,8 @@ public interface LearningSession {
 
     String getCorrectAnswer();
 
+    boolean currentQuestionEvaluated();
+
     void switchDirection();
 
     int getCorrectAnsweredQuestions();

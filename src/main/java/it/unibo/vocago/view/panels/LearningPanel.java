@@ -7,6 +7,7 @@ import it.unibo.vocago.view.util.UIConstants;
 import it.unibo.vocago.view.util.UIFactory;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagLayout;
@@ -14,11 +15,9 @@ import java.awt.GridLayout;
 import javax.swing.*;
 
 public class LearningPanel extends JPanel implements PanelLayout {
-
     private final Controller controller;
-
     private final JButton nextWordButton;
-    private final JButton showAnswerButton;
+    private final JButton revealAnswerButton;
     private final JButton goBackButton;
     private JButton switchLanguageButton;
     private JLabel answerLabel;
@@ -32,7 +31,6 @@ public class LearningPanel extends JPanel implements PanelLayout {
 
         this.controller = controller;
         this.startTime = controller.getLearningStartTime();
-
         UIFactory.stylePanel(this);
 
         this.userAnswer = UIFactory.createTextField(UIConstants.PROMPT_FONT);
@@ -64,7 +62,7 @@ public class LearningPanel extends JPanel implements PanelLayout {
                 true,
                 UIConstants.FONT);
 
-        this.showAnswerButton = UIFactory.createButton(
+        this.revealAnswerButton = UIFactory.createButton(
                 "REVEAL ANSWER",
                 "",
                 0,
@@ -91,6 +89,7 @@ public class LearningPanel extends JPanel implements PanelLayout {
         buildLayout();
         actionRegister();
         startTimer();
+        SwingUtilities.invokeLater(() -> this.userAnswer.requestFocusInWindow());
     }
     
     @Override
@@ -164,7 +163,7 @@ public class LearningPanel extends JPanel implements PanelLayout {
             // UIConstants.PANEL_BORDER));
             firstLanguagePanel.add(labelPanel);
             secondLanguagePanel.add(textFieldPanel);
-            this.switchLanguageButton = UIFactory.createButton("Switch Language", "data/pictures/arrow.png", 40,
+            this.switchLanguageButton = UIFactory.createButton("Switch Language", "data/resources/pictures/arrow.png", 40,
                     UIConstants.BACKGROUND, 100, 160, false, true, true, UIConstants.FONT);
         } else {
             firstLanguagePanel.add(textFieldPanel);
@@ -174,7 +173,7 @@ public class LearningPanel extends JPanel implements PanelLayout {
             // labelPanel.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0,
             // UIConstants.PANEL_BORDER));
             secondLanguagePanel.add(labelPanel);
-            this.switchLanguageButton = UIFactory.createButton("Switch Language", "data/pictures/back.png", 40,
+            this.switchLanguageButton = UIFactory.createButton("Switch Language", "data/resources/pictures/back.png", 40,
                     UIConstants.BACKGROUND, 100, 160, false, true, true, UIConstants.FONT);
         }
         this.switchLanguageButton.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -201,15 +200,45 @@ public class LearningPanel extends JPanel implements PanelLayout {
         buttonsPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, UIConstants.BUTTON_PANEL_HEIGHT));
         buttonsPanel.setPreferredSize(new Dimension(Integer.MAX_VALUE, UIConstants.BUTTON_PANEL_HEIGHT));
         UIFactory.highlight(buttonsPanel);
-        this.showAnswerButton.setBorderPainted(true);
+        this.revealAnswerButton.setBorderPainted(true);
         this.nextWordButton.setBorderPainted(true);
-        buttonsPanel.add(this.showAnswerButton);
+        buttonsPanel.add(this.revealAnswerButton);
         buttonsPanel.add(this.nextWordButton);
         return buttonsPanel;
     }
     
     public void actionRegister() {
-        
+        this.goBackButton.addActionListener(e -> this.controller.closeLearningSession());
+        this.userAnswer.addActionListener(e -> checkAnswer());
+        this.revealAnswerButton.addActionListener(e -> {
+            this.controller.evaluateAnswer("");
+            showFeedback(UIConstants.BLUE, "The correct answer is: " + this.controller.getCorrectAnswer());
+        });
+        this.nextWordButton.addActionListener(e -> this.controller.showLearningPanel());
+        this.switchLanguageButton.addActionListener(e -> {
+            this.controller.switchDirection();
+            this.controller.showLearningPanel();
+        });
+    }
+
+    private void checkAnswer() {
+        if (this.controller.currentQuestionEvaluated()) {
+            this.controller.showLearningPanel();
+            return;
+        }
+
+        final String answer = this.userAnswer.getText().trim();
+        if (answer.isEmpty()) {
+            showFeedback(UIConstants.BLUE, "Please enter an answer first!");
+            return;
+        }
+
+        if (this.controller.evaluateAnswer(answer)) {
+            showFeedback(UIConstants.GREEN, "Correct! Press Enter for the next word.");
+        } else {
+            showFeedback(UIConstants.RED, "the correct answer is: (" + this.controller.getCorrectAnswer() + "), Press Enter for the next word." );
+        }
+        this.controller.saveVocabulary(this.controller.getCurrentUser().getVocabulary());
     }
 
     private void startTimer() {
@@ -225,6 +254,10 @@ public class LearningPanel extends JPanel implements PanelLayout {
         this.timerLabel.setText(String.format("%02d:%02d", minutes, seconds));
     }
 
+    private void showFeedback(final Color color, final String text) {
+        this.answerPanel.setBackground(color);
+        this.answerLabel.setText(text);
+    }
 
     
 }

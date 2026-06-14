@@ -29,6 +29,8 @@ public interface Controller {
 
     void switchDirection();
 
+    boolean currentQuestionEvaluated();
+
     Direction getDirection();
 
     long getLearningStartTime();
@@ -54,4 +56,6 @@ public interface Controller {
     Stats getDashboardStats();
 
     void saveLearningStats();
+
+    void closeApp();
 }

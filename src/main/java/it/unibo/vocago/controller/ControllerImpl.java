@@ -63,16 +63,9 @@ public class ControllerImpl implements Controller {
         this.appFrame.showLearningPanel();
     }
     
-    public void closeLearningSession() {
-        if (this.learningSession != null) {
-            saveLearningStats();
-            saveVocabulary(getCurrentUser().getVocabulary());
-            this.learningSession = null;
-        }
-        showUserDashboardPanel();
-    }
     
-        // Learning Session geters //
+    
+        // Learning Session getters and setters //
     public LearningSession getLearningSession() {
         if (this.learningSession == null) {
             throw new IllegalStateException("No active learning session.");
@@ -96,6 +89,10 @@ public class ControllerImpl implements Controller {
         getLearningSession().switchDirection();
     }
 
+    public boolean currentQuestionEvaluated() {
+        return getLearningSession().currentQuestionEvaluated();
+    }
+
     public Direction getDirection() {
         return getLearningSession().getDirection();
     }
@@ -106,6 +103,17 @@ public class ControllerImpl implements Controller {
 
     public int getCurrentQuestionNumber() {
         return getLearningSession().getCorrectAnsweredQuestions();
+    }
+    
+    public void closeLearningSession() {
+        if (this.learningSession != null) {
+            if (this.profileManager.hasCurrentUser() && getCurrentUser().getVocabulary() != null) {
+                saveVocabulary(getCurrentUser().getVocabulary());
+            }
+            saveLearningStats();
+            this.learningSession = null;
+        }
+        showUserDashboardPanel();
     }
 
     // profile Manager getters and setters //
@@ -217,7 +225,7 @@ public class ControllerImpl implements Controller {
     
     public boolean resetStats() {
         final int answer = JOptionPane.showConfirmDialog(this.appFrame, "Are you sure?", "Reset Progress",
-                    JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+                JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         if (answer == JOptionPane.YES_OPTION) {
             try {
                 this.profileManager.resetStats();
@@ -230,5 +238,9 @@ public class ControllerImpl implements Controller {
             }
         }
         return false;
+    }
+
+    public void closeApp() {
+        System.exit(0);
     }
 }
