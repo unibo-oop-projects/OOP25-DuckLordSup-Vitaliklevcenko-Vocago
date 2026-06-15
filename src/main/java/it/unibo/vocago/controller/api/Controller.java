@@ -45,7 +45,7 @@ public interface Controller {
 
     void deleteUser();
 
-    boolean resetStats();
+    void resetStats();
 
     boolean vocabularyIsValid();
 

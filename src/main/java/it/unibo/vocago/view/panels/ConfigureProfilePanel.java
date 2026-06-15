@@ -46,9 +46,9 @@ public class ConfigureProfilePanel extends JPanel implements PanelLayout {
         this.controller = controller;
         UIFactory.stylePanel(this);
         this.saveChangesButton = UIFactory.createButton("Save Changes", "", 1,
-                UIConstants.BLUE, 42, 430, true, false, true, UIConstants.FONT);
-        this.resetProgressButton = UIFactory.createButton("Reset Progress", "", 1,
-                UIConstants.BUTTON_BACKGROUND, 42, 210, true, false, true, UIConstants.FONT);
+                UIConstants.BLUE, 42, 425, true, false, true, UIConstants.FONT);
+        this.resetProgressButton = UIFactory.createButton("Reset Progress", "data/resources/pictures/reset.png",
+                20, UIConstants.RED, 42, 225, true, true, true, UIConstants.FONT);
         this.goBackButton = UIFactory.createButton("", "data/resources/pictures/back.png", 60, UIConstants.BACKGROUND,
                 60,
                 BUTTON_WIDTH,

@@ -262,21 +262,19 @@ public class ControllerImpl implements Controller {
         }
     }
     
-    public boolean resetStats() {
-        final int answer = JOptionPane.showConfirmDialog(this.appFrame, "Are you sure?", "Reset Progress",
+    public void resetStats() {
+        final int answer = JOptionPane.showConfirmDialog(this.appFrame, "Are you sure? your streak and study time will be reset", "Reset Progress",
                 JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         if (answer == JOptionPane.YES_OPTION) {
             try {
                 this.profileManager.resetStats();
                 this.appFrame.showMessage("Progress Reset", "Your progress has been reset",
                         JOptionPane.INFORMATION_MESSAGE);
-                return true;
             } catch (RuntimeException exception) {
                 this.appFrame.showMessage("Progress Error", "Failed to reset your progress, try again!",
                         JOptionPane.ERROR_MESSAGE);
             }
         }
-        return false;
     }
 
     public void dailyGoalAchieved() {
