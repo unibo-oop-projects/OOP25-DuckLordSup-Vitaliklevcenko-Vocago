@@ -46,9 +46,9 @@ public class ConfigureProfilePanel extends JPanel implements PanelLayout {
         this.controller = controller;
         UIFactory.stylePanel(this);
         this.saveChangesButton = UIFactory.createButton("Save Changes", "", 1,
-                UIConstants.BLUE, 42, 425, true, false, true, UIConstants.FONT);
-        this.resetProgressButton = UIFactory.createButton("Reset Progress", "data/resources/pictures/reset.png",
-                20, UIConstants.RED, 42, 225, true, true, true, UIConstants.FONT);
+                UIConstants.BLUE, 42, 450, true, false, true, UIConstants.FONT);
+        this.resetProgressButton = UIFactory.createButton("Delete Profile", "data/resources/pictures/bin.png",
+                20, UIConstants.RED, 42, 200, true, true, true, UIConstants.FONT);
         this.goBackButton = UIFactory.createButton("", "data/resources/pictures/back.png", 60, UIConstants.BACKGROUND,
                 60,
                 BUTTON_WIDTH,
@@ -169,7 +169,7 @@ public class ConfigureProfilePanel extends JPanel implements PanelLayout {
             this.dailyGoalSlider.getValue()));
             
         this.goBackButton.addActionListener(e -> this.controller.showUserDashboardPanel());
-        this.resetProgressButton.addActionListener(e -> this.controller.resetStats());
+        this.resetProgressButton.addActionListener(e -> this.controller.deleteUser());
         this.dailyGoalSlider.addChangeListener(
                 e -> this.dailyGoalValueLabel.setText(Integer.toString(this.dailyGoalSlider.getValue())));
     }

@@ -47,6 +47,8 @@ public final class UIConstants {
     public static final Color GREEN = new Color(50, 130, 50);// green
     public static final Color RED = new Color(160, 50, 50); // red
     public static final Color BLUE = new Color(90, 130, 170); // blue
+    public static final Color TEAL = new Color(65, 130, 125);
+    public static final Color AMBER = new Color(170, 120, 45);
 
     // grey
     public static final Color TEXT_FIELD_BACKGROUND = new Color(110, 110, 110);

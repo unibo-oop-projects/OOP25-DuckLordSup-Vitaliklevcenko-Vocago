@@ -268,6 +268,7 @@ public class ControllerImpl implements Controller {
         if (answer == JOptionPane.YES_OPTION) {
             try {
                 this.profileManager.resetStats();
+                showUserDashboardPanel();
                 this.appFrame.showMessage("Progress Reset", "Your progress has been reset",
                         JOptionPane.INFORMATION_MESSAGE);
             } catch (RuntimeException exception) {
