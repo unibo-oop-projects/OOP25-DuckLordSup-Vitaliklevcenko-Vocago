@@ -211,6 +211,9 @@ public class ControllerImpl implements Controller {
         this.profileManager.saveDailyGoal(dailyGoal);
     }
 
+    public void saveProfileConfigurations(final String userName, final String firstLanguage, final String secondLanguage, final int dailyGoal) {
+        
+    }
     //progress file getters and setters//
     public Stats getDashboardStats() {
         try {

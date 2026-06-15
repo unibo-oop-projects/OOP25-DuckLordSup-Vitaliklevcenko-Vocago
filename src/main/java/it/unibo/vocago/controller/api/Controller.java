@@ -64,4 +64,6 @@ public interface Controller {
     void saveDailyGoal(final int dailyGoal);
 
     int getDailyGoal();
+
+    void saveProfileConfigurations(String userName, String firstLanguage, String secondLanguage, int dailyGoal);
 }

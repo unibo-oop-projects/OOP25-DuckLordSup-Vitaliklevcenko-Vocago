@@ -31,7 +31,6 @@ public class ConfigureProfilePanel extends JPanel implements PanelLayout {
     private static final int PANEL_WIDTH = 660;
     private static final int DAILY_GOAL_MIN = 5;
     private static final int DAILY_GOAL_MAX = 40;
-    private static final int DEFAULT_DAILY_GOAL = 10;
     private static final int BUTTON_WIDTH = 70;
     private final Controller controller;
     private final JButton saveChangesButton;
@@ -63,11 +62,7 @@ public class ConfigureProfilePanel extends JPanel implements PanelLayout {
         this.dailyGoalValueLabel = UIFactory.createLabel(Integer.toString(this.controller.getDailyGoal()), UIConstants.FONT);
 
         buildLayout();
-        this.usernameTextField.addActionListener(e -> buttonActionRegister());
-        this.saveChangesButton.addActionListener(e -> buttonActionRegister());
-        this.goBackButton.addActionListener(e -> this.controller.showUserDashboardPanel());
-        this.dailyGoalSlider.addChangeListener(
-                e -> this.dailyGoalValueLabel.setText(Integer.toString(this.dailyGoalSlider.getValue())));
+        buttonActionRegister();
     }
 
     @Override
@@ -167,6 +162,15 @@ public class ConfigureProfilePanel extends JPanel implements PanelLayout {
     }
 
     private void buttonActionRegister() {
-
+        this.saveChangesButton.addActionListener(e -> this.controller.saveProfileConfigurations(
+            this.usernameTextField.getText(),
+            (String) this.firstLanguageComboBox.getSelectedItem(),
+            (String) this.secondLanguageComboBox.getSelectedItem(),
+            this.dailyGoalSlider.getValue()));
+            
+        this.goBackButton.addActionListener(e -> this.controller.showUserDashboardPanel());
+        this.resetProgressButton.addActionListener(e -> this.controller.resetStats());
+        this.dailyGoalSlider.addChangeListener(
+                e -> this.dailyGoalValueLabel.setText(Integer.toString(this.dailyGoalSlider.getValue())));
     }
 }
