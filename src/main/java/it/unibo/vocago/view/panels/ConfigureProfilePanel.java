@@ -15,7 +15,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import it.unibo.vocago.controller.api.Controller;
@@ -33,7 +32,7 @@ public class ConfigureProfilePanel extends JPanel implements PanelLayout {
     private static final int DAILY_GOAL_MIN = 5;
     private static final int DAILY_GOAL_MAX = 40;
     private static final int DEFAULT_DAILY_GOAL = 10;
-
+    private static final int BUTTON_WIDTH = 70;
     private final Controller controller;
     private final JButton saveChangesButton;
     private final JButton resetProgressButton;
@@ -41,7 +40,8 @@ public class ConfigureProfilePanel extends JPanel implements PanelLayout {
     private final JComboBox<String> firstLanguageComboBox;
     private final JComboBox<String> secondLanguageComboBox;
     private final JButton goBackButton;
-
+    private final JSlider dailyGoalSlider;
+    private final JLabel dailyGoalValueLabel;
 
     public ConfigureProfilePanel(final Controller controller) {
         this.controller = controller;
@@ -51,19 +51,23 @@ public class ConfigureProfilePanel extends JPanel implements PanelLayout {
         this.resetProgressButton = UIFactory.createButton("Reset Progress", "", 1,
                 UIConstants.BUTTON_BACKGROUND, 42, 210, true, false, true, UIConstants.FONT);
         this.goBackButton = UIFactory.createButton("", "data/resources/pictures/back.png", 60, UIConstants.BACKGROUND,
-                60, 70,
+                60,
+                BUTTON_WIDTH,
                 false, true, true, UIConstants.FONT);
         this.usernameTextField = UIFactory.createTextField();
         this.firstLanguageComboBox = UIFactory.createComboBox(LANGUAGES);
         this.secondLanguageComboBox = UIFactory.createComboBox(LANGUAGES);
-        this.secondLanguageComboBox.setSelectedItem("Italian");//should cahnge to the defaul
-
+        this.firstLanguageComboBox.setSelectedItem(this.controller.getCurrentUser().getFirstLanguage());
+        this.secondLanguageComboBox.setSelectedItem(this.controller.getCurrentUser().getSecondLanguage());
+        this.dailyGoalSlider = new JSlider(DAILY_GOAL_MIN, DAILY_GOAL_MAX, DEFAULT_DAILY_GOAL);// need to change
+        this.dailyGoalValueLabel = UIFactory.createLabel(Integer.toString(DEFAULT_DAILY_GOAL), UIConstants.FONT); // need
 
         buildLayout();
         this.usernameTextField.addActionListener(e -> buttonActionRegister());
         this.saveChangesButton.addActionListener(e -> buttonActionRegister());
         this.goBackButton.addActionListener(e -> this.controller.showUserDashboardPanel());
-
+        this.dailyGoalSlider.addChangeListener(
+                e -> this.dailyGoalValueLabel.setText(Integer.toString(this.dailyGoalSlider.getValue())));
     }
 
     @Override
@@ -88,13 +92,13 @@ public class ConfigureProfilePanel extends JPanel implements PanelLayout {
         headerPanel.setPreferredSize(new Dimension(Integer.MAX_VALUE, 90));
         headerPanel.add(this.goBackButton, BorderLayout.WEST);
         headerPanel.add(UIFactory.createLabel("Configure Profile", UIConstants.TITLE_FONT), BorderLayout.CENTER);
-        headerPanel.add(Box.createHorizontalStrut(this.goBackButton.getWidth()), BorderLayout.EAST);// why is not working
+        headerPanel.add(Box.createHorizontalStrut(BUTTON_WIDTH), BorderLayout.EAST);
         return headerPanel;
     }
 
     private JPanel accountDetailsPanel() {
         final JPanel panel = createPanel("ACCOUNT DETAILS", 100);
-        final JPanel nicknameRow = createRowPanel(new BorderLayout(10, 5), panel.getBackground());
+        final JPanel nicknameRow = UIFactory.createPanel(new BorderLayout(10, 5));
         nicknameRow.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
         nicknameRow.add(UIFactory.createLabel("Nickname:", UIConstants.FONT), BorderLayout.WEST);
         nicknameRow.add(this.usernameTextField, BorderLayout.CENTER);
@@ -104,7 +108,7 @@ public class ConfigureProfilePanel extends JPanel implements PanelLayout {
 
     private JPanel languagePreferencesPanel() {
         final JPanel panel = createPanel("LANGUAGE PREFERENCES", 130);
-        final JPanel languageRow = createRowPanel(new GridLayout(2, 2, 24, 0), panel.getBackground());
+        final JPanel languageRow = UIFactory.createPanel(new GridLayout(2, 2, 24, 0));
         languageRow.add(UIFactory.createLabel("Language you study:", UIConstants.FONT));
         languageRow.add(UIFactory.createLabel("Language you already know:", UIConstants.FONT));
         languageRow.add(this.firstLanguageComboBox);
@@ -115,16 +119,37 @@ public class ConfigureProfilePanel extends JPanel implements PanelLayout {
 
     private JPanel dailyGoalPanel() {
         final JPanel panel = createPanel("DAILY GOAL", 135);
-
+        final JPanel wordsRow = UIFactory.createPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        wordsRow.add(UIFactory.createLabel("Words per day: ", UIConstants.FONT));
+        wordsRow.add(this.dailyGoalValueLabel);
+        panel.add(wordsRow);
+        panel.add(Box.createVerticalStrut(8));
+        panel.add(sliderPanel(panel.getBackground()));
         return panel;
     }
 
     private JPanel actionButtonsPanel() {
         final JPanel actionsPanel = UIFactory.createPanel(new FlowLayout(FlowLayout.CENTER, 12, 0));
-        actionsPanel.setMaximumSize(new Dimension(PANEL_WIDTH, 46));
         actionsPanel.add(this.saveChangesButton);
         actionsPanel.add(this.resetProgressButton);
         return actionsPanel;
+    }
+
+    private JPanel sliderPanel(final Color background) {
+        this.dailyGoalSlider.setBackground(background);
+        this.dailyGoalSlider.setForeground(UIConstants.TEXT_COLOR);
+        this.dailyGoalSlider.setMajorTickSpacing(5);
+        this.dailyGoalSlider.setMinorTickSpacing(5);
+        this.dailyGoalSlider.setPaintTicks(true);
+        this.dailyGoalSlider.setOpaque(false);
+        final JPanel panel = UIFactory.createPanel(new BorderLayout());
+        panel.add(this.dailyGoalSlider, BorderLayout.CENTER);
+
+        final JPanel limitsPanel = UIFactory.createPanel(new BorderLayout());
+        limitsPanel.add(UIFactory.createLabel(Integer.toString(DAILY_GOAL_MIN), UIConstants.FONT), BorderLayout.WEST);
+        limitsPanel.add(UIFactory.createLabel(Integer.toString(DAILY_GOAL_MAX), UIConstants.FONT), BorderLayout.EAST);
+        panel.add(limitsPanel, BorderLayout.SOUTH);
+        return panel;
     }
 
     private JPanel createPanel(final String title, final int height) {
@@ -140,14 +165,6 @@ public class ConfigureProfilePanel extends JPanel implements PanelLayout {
         panel.add(Box.createVerticalStrut(10));
         return panel;
     }
-
-    private JPanel createRowPanel(final java.awt.LayoutManager layout, final Color background) {
-        final JPanel panel = UIFactory.createPanel(layout);
-        panel.setBackground(background);
-        return panel;
-    }
-
-
 
     private void buttonActionRegister() {
 
