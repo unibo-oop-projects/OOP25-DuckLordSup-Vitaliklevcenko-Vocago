@@ -94,6 +94,7 @@ public class ConfigureProfilePanel extends JPanel implements PanelLayout {
     private JPanel accountDetailsPanel() {
         final JPanel panel = createPanel("ACCOUNT DETAILS", 100);
         final JPanel nicknameRow = UIFactory.createPanel(new BorderLayout(10, 5));
+        nicknameRow.setBackground(panel.getBackground());
         nicknameRow.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
         nicknameRow.add(UIFactory.createLabel("Nickname:", UIConstants.FONT), BorderLayout.WEST);
         nicknameRow.add(this.usernameTextField, BorderLayout.CENTER);
@@ -104,6 +105,7 @@ public class ConfigureProfilePanel extends JPanel implements PanelLayout {
     private JPanel languagePreferencesPanel() {
         final JPanel panel = createPanel("LANGUAGE PREFERENCES", 130);
         final JPanel languageRow = UIFactory.createPanel(new GridLayout(2, 2, 24, 0));
+        languageRow.setBackground(panel.getBackground());
         languageRow.add(UIFactory.createLabel("Language you study:", UIConstants.FONT));
         languageRow.add(UIFactory.createLabel("Language you already know:", UIConstants.FONT));
         languageRow.add(this.firstLanguageComboBox);
@@ -115,6 +117,7 @@ public class ConfigureProfilePanel extends JPanel implements PanelLayout {
     private JPanel dailyGoalPanel() {
         final JPanel panel = createPanel("DAILY GOAL", 135);
         final JPanel wordsRow = UIFactory.createPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        wordsRow.setBackground(panel.getBackground());
         wordsRow.add(UIFactory.createLabel("Words per day: ", UIConstants.FONT));
         wordsRow.add(this.dailyGoalValueLabel);
         panel.add(wordsRow);
@@ -136,11 +139,12 @@ public class ConfigureProfilePanel extends JPanel implements PanelLayout {
         this.dailyGoalSlider.setMajorTickSpacing(5);
         this.dailyGoalSlider.setMinorTickSpacing(5);
         this.dailyGoalSlider.setPaintTicks(true);
-        this.dailyGoalSlider.setOpaque(false);
-        final JPanel panel = UIFactory.createPanel(new BorderLayout());
-        panel.add(this.dailyGoalSlider, BorderLayout.CENTER);
 
+        final JPanel panel = UIFactory.createPanel(new BorderLayout());
+        panel.setBackground(background);
+        panel.add(this.dailyGoalSlider, BorderLayout.CENTER);
         final JPanel limitsPanel = UIFactory.createPanel(new BorderLayout());
+        limitsPanel.setBackground(background);
         limitsPanel.add(UIFactory.createLabel(Integer.toString(DAILY_GOAL_MIN), UIConstants.FONT), BorderLayout.WEST);
         limitsPanel.add(UIFactory.createLabel(Integer.toString(DAILY_GOAL_MAX), UIConstants.FONT), BorderLayout.EAST);
         panel.add(limitsPanel, BorderLayout.SOUTH);
