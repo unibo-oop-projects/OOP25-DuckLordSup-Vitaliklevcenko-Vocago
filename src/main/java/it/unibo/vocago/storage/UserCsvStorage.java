@@ -65,8 +65,17 @@ public class UserCsvStorage implements UserRepository {
 
         try {
             final List<User> users = new ArrayList<>();
-            for (final Path file : Files.list(USERS_DIRECTORY).filter(this::isCsvFile).toList()) {
-                users.add(loadUser(file));
+            final List<Path> allFiles = Files.list(USERS_DIRECTORY).toList();
+
+            for (final Path file : allFiles) {
+                if (isCsvFile(file)) {
+                    try {
+                        users.add(loadUser(file));
+                    } catch (RuntimeException | IOException exception) {
+                        System.err.println("Skipping corrupted profile file: " + file);
+                        exception.printStackTrace();
+                    }
+                }
             }
             return users;
         } catch (IOException exception) {
