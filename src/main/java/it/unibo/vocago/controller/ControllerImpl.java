@@ -221,11 +221,15 @@ public class ControllerImpl implements Controller {
                 return;
             }
             this.profileManager.saveProfileConfigurations(userName, firstLanguage, secondLanguage, dailyGoal);
+            this.appFrame.showMessage(
+                    "Profile saved",
+                    "Profile configuration has been saved successfully!",
+                    JOptionPane.INFORMATION_MESSAGE);
             showUserDashboardPanel();
         } catch (RuntimeException exception) {
             this.appFrame.showMessage(
-                    "User Error",
-                    "Could not change user profile configuration, try again!",
+                    "Profile Error",
+                    "Could not change profile configuration, try again!",
                     JOptionPane.ERROR_MESSAGE);
         }
     }

@@ -22,6 +22,10 @@ import it.unibo.vocago.storage.api.UserRepository;
 
 public class ProfileManagerImpl implements ProfileManager{
 
+    private static final int DEFAULT_DAILY_GOAL = 10;
+    private static final int MIN_DAILY_GOAL = 5;
+    private static final int MAX_DAILY_GOAL = 40;
+
     private final UserRepository userRepository;
     private final ProgressRepository progressRepository;
     private User currentUser;
@@ -187,8 +191,8 @@ public class ProfileManagerImpl implements ProfileManager{
             throw new IllegalStateException("No current user selected.");
         }
         int dailyGoal = this.progressRepository.getDailyGoal(this.currentUser.getUserName());
-        if (dailyGoal > 40 || dailyGoal < 1) {
-            return 10;
+        if (dailyGoal > MAX_DAILY_GOAL || dailyGoal < MIN_DAILY_GOAL) {
+            return DEFAULT_DAILY_GOAL;
         }
         return dailyGoal;
     }
@@ -196,11 +200,24 @@ public class ProfileManagerImpl implements ProfileManager{
     public void saveProfileConfigurations(String newUserName, final String firstLanguage,
             final String secondLanguage, int dailyGoal) {
         if (hasCurrentUser()) {
-            if (dailyGoal > 40 || dailyGoal < 1) {
-                dailyGoal = 10;
+            final String originalUserName = this.currentUser.getUserName();
+            final String targetUserName = newUserName == null || newUserName.trim().isBlank()
+                    ? originalUserName
+                    : newUserName.trim();
+            if (dailyGoal < MIN_DAILY_GOAL || dailyGoal > MAX_DAILY_GOAL) {
+                dailyGoal = DEFAULT_DAILY_GOAL;
             }
-            this.progressRepository.saveProfileConfigurations(this.currentUser.getUserName(), newUserName,
-                    firstLanguage, secondLanguage, dailyGoal);
+            this.progressRepository.saveProfileConfigurations(originalUserName, targetUserName, dailyGoal);
+            final User updatedUser = new Profile(
+                    targetUserName,
+                    this.currentUser.getVocabulary(),
+                    firstLanguage,
+                    secondLanguage);
+            this.userRepository.save(updatedUser);
+            if (!originalUserName.equals(targetUserName)) {
+                this.userRepository.deleteUser(originalUserName);
+            }
+            this.currentUser = updatedUser;
         }
     }
 
