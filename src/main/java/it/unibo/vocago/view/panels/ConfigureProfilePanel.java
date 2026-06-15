@@ -1,105 +1,155 @@
 package it.unibo.vocago.view.panels;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 
 import it.unibo.vocago.controller.api.Controller;
 import it.unibo.vocago.view.panels.api.PanelLayout;
 import it.unibo.vocago.view.util.UIConstants;
 import it.unibo.vocago.view.util.UIFactory;
 
-public class ConfigureProfilePanel  extends JPanel implements PanelLayout {
+public class ConfigureProfilePanel extends JPanel implements PanelLayout {
+
+    private static final String[] LANGUAGES = {
+            "English", "Italian", "German", "French", "Spanish",
+            "Portuguese", "Dutch", "Polish", "Japanese", "Chinese"
+    };
+    private static final int PANEL_WIDTH = 660;
+    private static final int DAILY_GOAL_MIN = 5;
+    private static final int DAILY_GOAL_MAX = 40;
+    private static final int DEFAULT_DAILY_GOAL = 10;
 
     private final Controller controller;
-    private final JButton createNewUserButton;
+    private final JButton saveChangesButton;
+    private final JButton resetProgressButton;
     private final JTextField usernameTextField;
     private final JComboBox<String> firstLanguageComboBox;
     private final JComboBox<String> secondLanguageComboBox;
     private final JButton goBackButton;
-    private final JComboBox<Integer> dailyGoal; 
-    
+
     public ConfigureProfilePanel(final Controller controller) {
         this.controller = controller;
         UIFactory.stylePanel(this);
-        this.createNewUserButton = UIFactory.createButton("Change");
-        this.goBackButton = UIFactory.createButton("", "data/resources/pictures/back.png", 60, UIConstants.BACKGROUND, 60, 70,
-                true, true, true, UIConstants.FONT);
+        this.saveChangesButton = UIFactory.createButton("Save Changes", "", 1,
+                UIConstants.BLUE, 42, 430, true, false, true, UIConstants.FONT);
+        this.resetProgressButton = UIFactory.createButton("Reset Progress", "", 1,
+                UIConstants.BUTTON_BACKGROUND, 42, 210, true, false, true, UIConstants.FONT);
+        this.goBackButton = UIFactory.createButton("", "data/resources/pictures/back.png", 60, UIConstants.BACKGROUND,
+                60, 70,
+                false, true, true, UIConstants.FONT);
         this.usernameTextField = UIFactory.createTextField();
-        this.dailyGoal = UIFactory.createComboBox(new Integer[] { 5, 10, 20, 40 });
-        this.firstLanguageComboBox = UIFactory.createComboBox(new String[] {
-                "English", "Italian", "German", "French", "Spanish",
-                "Portuguese", "Dutch", "Polish", "Japanese", "Chinese"
-        });
-        this.secondLanguageComboBox = UIFactory.createComboBox(new String[] {
-                "Italian", "English", "German", "French", "Spanish",
-                "Portuguese", "Dutch", "Polish", "Japanese", "Chinese"
-        });
+        this.firstLanguageComboBox = UIFactory.createComboBox(LANGUAGES);
+        this.secondLanguageComboBox = UIFactory.createComboBox(LANGUAGES);
+        this.secondLanguageComboBox.setSelectedItem("Italian");
 
         buildLayout();
         this.usernameTextField.addActionListener(e -> buttonActionRegister());
-        this.createNewUserButton.addActionListener(e -> buttonActionRegister());
-        this.goBackButton.addActionListener(e -> this.controller.showStartPanel());
+        this.saveChangesButton.addActionListener(e -> buttonActionRegister());
+        this.goBackButton.addActionListener(e -> this.controller.showUserDashboardPanel());
     }
 
     @Override
     public void buildLayout() {
         setLayout(new BorderLayout());
-        JLabel titleLabel = UIFactory.createLabel("Configure User", UIConstants.TITLE_FONT);
-        JPanel titlePanel = UIFactory.createPanel(new FlowLayout(FlowLayout.CENTER, 0, 40));
-        titlePanel.add(titleLabel);
-        add(titlePanel, BorderLayout.NORTH);
+        add(headerPanel(), BorderLayout.NORTH);
 
-        JPanel contentPanel = UIFactory.createPanel();
+        final JPanel contentPanel = UIFactory.createPanel();
+        contentPanel.setBorder(new EmptyBorder(0, 0, 18, 0));
+        contentPanel.add(accountDetailsPanel());
         contentPanel.add(Box.createVerticalStrut(10));
-
-        Dimension comboSize = new Dimension(220, 32);
-        this.firstLanguageComboBox.setMaximumSize(comboSize);
-        this.secondLanguageComboBox.setMaximumSize(comboSize);
-        this.dailyGoal.setMaximumSize(comboSize);
-
-        JPanel LanguagePanel = UIFactory.createPanel();
-        UIFactory.brighter(LanguagePanel);
-
-        LanguagePanel.add(Box.createVerticalStrut(20));
-        LanguagePanel.add(UIFactory.createLabel("choose the language you study", UIConstants.FONT));
-        LanguagePanel.add(Box.createVerticalStrut(10));
-        LanguagePanel.add(this.firstLanguageComboBox);
-        LanguagePanel.add(Box.createVerticalStrut(20));
-        LanguagePanel.add(UIFactory.createLabel("choose the language you already know", UIConstants.FONT));
-        LanguagePanel.add(Box.createVerticalStrut(10));
-        LanguagePanel.add(this.secondLanguageComboBox);
-        LanguagePanel.add(Box.createVerticalStrut(20));
-        LanguagePanel.add(UIFactory.createLabel("Choose the Daily Goal", UIConstants.FONT));
-        LanguagePanel.add(Box.createVerticalStrut(10));
-        LanguagePanel.add(this.dailyGoal);
-        LanguagePanel.add(Box.createVerticalStrut(10));
-
-        contentPanel.add(LanguagePanel);
-        //contentPanel.add(Box.createVerticalStrut(10));
-
-        JPanel usernamePanel = UIFactory.createPanel(new FlowLayout(FlowLayout.CENTER, 12, 40));
-        usernamePanel.add(UIFactory.createLabel("new nickname:", UIConstants.FONT));
-        usernamePanel.add(this.usernameTextField);
-        usernamePanel.add(this.createNewUserButton);
-
-        contentPanel.add(usernamePanel);
-
+        contentPanel.add(languagePreferencesPanel());
+        contentPanel.add(Box.createVerticalStrut(10));
+        contentPanel.add(dailyGoalPanel());
+        contentPanel.add(Box.createVerticalStrut(12));
+        contentPanel.add(actionButtonsPanel());
         add(contentPanel, BorderLayout.CENTER);
+    }
 
-        JPanel bottomPanel = UIFactory.createPanel(new FlowLayout(FlowLayout.LEFT, 20, 20));
+    private JPanel headerPanel() {
+        final JPanel headerPanel = UIFactory.createPanel(new BorderLayout());
+        headerPanel.setPreferredSize(new Dimension(Integer.MAX_VALUE, 90));
+        // headerPanel.setBorder(new EmptyBorder(18, 32, 8, 32));
 
-        bottomPanel.add(this.goBackButton);
-        add(bottomPanel, BorderLayout.SOUTH);
+        headerPanel.add(this.goBackButton, BorderLayout.WEST);
+        headerPanel.add(UIFactory.createLabel("Configure Profile", UIConstants.TITLE_FONT), BorderLayout.CENTER);
+        headerPanel.add(Box.createHorizontalStrut(this.goBackButton.getWidth()), BorderLayout.EAST);
+        return headerPanel;
+    }
+
+    private JPanel accountDetailsPanel() {
+        final JPanel panel = createPanel("ACCOUNT DETAILS", 100);
+        final JPanel nicknameRow = createRowPanel(new BorderLayout(12, 0), panel.getBackground());
+        final JLabel nicknameLabel = createLeftLabel("Nickname:", UIConstants.FONT);
+        nicknameRow.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
+        nicknameRow.add(nicknameLabel, BorderLayout.WEST);
+        nicknameRow.add(this.usernameTextField, BorderLayout.CENTER);
+        panel.add(nicknameRow);
+        return panel;
+    }
+
+    private JPanel languagePreferencesPanel() {
+        final JPanel panel = createPanel("LANGUAGE PREFERENCES", 130);
+
+        return panel;
+    }
+
+    private JPanel dailyGoalPanel() {
+        final JPanel panel = createPanel("DAILY GOAL", 135);
+
+        return panel;
+    }
+
+    private JPanel actionButtonsPanel() {
+        final JPanel actionsPanel = UIFactory.createPanel(new FlowLayout(FlowLayout.CENTER, 12, 0));
+        actionsPanel.setMaximumSize(new Dimension(PANEL_WIDTH, 46));
+        actionsPanel.add(this.saveChangesButton);
+        return actionsPanel;
+    }
+
+    private JPanel createPanel(final String title, final int height) {
+        final JPanel panel = UIFactory.createPanel();
+        UIFactory.brighter(panel);
+        panel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panel.setPreferredSize(new Dimension(PANEL_WIDTH, height));
+        panel.setMaximumSize(new Dimension(PANEL_WIDTH, height));
+        panel.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(UIConstants.PANEL_BORDER),
+                new EmptyBorder(10, 20, 10, 20)));
+        panel.add(createLeftLabel(title, UIConstants.FONT.deriveFont(Font.BOLD)));
+        panel.add(Box.createVerticalStrut(10));
+        return panel;
+    }
+
+    private JPanel createRowPanel(final java.awt.LayoutManager layout, final Color background) {
+        final JPanel panel = UIFactory.createPanel(layout);
+        panel.setBackground(background);
+        panel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        return panel;
+    }
+
+    private JLabel createLeftLabel(final String text, final Font font) {
+        final JLabel label = UIFactory.createLabel(text, font);
+        label.setHorizontalAlignment(SwingConstants.LEFT);
+        label.setAlignmentX(Component.LEFT_ALIGNMENT);
+        return label;
     }
 
     private void buttonActionRegister() {
-        
+
     }
 }

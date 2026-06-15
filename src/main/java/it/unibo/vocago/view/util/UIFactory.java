@@ -105,7 +105,6 @@ public final class UIFactory {
             }
         };
         button.addMouseListener(hoverListener);
-
     }
 
     public static void highlightIcon(final JButton button) {
