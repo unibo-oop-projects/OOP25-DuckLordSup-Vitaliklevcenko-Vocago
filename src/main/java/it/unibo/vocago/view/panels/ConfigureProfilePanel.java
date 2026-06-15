@@ -34,7 +34,7 @@ public class ConfigureProfilePanel extends JPanel implements PanelLayout {
     private static final int BUTTON_WIDTH = 70;
     private final Controller controller;
     private final JButton saveChangesButton;
-    private final JButton resetProgressButton;
+    private final JButton deleteProfileButton;
     private final JTextField usernameTextField;
     private final JComboBox<String> firstLanguageComboBox;
     private final JComboBox<String> secondLanguageComboBox;
@@ -47,7 +47,7 @@ public class ConfigureProfilePanel extends JPanel implements PanelLayout {
         UIFactory.stylePanel(this);
         this.saveChangesButton = UIFactory.createButton("Save Changes", "", 1,
                 UIConstants.BLUE, 42, 450, true, false, true, UIConstants.FONT);
-        this.resetProgressButton = UIFactory.createButton("Delete Profile", "data/resources/pictures/bin.png",
+        this.deleteProfileButton = UIFactory.createButton("Delete Profile", "data/resources/pictures/bin.png",
                 20, UIConstants.RED, 42, 200, true, true, true, UIConstants.FONT);
         this.goBackButton = UIFactory.createButton("", "data/resources/pictures/back.png", 60, UIConstants.BACKGROUND,
                 60,
@@ -56,8 +56,8 @@ public class ConfigureProfilePanel extends JPanel implements PanelLayout {
         this.usernameTextField = UIFactory.createTextField();
         this.firstLanguageComboBox = UIFactory.createComboBox(LANGUAGES);
         this.secondLanguageComboBox = UIFactory.createComboBox(LANGUAGES);
-        this.firstLanguageComboBox.setSelectedItem(this.controller.getCurrentUser().getFirstLanguage());
-        this.secondLanguageComboBox.setSelectedItem(this.controller.getCurrentUser().getSecondLanguage());
+        this.firstLanguageComboBox.setSelectedItem(this.controller.getCurrentProfile().getFirstLanguage());
+        this.secondLanguageComboBox.setSelectedItem(this.controller.getCurrentProfile().getSecondLanguage());
         this.dailyGoalSlider = new JSlider(DAILY_GOAL_MIN, DAILY_GOAL_MAX, this.controller.getDailyGoal());
         this.dailyGoalValueLabel = UIFactory.createLabel(Integer.toString(this.controller.getDailyGoal()), UIConstants.FONT);
 
@@ -126,7 +126,7 @@ public class ConfigureProfilePanel extends JPanel implements PanelLayout {
     private JPanel actionButtonsPanel() {
         final JPanel actionsPanel = UIFactory.createPanel(new FlowLayout(FlowLayout.CENTER, 12, 0));
         actionsPanel.add(this.saveChangesButton);
-        actionsPanel.add(this.resetProgressButton);
+        actionsPanel.add(this.deleteProfileButton);
         return actionsPanel;
     }
 
@@ -168,8 +168,8 @@ public class ConfigureProfilePanel extends JPanel implements PanelLayout {
             (String) this.secondLanguageComboBox.getSelectedItem(),
             this.dailyGoalSlider.getValue()));
             
-        this.goBackButton.addActionListener(e -> this.controller.showUserDashboardPanel());
-        this.resetProgressButton.addActionListener(e -> this.controller.deleteUser());
+        this.goBackButton.addActionListener(e -> this.controller.showProfileDashboardPanel());
+        this.deleteProfileButton.addActionListener(e -> this.controller.deleteProfile());
         this.dailyGoalSlider.addChangeListener(
                 e -> this.dailyGoalValueLabel.setText(Integer.toString(this.dailyGoalSlider.getValue())));
     }

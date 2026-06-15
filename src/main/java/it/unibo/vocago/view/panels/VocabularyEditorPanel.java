@@ -74,7 +74,7 @@ public class VocabularyEditorPanel extends JPanel implements PanelLayout {
         upperButtonsPanel.add(leftPanel);
 
         upperButtonsPanel.add(UIFactory.createLabel(
-                "My " + this.controller.getCurrentUser().getSecondLanguage() + " Vocabulary",
+                "My " + this.controller.getCurrentProfile().getSecondLanguage() + " Vocabulary",
                 UIConstants.TITLE_FONT));
 
         final JPanel rightPanel = UIFactory.createPanel(new FlowLayout(FlowLayout.RIGHT, 5, 10));
@@ -87,8 +87,8 @@ public class VocabularyEditorPanel extends JPanel implements PanelLayout {
 
     private JScrollPane buildTableScrollPane() {
 
-        model.addColumn(this.controller.getCurrentUser().getFirstLanguage());
-        model.addColumn(this.controller.getCurrentUser().getSecondLanguage());
+        model.addColumn(this.controller.getCurrentProfile().getFirstLanguage());
+        model.addColumn(this.controller.getCurrentProfile().getSecondLanguage());
         model.addColumn("Memorization level");
         model.addColumn("Recognition level");
         model.addColumn("firstProgress");
@@ -142,7 +142,7 @@ public class VocabularyEditorPanel extends JPanel implements PanelLayout {
         this.goBackButton.addActionListener(e -> askBeforeLeaving());
         this.saveChangesButton.addActionListener(e -> {
             if (saveChanges()) {
-                this.controller.showUserDashboardPanel();
+                this.controller.showProfileDashboardPanel();
             }
         });
 
@@ -160,7 +160,7 @@ public class VocabularyEditorPanel extends JPanel implements PanelLayout {
     }
 
     private void showVocabulary() {
-        for (final VocabularyItem item : this.controller.getCurrentUser().getVocabulary().getItems()) {
+        for (final VocabularyItem item : this.controller.getCurrentProfile().getVocabulary().getItems()) {
             this.model.addRow(VocabularyEditorHelper.rowFromVocabularyItem(item));
         }
         addEmptyRow();
@@ -233,7 +233,7 @@ public class VocabularyEditorPanel extends JPanel implements PanelLayout {
             return;
         }
         if (answer != JOptionPane.CANCEL_OPTION && answer != JOptionPane.CLOSED_OPTION) {
-            this.controller.showUserDashboardPanel();
+            this.controller.showProfileDashboardPanel();
         }
     }
 }

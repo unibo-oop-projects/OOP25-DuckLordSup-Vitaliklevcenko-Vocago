@@ -18,5 +18,5 @@ public interface ProgressRepository {
 
     int getDailyGoal(String userName);
 
-    void saveProfileConfigurations(String userName, final String newUserName, final int dailyGoal);
+    void saveProfileConfigurations(String profileName, final String newProfileName, final int dailyGoal);
 }

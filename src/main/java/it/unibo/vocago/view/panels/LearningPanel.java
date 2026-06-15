@@ -148,9 +148,9 @@ public class LearningPanel extends JPanel implements PanelLayout {
         secondLanguagePanel.setPreferredSize(new Dimension(500, 200));
         UIFactory.highlight(secondLanguagePanel);
 
-        firstLanguagePanel.add(UIFactory.createLabel(this.controller.getCurrentUser().getFirstLanguage(),
+        firstLanguagePanel.add(UIFactory.createLabel(this.controller.getCurrentProfile().getFirstLanguage(),
                 UIConstants.PROMPT_FONT), BorderLayout.NORTH);
-        secondLanguagePanel.add(UIFactory.createLabel(this.controller.getCurrentUser().getSecondLanguage(),
+        secondLanguagePanel.add(UIFactory.createLabel(this.controller.getCurrentProfile().getSecondLanguage(),
                 UIConstants.PROMPT_FONT), BorderLayout.NORTH);
 
         JPanel textFieldPanel = UIFactory.createPanel(new GridBagLayout());
@@ -212,12 +212,12 @@ public class LearningPanel extends JPanel implements PanelLayout {
     }
     
     public void actionRegister() {
-        this.goBackButton.addActionListener(e -> this.controller.showUserDashboardPanel());
+        this.goBackButton.addActionListener(e -> this.controller.showProfileDashboardPanel());
         this.userAnswer.addActionListener(e -> checkAnswer());
         this.revealAnswerButton.addActionListener(e -> {
             this.controller.evaluateAnswer("");
             showFeedback(UIConstants.BLUE, "The correct answer is: " + this.controller.getCorrectAnswer());
-            this.controller.saveVocabulary(this.controller.getCurrentUser().getVocabulary());
+            this.controller.saveVocabulary(this.controller.getCurrentProfile().getVocabulary());
         });
         this.nextWordButton.addActionListener(e -> this.controller.showLearningPanel());
         this.switchLanguageButton.addActionListener(e -> {
@@ -243,7 +243,7 @@ public class LearningPanel extends JPanel implements PanelLayout {
         } else {
             showFeedback(UIConstants.RED, "the correct answer is: (" + this.controller.getCorrectAnswer() + "), Press Enter for the next word." );
         }
-        this.controller.saveVocabulary(this.controller.getCurrentUser().getVocabulary());
+        this.controller.saveVocabulary(this.controller.getCurrentProfile().getVocabulary());
     }
 
     private void startTimer() {

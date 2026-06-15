@@ -18,28 +18,28 @@ import it.unibo.vocago.view.util.UIConstants;
 import it.unibo.vocago.view.util.UIFactory;
 import java.awt.Image;
 
-public class UserDashboardPanel extends JPanel implements PanelLayout {
+public class ProfileDashboardPanel extends JPanel implements PanelLayout {
 
         private final Controller controller;
-        private final JButton switchUserButton;
+        private final JButton switchProfileButton;
         private final JButton startButton;
         private final JButton editVocabularyButton;
-        private final JButton deleteUserButton;
+        private final JButton resetStatsButton;
         private final JButton configureProfileButton;
 
-        public UserDashboardPanel(final Controller controller) {
+        public ProfileDashboardPanel(final Controller controller) {
                 this.controller = controller;
                 this.editVocabularyButton = UIFactory.createButton("Edit Vocabulary",
                                 "data/resources/pictures/edit.png",
                                 40, UIConstants.BLUE, 70, 500, true, true, true, UIConstants.PROMPT_FONT);
                 this.startButton = UIFactory.createButton("START LEARNING", "data/resources/pictures/start.png",
                                 70, UIConstants.GREEN, 140, 500, true, true, true, UIConstants.TITLE_FONT);
-                this.deleteUserButton = UIFactory.createButton("Reset Stats", "data/resources/pictures/reset.png",
+                this.resetStatsButton = UIFactory.createButton("Reset Stats", "data/resources/pictures/reset.png",
                                 20, UIConstants.RED, 30, 160, true, true, true, UIConstants.FONT);
-                this.configureProfileButton = UIFactory.createButton("Configure Profile",
+                this.configureProfileButton = UIFactory.createButton("Settings",
                                 "data/resources/pictures/settings.png",
                                 30, UIConstants.AMBER, 50, 230, true, true, true, UIConstants.FONT);
-                this.switchUserButton = UIFactory.createButton("Switch Profile", "data/resources/pictures/profile.png",
+                this.switchProfileButton = UIFactory.createButton("Switch Profile", "data/resources/pictures/profile.png",
                                 25, UIConstants.TEAL, 50, 230, true, true, true, UIConstants.FONT);
                 buildLayout();
                 ButtonActionRegister();
@@ -52,7 +52,7 @@ public class UserDashboardPanel extends JPanel implements PanelLayout {
 
                 JPanel titlePanel = UIFactory.createPanel(new BorderLayout());
                 titlePanel.add(UIFactory.createLabel(
-                                "WELCOME BACK, " + this.controller.getCurrentUser().getUserName() + "!",
+                                "WELCOME BACK, " + this.controller.getCurrentProfile().getUserName() + "!",
                                 UIConstants.TITLE_FONT));
                 titlePanel.setPreferredSize(new Dimension(Integer.MAX_VALUE, 130));
                 titlePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 130));
@@ -98,11 +98,11 @@ public class UserDashboardPanel extends JPanel implements PanelLayout {
                 UIFactory.brighter(managementPanel);
                 managementPanel.setMaximumSize(new Dimension(500, 70));
                 managementPanel.setPreferredSize(new Dimension(500, 70));
-                managementPanel.add(this.switchUserButton);
+                managementPanel.add(this.switchProfileButton);
                 managementPanel.add(this.configureProfileButton);
                 leftPanel.add(managementPanel);
                 leftPanel.add(Box.createVerticalStrut(20));
-                leftPanel.add(this.deleteUserButton);
+                leftPanel.add(this.resetStatsButton);
                 leftPanel.add(Box.createVerticalStrut(20));
                 UIFactory.highlight(leftPanel);
                 return leftPanel;
@@ -154,8 +154,8 @@ public class UserDashboardPanel extends JPanel implements PanelLayout {
         private void ButtonActionRegister() {
                 this.editVocabularyButton.addActionListener(e -> this.controller.showVocabularyEditorPanel());
                 this.startButton.addActionListener(e -> this.controller.showLearningPanel());
-                this.deleteUserButton.addActionListener(e -> this.controller.resetStats());
-                this.switchUserButton.addActionListener(e -> this.controller.showStartPanel());
-                this.configureProfileButton.addActionListener(e -> this.controller.showconfigureProfilePanel());
+                this.resetStatsButton.addActionListener(e -> this.controller.resetStats());
+                this.switchProfileButton.addActionListener(e -> this.controller.showStartPanel());
+                this.configureProfileButton.addActionListener(e -> this.controller.showConfigureProfilePanel());
         }
 }

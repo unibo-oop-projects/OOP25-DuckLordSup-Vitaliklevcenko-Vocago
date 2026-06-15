@@ -116,21 +116,21 @@ public class ProgressFileStorage implements ProgressRepository {
     }
 
     @Override
-    public void saveProfileConfigurations(final String userName, final String newUserName, final int dailyGoal) {
-        final String currentUserName = userName.trim();
-        final String targetUserName = newUserName.trim();
-        final LocalDate lastStudyDate = getLastStudyDate(currentUserName);
-        final int currentStreak = getCurrentStreak(currentUserName);
-        final long totalStudyTime = getTotalStudyTime(currentUserName);
+    public void saveProfileConfigurations(final String profileName, final String newProfileName, final int dailyGoal) {
+        final String currentProfileName = profileName.trim();
+        final String targetProfileName = newProfileName.trim();
+        final LocalDate lastStudyDate = getLastStudyDate(currentProfileName);
+        final int currentStreak = getCurrentStreak(currentProfileName);
+        final long totalStudyTime = getTotalStudyTime(currentProfileName);
 
         try {
             Files.createDirectories(USERS_DIRECTORY);
-            if (!currentUserName.equals(targetUserName)) {
-                Files.move(fileFor(currentUserName), fileFor(targetUserName));
+            if (!currentProfileName.equals(targetProfileName)) {
+                Files.move(fileFor(currentProfileName), fileFor(targetProfileName));
             }
-            saveStats(targetUserName, lastStudyDate, currentStreak, totalStudyTime, dailyGoal);
+            saveStats(targetProfileName, lastStudyDate, currentStreak, totalStudyTime, dailyGoal);
         } catch (IOException exception) {
-            throw new UncheckedIOException("Could not save progress configuration for user: " + currentUserName,
+            throw new UncheckedIOException("Could not save progress configuration for profile: " + currentProfileName,
                     exception);
         }
     }

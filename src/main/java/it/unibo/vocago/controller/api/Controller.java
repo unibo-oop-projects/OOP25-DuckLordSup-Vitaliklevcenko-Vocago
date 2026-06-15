@@ -11,15 +11,15 @@ public interface Controller {
 
     void showStartPanel();
 
-    void showCreateNewUserPanel();
+    void showCreateNewProfilePanel();
 
-    void showUserDashboardPanel();
+    void showProfileDashboardPanel();
 
     void showVocabularyEditorPanel();
 
     void showLearningPanel();
 
-    void showconfigureProfilePanel();
+    void showConfigureProfilePanel();
 
     String getNextQuestion();
 
@@ -37,21 +37,21 @@ public interface Controller {
 
     int getCurrentQuestionNumber();
 
-    List<User> getExistingUsers();
+    List<User> getExistingProfiles();
 
-    void createUser(String userName, String firstLanguage, String secondLanguage);
+    void createProfile(String profileName, String firstLanguage, String secondLanguage);
 
     void saveVocabulary(Vocabulary vocabulary);
 
-    void deleteUser();
+    void deleteProfile();
 
     void resetStats();
 
     boolean vocabularyIsValid();
 
-    void chooseUser(User user);
+    void chooseProfile(User profile);
 
-    User getCurrentUser();
+    User getCurrentProfile();
 
     Stats getDashboardStats();
 
@@ -61,7 +61,7 @@ public interface Controller {
 
     int getDailyGoal();
 
-    void saveProfileConfigurations(String userName, String firstLanguage, String secondLanguage, int dailyGoal);
+    void saveProfileConfigurations(String profileName, String firstLanguage, String secondLanguage, int dailyGoal);
     
     void dailyGoalAchieved();
 }

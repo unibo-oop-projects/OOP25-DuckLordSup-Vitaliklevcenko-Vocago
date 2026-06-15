@@ -9,10 +9,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import it.unibo.vocago.controller.api.Controller;
 import it.unibo.vocago.view.panels.ConfigureProfilePanel;
-import it.unibo.vocago.view.panels.CreateNewUserPanel;
+import it.unibo.vocago.view.panels.CreateNewProfilePanel;
 import it.unibo.vocago.view.panels.LearningPanel;
+import it.unibo.vocago.view.panels.ProfileDashboardPanel;
 import it.unibo.vocago.view.panels.StartPanel;
-import it.unibo.vocago.view.panels.UserDashboardPanel;
 import it.unibo.vocago.view.panels.VocabularyEditorPanel;
 import it.unibo.vocago.view.util.UIFactory;
 
@@ -26,10 +26,10 @@ public class AppFrame extends JFrame {
     private final Controller controller;
 
     private StartPanel startPanel;
-    private UserDashboardPanel userDashboardPanel;
+    private ProfileDashboardPanel profileDashboardPanel;
     private LearningPanel learningPanel;
     private VocabularyEditorPanel vocabularyEditorPanel;
-    private CreateNewUserPanel createNewUserPanel;
+    private CreateNewProfilePanel createNewProfilePanel;
     private ConfigureProfilePanel configureProfilePanel;
 
     public AppFrame(final Controller controller) {
@@ -54,9 +54,9 @@ public class AppFrame extends JFrame {
 
         // nulling the panels
         this.startPanel = null;
-        this.userDashboardPanel = null;
+        this.profileDashboardPanel = null;
         this.learningPanel = null;
-        this.createNewUserPanel = null;
+        this.createNewProfilePanel = null;
         this.vocabularyEditorPanel = null;
         this.configureProfilePanel = null;
 
@@ -73,20 +73,20 @@ public class AppFrame extends JFrame {
                 "StartPanel");
     }
 
-    public void showCreateNewUserPanel() {
+    public void showCreateNewProfilePanel() {
         resizeWindow(SMALL_WINDOW);
-        this.createNewUserPanel = replacePanel(
-                this.createNewUserPanel,
-                new CreateNewUserPanel(this.controller),
-                "CreateNewUserPanel");
+        this.createNewProfilePanel = replacePanel(
+                this.createNewProfilePanel,
+                new CreateNewProfilePanel(this.controller),
+                "CreateNewProfilePanel");
     }
 
-    public void showUserDashboardPanel() {
+    public void showProfileDashboardPanel() {
         resizeWindow(DASHBOARD_WINDOW);
-        this.userDashboardPanel = replacePanel(
-                this.userDashboardPanel,
-                new UserDashboardPanel(this.controller),
-                "UserDashboardPanel");
+        this.profileDashboardPanel = replacePanel(
+                this.profileDashboardPanel,
+                new ProfileDashboardPanel(this.controller),
+                "ProfileDashboardPanel");
     }
 
     public void showVocabularyEditorPanel() {

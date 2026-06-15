@@ -9,23 +9,23 @@ import it.unibo.vocago.model.vocabulary.api.Vocabulary;
 
 public interface ProfileManager {
 
-    void createUser(String userName, String firstLanguage, String secondLanguage);
+    void createProfile(String profileName, String firstLanguage, String secondLanguage);
 
-    boolean userExists(String userName);
+    boolean profileExists(String profileName);
 
-    List<User> getExistingUsers();
+    List<User> getExistingProfiles();
 
-    void chooseUser(User user);
+    void chooseProfile(User profile);
 
-    User getCurrentUser();
+    User getCurrentProfile();
 
-    boolean hasCurrentUser();
+    boolean hasCurrentProfile();
 
     boolean vocabularyIsValid();
 
     void saveVocabulary(Vocabulary vocabulary);
 
-    boolean deleteCurrentUser();
+    boolean deleteCurrentProfile();
 
     Stats getDashboardStats();
 
@@ -37,6 +37,6 @@ public interface ProfileManager {
 
     int getDailyGoal();
 
-    void saveProfileConfigurations(String userName, final String firstLanguage,
+    void saveProfileConfigurations(String profileName, final String firstLanguage,
             final String secondLanguage, final int dailyGoal);
 }
