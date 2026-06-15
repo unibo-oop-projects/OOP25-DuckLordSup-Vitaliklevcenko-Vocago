@@ -15,6 +15,10 @@ import java.awt.GridLayout;
 import javax.swing.*;
 
 public class LearningPanel extends JPanel implements PanelLayout {
+
+    private static final int HEADER_HEIGHT = 60;
+
+    
     private final Controller controller;
     private final JButton nextWordButton;
     private final JButton revealAnswerButton;
@@ -29,6 +33,8 @@ public class LearningPanel extends JPanel implements PanelLayout {
 
     public LearningPanel(final Controller controller) {
 
+        
+        
         this.controller = controller;
         this.startTime = controller.getLearningStartTime();
         UIFactory.stylePanel(this);
@@ -107,7 +113,7 @@ public class LearningPanel extends JPanel implements PanelLayout {
         JPanel welcomPanel = UIFactory.createPanel(new GridLayout());
         // UIFactory.highlight(welcomPanel);
         // UIFactory.brighter(welcomPanel);
-        welcomPanel.setPreferredSize(new Dimension(Integer.MAX_VALUE, UIConstants.HEADER_HEIGHT));
+        welcomPanel.setPreferredSize(new Dimension(Integer.MAX_VALUE, HEADER_HEIGHT));
 
         final JPanel leftPanel = UIFactory.createPanel(new BorderLayout());
         //UIFactory.brighter(leftPanel);

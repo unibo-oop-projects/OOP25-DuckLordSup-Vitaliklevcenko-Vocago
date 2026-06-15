@@ -5,8 +5,6 @@ import java.awt.Font;
 
 public final class UIConstants {
 
-    public static final int HEADER_HEIGHT = 60;
-    public static final int FOOTER_HEIGHT = 60;
     public static final int ANSWER_PANEL_HEIGHT = 120;
     public static final int ZERO = 0;
     public static final int PADDING = 1;
@@ -24,19 +22,12 @@ public final class UIConstants {
     public static final int WORD_COLUMN_WIDTH = 280;
     public static final int MASTERY_COLUMN_WIDTH = 160;
     public static final int LANGUAGE_PANEL_HEIGHT = 260;
-    public static final int FIRST_COLUMN = 0;
-    public static final int SECOND_COLUMN = 1;
-    public static final int THIRD_COLUMN = 2;
-    public static final int FOURTH_COLUMN = 3;
-    public static final int FIFTH_COLUMN = 4;
-    public static final int SIXTH_COLUMN = 5;
     public static final int GOAL = 10;
     public static final int HOVER_COLOR_ADDITION = 50;
 
     public static final int OUTER_PADDING = 24;
     public static final int GAP = 12;
     public static final int LARGE_GAP = 24;
-    public static final double SCALE = 1.13;
     public static final int ONE_DAY = 1;
     // dark grey theme
     public static final Color BACKGROUND = new Color(50, 50, 50);

@@ -33,6 +33,8 @@ import java.awt.event.MouseEvent;
 
 public final class UIFactory {
 
+    private static final double SCALE = 1.13;
+
     private UIFactory() {
     }
 
@@ -124,7 +126,7 @@ public final class UIFactory {
             @Override
             public void mouseEntered(MouseEvent e) {
                 Image scaledImage = icon.getImage().getScaledInstance(
-                        (int) (width * UIConstants.SCALE), (int) (height * UIConstants.SCALE), Image.SCALE_SMOOTH);
+                        (int) (width * SCALE), (int) (height * SCALE), Image.SCALE_SMOOTH);
                 button.setIcon(new ImageIcon(scaledImage));
             }
 
@@ -138,7 +140,7 @@ public final class UIFactory {
 
     public static void highlightFont(final JButton button) {
         Font normalFont = button.getFont();
-        Font hoverFont = normalFont.deriveFont((float) (normalFont.getSize() * UIConstants.SCALE));
+        Font hoverFont = normalFont.deriveFont((float) (normalFont.getSize() * SCALE));
         button.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {

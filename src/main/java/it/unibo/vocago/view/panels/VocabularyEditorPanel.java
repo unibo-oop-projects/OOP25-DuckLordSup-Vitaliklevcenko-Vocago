@@ -25,6 +25,9 @@ import it.unibo.vocago.view.util.UIFactory;
 
 public class VocabularyEditorPanel extends JPanel implements PanelLayout {
 
+    private static final int HEADER_HEIGHT = 60;
+    private static final int FOOTER_HEIGHT = 60;
+
     private final DefaultTableModel model;
     private final JTable table;
     private final JButton addRowButton;
@@ -67,7 +70,7 @@ public class VocabularyEditorPanel extends JPanel implements PanelLayout {
 
     private JPanel buildUpperPanel() {
         final JPanel upperButtonsPanel = UIFactory.createPanel(new GridLayout());
-        upperButtonsPanel.setPreferredSize(new Dimension(Integer.MAX_VALUE, UIConstants.HEADER_HEIGHT));
+        upperButtonsPanel.setPreferredSize(new Dimension(Integer.MAX_VALUE, HEADER_HEIGHT));
 
         final JPanel leftPanel = UIFactory.createPanel(new BorderLayout());
         leftPanel.add(this.goBackButton, BorderLayout.WEST);
@@ -125,7 +128,7 @@ public class VocabularyEditorPanel extends JPanel implements PanelLayout {
         lowerButtonsPanel.add(this.addRowButton);
         lowerButtonsPanel.add(this.deleteRowButton);
         lowerButtonsPanel.add(this.saveChangesButton);
-        lowerButtonsPanel.setPreferredSize(new Dimension(Integer.MAX_VALUE, UIConstants.FOOTER_HEIGHT));
+        lowerButtonsPanel.setPreferredSize(new Dimension(Integer.MAX_VALUE, FOOTER_HEIGHT));
         return lowerButtonsPanel;
     }
 
