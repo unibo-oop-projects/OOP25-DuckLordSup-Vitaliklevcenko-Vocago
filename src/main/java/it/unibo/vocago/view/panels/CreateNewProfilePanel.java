@@ -84,14 +84,13 @@ public class CreateNewProfilePanel extends JPanel implements PanelLayout {
         usernamePanel.add(this.createNewProfileButton);
 
         contentPanel.add(usernamePanel);
-
         add(contentPanel, BorderLayout.CENTER);
 
-        JPanel bottomPanel = UIFactory.createPanel(new FlowLayout(FlowLayout.LEFT, 20, 20));
-
-        bottomPanel.add(this.goBackButton);
-        add(bottomPanel, BorderLayout.SOUTH);
-
+        if (this.controller.getExistingProfiles().size() > 0) {
+            JPanel bottomPanel = UIFactory.createPanel(new FlowLayout(FlowLayout.LEFT, 20, 20));
+            bottomPanel.add(this.goBackButton);
+            add(bottomPanel, BorderLayout.SOUTH);
+        }
     }
 
     private void buttonActionRegister() {

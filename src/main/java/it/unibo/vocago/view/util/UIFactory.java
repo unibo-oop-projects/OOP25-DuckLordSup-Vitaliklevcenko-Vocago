@@ -60,6 +60,7 @@ public final class UIFactory {
 
         if (height > 0 && width > 0) {
             Dimension dimension = new Dimension(width, height);
+            button.setMinimumSize(dimension);
             button.setMaximumSize(dimension);
             button.setPreferredSize(dimension);
         }
