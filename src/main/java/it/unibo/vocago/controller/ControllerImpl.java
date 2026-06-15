@@ -42,6 +42,7 @@ public class ControllerImpl implements Controller {
     }
 
     public void showUserDashboardPanel() {
+        closeLearningSession();//if active
         this.profileManager.updateExpiredStreak();
         this.appFrame.showUserDashboardPanel();
     }
@@ -107,7 +108,7 @@ public class ControllerImpl implements Controller {
         return getLearningSession().getCorrectAnsweredQuestions();
     }
     
-    public void closeLearningSession() {
+    private void closeLearningSession() {
         if (this.learningSession != null) {
             if (this.profileManager.hasCurrentUser() && getCurrentUser().getVocabulary() != null) {
                 saveVocabulary(getCurrentUser().getVocabulary());
@@ -115,7 +116,6 @@ public class ControllerImpl implements Controller {
             saveLearningStats();
             this.learningSession = null;
         }
-        showUserDashboardPanel();
     }
 
     // profile Manager getters and setters //
@@ -277,6 +277,14 @@ public class ControllerImpl implements Controller {
             }
         }
         return false;
+    }
+
+    public void dailyGoalAchieved() {
+        final int answer = JOptionPane.showConfirmDialog(this.appFrame, "you did it, good job! you want to continue to study?", "Daily Goal Achieved",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (answer == JOptionPane.NO_OPTION) {
+            showUserDashboardPanel();
+        }
     }
 
     public void closeApp() {

@@ -20,8 +20,6 @@ public interface Controller {
     void showLearningPanel();
 
     void showconfigureProfilePanel();
-    
-    void closeLearningSession();
 
     String getNextQuestion();
 
@@ -64,4 +62,6 @@ public interface Controller {
     int getDailyGoal();
 
     void saveProfileConfigurations(String userName, String firstLanguage, String secondLanguage, int dailyGoal);
+    
+    void dailyGoalAchieved();
 }

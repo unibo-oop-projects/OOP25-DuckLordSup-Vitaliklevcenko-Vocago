@@ -114,11 +114,15 @@ public class LearningPanel extends JPanel implements PanelLayout {
         leftPanel.add(this.goBackButton, BorderLayout.WEST);
         welcomPanel.add(leftPanel);
 
-        if (10 >= this.controller.getCurrentQuestionNumber()) {
+        int dailyGoal = this.controller.getDailyGoal();
+        if (dailyGoal > this.controller.getCurrentQuestionNumber()) {
             welcomPanel.add(UIFactory.createLabel(
-                    "WORD " + this.controller.getCurrentQuestionNumber() + " OUT OF " + 10,
+                    "WORD " + this.controller.getCurrentQuestionNumber() + " OUT OF " + dailyGoal,
                     UIConstants.TITLE_FONT), BorderLayout.CENTER);
-        } else {
+        } else if(dailyGoal == this.controller.getCurrentQuestionNumber()) {
+            this.controller.dailyGoalAchieved();
+            welcomPanel.add(UIFactory.createLabel("GOOD JOB!", UIConstants.TITLE_FONT), BorderLayout.CENTER);
+        }else{
             welcomPanel.add(UIFactory.createLabel("GOOD JOB!", UIConstants.TITLE_FONT), BorderLayout.CENTER);
         }
 
@@ -208,7 +212,7 @@ public class LearningPanel extends JPanel implements PanelLayout {
     }
     
     public void actionRegister() {
-        this.goBackButton.addActionListener(e -> this.controller.closeLearningSession());
+        this.goBackButton.addActionListener(e -> this.controller.showUserDashboardPanel());
         this.userAnswer.addActionListener(e -> checkAnswer());
         this.revealAnswerButton.addActionListener(e -> {
             this.controller.evaluateAnswer("");
