@@ -191,11 +191,7 @@ public class ProfileManagerImpl implements ProfileManager{
         if (!hasCurrentProfile()) {
             throw new IllegalStateException("No current profile selected.");
         }
-        int dailyGoal = this.progressRepository.getDailyGoal(this.currentProfile.getUserName());
-        if (dailyGoal > MAX_DAILY_GOAL || dailyGoal < MIN_DAILY_GOAL) {
-            return DEFAULT_DAILY_GOAL;
-        }
-        return dailyGoal;
+        return this.progressRepository.getDailyGoal(this.currentProfile.getUserName());
     }
     
     public void saveProfileConfigurations(String newProfileName, final String firstLanguage,

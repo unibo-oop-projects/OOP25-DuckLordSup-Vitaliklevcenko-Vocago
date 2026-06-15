@@ -99,15 +99,57 @@ public class ProgressFileStorage implements ProgressRepository {
 
     private List<String> readProgressLines(final String userName) {
         createProgressFile(userName);
-
         try {
+
             final List<String> lines = Files.readAllLines(fileFor(userName), StandardCharsets.UTF_8);
-            if (lines.size() < 3) {
-                throw new IllegalStateException("Invalid progress file for user: " + userName);
+            if (lines.size() != 4) {
+                resetProgressFile(userName, LocalDate.now(), 0, 0L, DEFAULT_DAILY_GOAL);
+                return Files.readAllLines(fileFor(userName), StandardCharsets.UTF_8);
             }
-            return lines;
+
+            LocalDate lastStudyDate;
+            int currentStreak;
+            long totalStudyTime;
+            int dailyGoal;
+
+            try {
+                lastStudyDate = LocalDate.parse(lines.get(LAST_STUDY_DATE_INDEX));
+            } catch (RuntimeException exception) {
+                lastStudyDate = LocalDate.now();
+            }
+            try {
+                currentStreak = Integer.parseInt(lines.get(CURRENT_STREAK_INDEX));
+            } catch (RuntimeException exception) {
+                currentStreak = 0;
+            }
+            try {
+                totalStudyTime = Long.parseLong(lines.get(TOTAL_STUDY_TIME_INDEX));
+            } catch (RuntimeException exception) {
+                totalStudyTime = 0L;
+            }
+            try {
+                dailyGoal = Integer.parseInt(lines.get(DAILY_GOAL_INDEX));
+                if (dailyGoal < 5 || dailyGoal > 40) {
+                    dailyGoal = DEFAULT_DAILY_GOAL;
+                }
+            } catch (RuntimeException exception) {
+                dailyGoal = DEFAULT_DAILY_GOAL;
+            }
+            saveStats(userName, lastStudyDate, currentStreak, totalStudyTime, dailyGoal);
+            return Files.readAllLines(fileFor(userName), StandardCharsets.UTF_8);
+            
         } catch (IOException exception) {
             throw new UncheckedIOException("Could not load progress for user: " + userName, exception);
+        }
+    }
+
+    private void resetProgressFile(final String userName, final LocalDate lastStudyDate,
+            int currentStreak, long totalStudyTime, int dailyGoal) {
+        try{
+            Files.deleteIfExists(fileFor(userName));
+            saveStats(userName, LocalDate.now(), 0, 0L, DEFAULT_DAILY_GOAL);
+        } catch (IOException exception) {
+            throw new UncheckedIOException("Could not reset progress for user: " + userName, exception);
         }
     }
 
