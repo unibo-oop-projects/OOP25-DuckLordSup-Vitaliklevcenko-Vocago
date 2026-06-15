@@ -207,12 +207,27 @@ public class ControllerImpl implements Controller {
         }
     }
 
-    public void saveDailyGoal(final int dailyGoal) {
-        this.profileManager.saveDailyGoal(dailyGoal);
-    }
-
-    public void saveProfileConfigurations(final String userName, final String firstLanguage, final String secondLanguage, final int dailyGoal) {
-        
+    public void saveProfileConfigurations(String userName, final String firstLanguage,
+            final String secondLanguage, final int dailyGoal) {
+        try{
+            String originalUserName = getCurrentUser().getUserName();
+            userName = (userName == null || userName.trim().isBlank()) ? originalUserName : userName.trim();
+            
+            if (this.profileManager.userExists(userName) && !userName.equals(originalUserName)) {
+                this.appFrame.showMessage(
+                        "Username Invalid",
+                        "This user already exists!",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            this.profileManager.saveProfileConfigurations(userName, firstLanguage, secondLanguage, dailyGoal);
+            showUserDashboardPanel();
+        } catch (RuntimeException exception) {
+            this.appFrame.showMessage(
+                    "User Error",
+                    "Could not change user profile configuration, try again!",
+                    JOptionPane.ERROR_MESSAGE);
+        }
     }
     //progress file getters and setters//
     public Stats getDashboardStats() {

@@ -182,24 +182,26 @@ public class ProfileManagerImpl implements ProfileManager{
                         + (System.currentTimeMillis() - session.getTime()) / 1000);
     }
 
-    public void saveDailyGoal(int dailyGoal) {
-        if (hasCurrentUser()) {
-            if (dailyGoal > 40 || dailyGoal < 1) {
-                dailyGoal = 10;
-            }
-            this.progressRepository.saveDailyGoal(this.currentUser.getUserName(), dailyGoal);
-        }
-    }
-    
     public int getDailyGoal() {
         if (!hasCurrentUser()) {
             throw new IllegalStateException("No current user selected.");
         }
         int dailyGoal = this.progressRepository.getDailyGoal(this.currentUser.getUserName());
-        if (dailyGoal > 40 || dailyGoal < 1){
+        if (dailyGoal > 40 || dailyGoal < 1) {
             return 10;
         }
         return dailyGoal;
+    }
+    
+    public void saveProfileConfigurations(String newUserName, final String firstLanguage,
+            final String secondLanguage, int dailyGoal) {
+        if (hasCurrentUser()) {
+            if (dailyGoal > 40 || dailyGoal < 1) {
+                dailyGoal = 10;
+            }
+            this.progressRepository.saveProfileConfigurations(this.currentUser.getUserName(), newUserName,
+                    firstLanguage, secondLanguage, dailyGoal);
+        }
     }
 
     public void updateExpiredStreak() {

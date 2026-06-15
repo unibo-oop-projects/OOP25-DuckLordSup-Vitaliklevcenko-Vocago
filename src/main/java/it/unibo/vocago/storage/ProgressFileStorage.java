@@ -99,7 +99,8 @@ public class ProgressFileStorage implements ProgressRepository {
     }
 
     @Override
-    public void saveDailyGoal(String userName, int dailyGoal) {
+    public void saveProfileConfigurations(String userName,final String newUserName, final String firstLanguage,
+            final String secondLanguage, final int dailyGoal) {
 
     }
 

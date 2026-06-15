@@ -35,7 +35,8 @@ public interface ProfileManager {
 
     void updateExpiredStreak();
 
-    void saveDailyGoal(int dailyGoal);
-
     int getDailyGoal();
+
+    void saveProfileConfigurations(String userName, final String firstLanguage,
+            final String secondLanguage, final int dailyGoal);
 }

@@ -61,8 +61,6 @@ public interface Controller {
 
     void closeApp();
 
-    void saveDailyGoal(final int dailyGoal);
-
     int getDailyGoal();
 
     void saveProfileConfigurations(String userName, String firstLanguage, String secondLanguage, int dailyGoal);
