@@ -198,6 +198,19 @@ public class ControllerImpl implements Controller {
         return this.profileManager.getCurrentUser();
     }
 
+    public int getDailyGoal() {
+        try {
+            return this.profileManager.getDailyGoal();
+        } catch (RuntimeException exception) {
+            exception.printStackTrace();
+            return 10;
+        }
+    }
+
+    public void saveDailyGoal(final int dailyGoal) {
+        this.profileManager.saveDailyGoal(dailyGoal);
+    }
+
     //progress file getters and setters//
     public Stats getDashboardStats() {
         try {
@@ -219,7 +232,7 @@ public class ControllerImpl implements Controller {
     public void saveLearningStats() {
         if (this.learningSession != null) {
             try {
-                this.profileManager.saveLearningStats(learningSession, getCurrentQuestionNumber());
+                this.profileManager.saveLearningStats(learningSession);
             } catch (RuntimeException exception) {
                 System.err.println("Could not save progress file");
                 exception.printStackTrace();

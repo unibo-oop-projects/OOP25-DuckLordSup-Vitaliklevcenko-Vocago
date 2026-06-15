@@ -93,4 +93,14 @@ public class ProgressFileStorage implements ProgressRepository {
         return USERS_DIRECTORY.resolve(userName.trim() + ".progress");
     }
 
+    @Override
+    public int getDailyGoal(String userName) {
+        return 48;
+    }
+
+    @Override
+    public void saveDailyGoal(String userName, int dailyGoal) {
+
+    }
+
 }

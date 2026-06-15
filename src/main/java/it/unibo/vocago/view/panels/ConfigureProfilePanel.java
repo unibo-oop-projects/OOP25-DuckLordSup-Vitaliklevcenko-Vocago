@@ -59,8 +59,8 @@ public class ConfigureProfilePanel extends JPanel implements PanelLayout {
         this.secondLanguageComboBox = UIFactory.createComboBox(LANGUAGES);
         this.firstLanguageComboBox.setSelectedItem(this.controller.getCurrentUser().getFirstLanguage());
         this.secondLanguageComboBox.setSelectedItem(this.controller.getCurrentUser().getSecondLanguage());
-        this.dailyGoalSlider = new JSlider(DAILY_GOAL_MIN, DAILY_GOAL_MAX, DEFAULT_DAILY_GOAL);// need to change
-        this.dailyGoalValueLabel = UIFactory.createLabel(Integer.toString(DEFAULT_DAILY_GOAL), UIConstants.FONT); // need
+        this.dailyGoalSlider = new JSlider(DAILY_GOAL_MIN, DAILY_GOAL_MAX, this.controller.getDailyGoal());
+        this.dailyGoalValueLabel = UIFactory.createLabel(Integer.toString(this.controller.getDailyGoal()), UIConstants.FONT);
 
         buildLayout();
         this.usernameTextField.addActionListener(e -> buttonActionRegister());

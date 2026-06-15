@@ -156,8 +156,8 @@ public class ProfileManagerImpl implements ProfileManager{
         }
     }
 
-    public void saveLearningStats(final LearningSession session, final int requiredCorrectAnswers) {
-        if (!hasCurrentUser() || session == null || session.getCorrectAnsweredQuestions() < requiredCorrectAnswers) {
+    public void saveLearningStats(final LearningSession session) {
+        if (!hasCurrentUser() || session == null) {
             return;
         }
         final String userName = this.currentUser.getUserName();
@@ -167,7 +167,8 @@ public class ProfileManagerImpl implements ProfileManager{
 
         if (today.equals(lastStudyDate)) {
             streak = Math.max(streak, 1);
-        } else if (lastStudyDate != null && lastStudyDate.equals(today.minusDays(1))) {
+        } else if (lastStudyDate != null && lastStudyDate.equals(today.minusDays(1)) &&
+        session.getCorrectAnsweredQuestions() >= getDailyGoal()) {
             streak++;
         } else {
             streak = 0;
@@ -180,7 +181,27 @@ public class ProfileManagerImpl implements ProfileManager{
                 this.progressRepository.getTotalStudyTime(userName)
                         + (System.currentTimeMillis() - session.getTime()) / 1000);
     }
+
+    public void saveDailyGoal(int dailyGoal) {
+        if (hasCurrentUser()) {
+            if (dailyGoal > 40 || dailyGoal < 1) {
+                dailyGoal = 10;
+            }
+            this.progressRepository.saveDailyGoal(this.currentUser.getUserName(), dailyGoal);
+        }
+    }
     
+    public int getDailyGoal() {
+        if (!hasCurrentUser()) {
+            throw new IllegalStateException("No current user selected.");
+        }
+        int dailyGoal = this.progressRepository.getDailyGoal(this.currentUser.getUserName());
+        if (dailyGoal > 40 || dailyGoal < 1){
+            return 10;
+        }
+        return dailyGoal;
+    }
+
     public void updateExpiredStreak() {
         if (!hasCurrentUser()) {
             return;

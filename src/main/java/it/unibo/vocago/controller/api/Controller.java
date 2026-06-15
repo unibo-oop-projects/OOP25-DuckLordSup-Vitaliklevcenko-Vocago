@@ -60,4 +60,8 @@ public interface Controller {
     void saveLearningStats();
 
     void closeApp();
+
+    void saveDailyGoal(final int dailyGoal);
+
+    int getDailyGoal();
 }

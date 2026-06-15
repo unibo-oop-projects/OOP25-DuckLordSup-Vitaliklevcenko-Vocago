@@ -31,8 +31,11 @@ public interface ProfileManager {
 
     void resetStats();
 
-    void saveLearningStats(LearningSession session, int requiredCorrectAnswers);
+    void saveLearningStats(LearningSession session);
 
     void updateExpiredStreak();
-    
+
+    void saveDailyGoal(int dailyGoal);
+
+    int getDailyGoal();
 }

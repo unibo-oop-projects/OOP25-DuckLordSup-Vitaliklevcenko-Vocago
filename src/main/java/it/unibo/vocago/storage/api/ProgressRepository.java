@@ -15,4 +15,8 @@ public interface ProgressRepository {
     long getTotalStudyTime(String userName);
 
     boolean deleteProgress(String userName);
+
+    int getDailyGoal(String userName);
+
+    void saveDailyGoal(String userName, int dailyGoal);
 }
