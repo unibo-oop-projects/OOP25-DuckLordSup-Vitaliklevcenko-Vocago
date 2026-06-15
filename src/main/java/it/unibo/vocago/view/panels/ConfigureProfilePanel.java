@@ -42,6 +42,7 @@ public class ConfigureProfilePanel extends JPanel implements PanelLayout {
     private final JComboBox<String> secondLanguageComboBox;
     private final JButton goBackButton;
 
+
     public ConfigureProfilePanel(final Controller controller) {
         this.controller = controller;
         UIFactory.stylePanel(this);
@@ -55,12 +56,14 @@ public class ConfigureProfilePanel extends JPanel implements PanelLayout {
         this.usernameTextField = UIFactory.createTextField();
         this.firstLanguageComboBox = UIFactory.createComboBox(LANGUAGES);
         this.secondLanguageComboBox = UIFactory.createComboBox(LANGUAGES);
-        this.secondLanguageComboBox.setSelectedItem("Italian");
+        this.secondLanguageComboBox.setSelectedItem("Italian");//should cahnge to the defaul
+
 
         buildLayout();
         this.usernameTextField.addActionListener(e -> buttonActionRegister());
         this.saveChangesButton.addActionListener(e -> buttonActionRegister());
         this.goBackButton.addActionListener(e -> this.controller.showUserDashboardPanel());
+
     }
 
     @Override
@@ -83,20 +86,17 @@ public class ConfigureProfilePanel extends JPanel implements PanelLayout {
     private JPanel headerPanel() {
         final JPanel headerPanel = UIFactory.createPanel(new BorderLayout());
         headerPanel.setPreferredSize(new Dimension(Integer.MAX_VALUE, 90));
-        // headerPanel.setBorder(new EmptyBorder(18, 32, 8, 32));
-
         headerPanel.add(this.goBackButton, BorderLayout.WEST);
         headerPanel.add(UIFactory.createLabel("Configure Profile", UIConstants.TITLE_FONT), BorderLayout.CENTER);
-        headerPanel.add(Box.createHorizontalStrut(this.goBackButton.getWidth()), BorderLayout.EAST);
+        headerPanel.add(Box.createHorizontalStrut(this.goBackButton.getWidth()), BorderLayout.EAST);// why is not working
         return headerPanel;
     }
 
     private JPanel accountDetailsPanel() {
         final JPanel panel = createPanel("ACCOUNT DETAILS", 100);
-        final JPanel nicknameRow = createRowPanel(new BorderLayout(12, 0), panel.getBackground());
-        final JLabel nicknameLabel = createLeftLabel("Nickname:", UIConstants.FONT);
+        final JPanel nicknameRow = createRowPanel(new BorderLayout(10, 5), panel.getBackground());
         nicknameRow.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
-        nicknameRow.add(nicknameLabel, BorderLayout.WEST);
+        nicknameRow.add(UIFactory.createLabel("Nickname:", UIConstants.FONT), BorderLayout.WEST);
         nicknameRow.add(this.usernameTextField, BorderLayout.CENTER);
         panel.add(nicknameRow);
         return panel;
@@ -104,7 +104,12 @@ public class ConfigureProfilePanel extends JPanel implements PanelLayout {
 
     private JPanel languagePreferencesPanel() {
         final JPanel panel = createPanel("LANGUAGE PREFERENCES", 130);
-
+        final JPanel languageRow = createRowPanel(new GridLayout(2, 2, 24, 0), panel.getBackground());
+        languageRow.add(UIFactory.createLabel("Language you study:", UIConstants.FONT));
+        languageRow.add(UIFactory.createLabel("Language you already know:", UIConstants.FONT));
+        languageRow.add(this.firstLanguageComboBox);
+        languageRow.add(this.secondLanguageComboBox);
+        panel.add(languageRow);
         return panel;
     }
 
@@ -118,6 +123,7 @@ public class ConfigureProfilePanel extends JPanel implements PanelLayout {
         final JPanel actionsPanel = UIFactory.createPanel(new FlowLayout(FlowLayout.CENTER, 12, 0));
         actionsPanel.setMaximumSize(new Dimension(PANEL_WIDTH, 46));
         actionsPanel.add(this.saveChangesButton);
+        actionsPanel.add(this.resetProgressButton);
         return actionsPanel;
     }
 
@@ -130,7 +136,7 @@ public class ConfigureProfilePanel extends JPanel implements PanelLayout {
         panel.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(UIConstants.PANEL_BORDER),
                 new EmptyBorder(10, 20, 10, 20)));
-        panel.add(createLeftLabel(title, UIConstants.FONT.deriveFont(Font.BOLD)));
+        panel.add(UIFactory.createLabel(title, UIConstants.FONT.deriveFont(Font.BOLD)));
         panel.add(Box.createVerticalStrut(10));
         return panel;
     }
@@ -138,16 +144,10 @@ public class ConfigureProfilePanel extends JPanel implements PanelLayout {
     private JPanel createRowPanel(final java.awt.LayoutManager layout, final Color background) {
         final JPanel panel = UIFactory.createPanel(layout);
         panel.setBackground(background);
-        panel.setAlignmentX(Component.LEFT_ALIGNMENT);
         return panel;
     }
 
-    private JLabel createLeftLabel(final String text, final Font font) {
-        final JLabel label = UIFactory.createLabel(text, font);
-        label.setHorizontalAlignment(SwingConstants.LEFT);
-        label.setAlignmentX(Component.LEFT_ALIGNMENT);
-        return label;
-    }
+
 
     private void buttonActionRegister() {
 
