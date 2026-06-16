@@ -24,6 +24,11 @@ final class VocabularyEditorHelper {
     static final int RECOGNITION_COLUMN = 3;
     static final int FIRST_PROGRESS_COLUMN = 4;
     static final int SECOND_PROGRESS_COLUMN = 5;
+    static final int MASTERY_COLUMN_WIDTH = 160;
+    static final int HEADER_HEIGHT = 60;
+    static final int FOOTER_HEIGHT = 60;
+    static final int ZERO = 0;
+    static final int WORD_COLUMN_WIDTH = 280;
 
     static Object[] emptyRow() {
         return new Object[] {

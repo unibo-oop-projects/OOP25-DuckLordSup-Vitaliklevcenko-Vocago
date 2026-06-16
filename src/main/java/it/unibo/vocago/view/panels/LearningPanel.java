@@ -17,8 +17,10 @@ import javax.swing.*;
 public class LearningPanel extends JPanel implements PanelLayout {
 
     private static final int HEADER_HEIGHT = 60;
+    private static final int ANSWER_PANEL_HEIGHT = 120;
+    private static final int BUTTON_PANEL_HEIGHT = 50;
+    private static final int LANGUAGE_PANEL_HEIGHT = 260;
 
-    
     private final Controller controller;
     private final JButton nextWordButton;
     private final JButton revealAnswerButton;
@@ -142,15 +144,15 @@ public class LearningPanel extends JPanel implements PanelLayout {
     private JPanel createMainPanel() {
         JPanel mainPanel = UIFactory.createPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
         // UIFactory.brighter(mainPanel);
-        mainPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, UIConstants.LANGUAGE_PANEL_HEIGHT));
+        mainPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, LANGUAGE_PANEL_HEIGHT));
 
         JPanel firstLanguagePanel = UIFactory.createPanel(new BorderLayout());
-        firstLanguagePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, UIConstants.LANGUAGE_PANEL_HEIGHT));
+        firstLanguagePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, LANGUAGE_PANEL_HEIGHT));
         firstLanguagePanel.setPreferredSize(new Dimension(500, 200));
         UIFactory.highlight(firstLanguagePanel);
 
         JPanel secondLanguagePanel = UIFactory.createPanel(new BorderLayout());
-        secondLanguagePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, UIConstants.LANGUAGE_PANEL_HEIGHT));
+        secondLanguagePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, LANGUAGE_PANEL_HEIGHT));
         secondLanguagePanel.setPreferredSize(new Dimension(500, 200));
         UIFactory.highlight(secondLanguagePanel);
 
@@ -193,7 +195,7 @@ public class LearningPanel extends JPanel implements PanelLayout {
         mainPanel.add(secondLanguagePanel);
 
         this.answerPanel.setMaximumSize(new Dimension(
-                Integer.MAX_VALUE, UIConstants.ANSWER_PANEL_HEIGHT));
+                Integer.MAX_VALUE, ANSWER_PANEL_HEIGHT));
         this.answerPanel.add(this.answerLabel);
         // this.answerPanel.setBackground(getBackground());
         // UIFactory.highlight(this.answerPanel);
@@ -207,8 +209,8 @@ public class LearningPanel extends JPanel implements PanelLayout {
     
     private JPanel createButtonsPanel() {
         JPanel buttonsPanel = UIFactory.createPanel(new GridLayout());
-        buttonsPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, UIConstants.BUTTON_PANEL_HEIGHT));
-        buttonsPanel.setPreferredSize(new Dimension(Integer.MAX_VALUE, UIConstants.BUTTON_PANEL_HEIGHT));
+        buttonsPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, BUTTON_PANEL_HEIGHT));
+        buttonsPanel.setPreferredSize(new Dimension(Integer.MAX_VALUE, BUTTON_PANEL_HEIGHT));
         UIFactory.highlight(buttonsPanel);
         this.revealAnswerButton.setBorderPainted(true);
         this.nextWordButton.setBorderPainted(true);

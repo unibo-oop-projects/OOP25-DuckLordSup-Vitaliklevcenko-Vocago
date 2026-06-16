@@ -24,10 +24,7 @@ import it.unibo.vocago.view.util.UIConstants;
 import it.unibo.vocago.view.util.UIFactory;
 
 public class VocabularyEditorPanel extends JPanel implements PanelLayout {
-
-    private static final int HEADER_HEIGHT = 60;
-    private static final int FOOTER_HEIGHT = 60;
-
+    
     private final DefaultTableModel model;
     private final JTable table;
     private final JButton addRowButton;
@@ -70,7 +67,7 @@ public class VocabularyEditorPanel extends JPanel implements PanelLayout {
 
     private JPanel buildUpperPanel() {
         final JPanel upperButtonsPanel = UIFactory.createPanel(new GridLayout());
-        upperButtonsPanel.setPreferredSize(new Dimension(Integer.MAX_VALUE, HEADER_HEIGHT));
+        upperButtonsPanel.setPreferredSize(new Dimension(Integer.MAX_VALUE, VocabularyEditorHelper.HEADER_HEIGHT));
 
         final JPanel leftPanel = UIFactory.createPanel(new BorderLayout());
         leftPanel.add(this.goBackButton, BorderLayout.WEST);
@@ -106,13 +103,13 @@ public class VocabularyEditorPanel extends JPanel implements PanelLayout {
         this.table.getColumnModel().getColumn(VocabularyEditorHelper.RECOGNITION_COLUMN).setCellEditor(masteryEditor);
 
         this.table.getColumnModel().getColumn(VocabularyEditorHelper.FIRST_WORDS_COLUMN)
-                .setPreferredWidth(UIConstants.WORD_COLUMN_WIDTH);
+                .setPreferredWidth(VocabularyEditorHelper.WORD_COLUMN_WIDTH);
         this.table.getColumnModel().getColumn(VocabularyEditorHelper.SECOND_WORDS_COLUMN)
-                .setPreferredWidth(UIConstants.WORD_COLUMN_WIDTH);
+                .setPreferredWidth(VocabularyEditorHelper.WORD_COLUMN_WIDTH);
         this.table.getColumnModel().getColumn(VocabularyEditorHelper.MEMORIZATION_COLUMN)
-                .setPreferredWidth(UIConstants.MASTERY_COLUMN_WIDTH);
+                .setPreferredWidth(VocabularyEditorHelper.MASTERY_COLUMN_WIDTH);
         this.table.getColumnModel().getColumn(VocabularyEditorHelper.RECOGNITION_COLUMN)
-                .setPreferredWidth(UIConstants.MASTERY_COLUMN_WIDTH);
+                .setPreferredWidth(VocabularyEditorHelper.MASTERY_COLUMN_WIDTH);
 
         hideColumn(VocabularyEditorHelper.FIRST_PROGRESS_COLUMN);
         hideColumn(VocabularyEditorHelper.SECOND_PROGRESS_COLUMN);
@@ -128,15 +125,15 @@ public class VocabularyEditorPanel extends JPanel implements PanelLayout {
         lowerButtonsPanel.add(this.addRowButton);
         lowerButtonsPanel.add(this.deleteRowButton);
         lowerButtonsPanel.add(this.saveChangesButton);
-        lowerButtonsPanel.setPreferredSize(new Dimension(Integer.MAX_VALUE, FOOTER_HEIGHT));
+        lowerButtonsPanel.setPreferredSize(new Dimension(Integer.MAX_VALUE, VocabularyEditorHelper.FOOTER_HEIGHT));
         return lowerButtonsPanel;
     }
 
     private void hideColumn(final int columnIndex) {
-        this.table.getColumnModel().getColumn(columnIndex).setMinWidth(UIConstants.ZERO);
-        this.table.getColumnModel().getColumn(columnIndex).setMaxWidth(UIConstants.ZERO);
-        this.table.getColumnModel().getColumn(columnIndex).setPreferredWidth(UIConstants.ZERO);
-        this.table.getColumnModel().getColumn(columnIndex).setWidth(UIConstants.ZERO);
+        this.table.getColumnModel().getColumn(columnIndex).setMinWidth(VocabularyEditorHelper.ZERO);
+        this.table.getColumnModel().getColumn(columnIndex).setMaxWidth(VocabularyEditorHelper.ZERO);
+        this.table.getColumnModel().getColumn(columnIndex).setPreferredWidth(VocabularyEditorHelper.ZERO);
+        this.table.getColumnModel().getColumn(columnIndex).setWidth(VocabularyEditorHelper.ZERO);
     }
 
     private void actionRegister() {

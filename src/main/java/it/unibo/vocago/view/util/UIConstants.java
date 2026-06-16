@@ -5,23 +5,8 @@ import java.awt.Font;
 
 public final class UIConstants {
 
-    public static final int ANSWER_PANEL_HEIGHT = 120;
-    public static final int ZERO = 0;
-    public static final int PADDING = 1;
     public static final int CELL_BORDER_THICKNESS = 2;
     public static final int BIG_PADDING = 15;
-    public static final int TEXT_SIZE = 14;
-    public static final int TEXT_FIELD_HEIGHT = 30;
-    public static final int BUTTON_HEIGHT = 30;
-    public static final int PROFILE_BUTTON_SIZE = 140;
-    public static final int ICON_SIZE = 50;
-    public static final int BUTTON_WIDTH = 170;
-    public static final int BUTTON_PANEL_HEIGHT = 50;
-    public static final int TABLE_ROW_HEIGHT = 32;
-    public static final int TABLE_HEADER_HEIGHT = 36;
-    public static final int WORD_COLUMN_WIDTH = 280;
-    public static final int MASTERY_COLUMN_WIDTH = 160;
-    public static final int LANGUAGE_PANEL_HEIGHT = 260;
     public static final int GOAL = 10;
     public static final int HOVER_COLOR_ADDITION = 50;
 

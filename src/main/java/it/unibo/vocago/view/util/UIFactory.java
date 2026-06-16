@@ -34,6 +34,11 @@ import java.awt.event.MouseEvent;
 public final class UIFactory {
 
     private static final double SCALE = 1.13;
+    private static final int ZERO = 0;
+    private static final int PADDING = 1;
+    private static final int TABLE_ROW_HEIGHT = 32;
+    private static final int TABLE_HEADER_HEIGHT = 36;
+    private static final int TEXT_SIZE = 14;
 
     private UIFactory() {
     }
@@ -156,7 +161,7 @@ public final class UIFactory {
 
     public static JButton createButton(final String text) {
         return createButton(text, "", 1, UIConstants.BUTTON_BACKGROUND,
-                UIConstants.ZERO, UIConstants.ZERO, true, false, false, UIConstants.FONT);
+                ZERO, ZERO, true, false, false, UIConstants.FONT);
     }
 
     public static JLabel createLabel(final String text, final Font font) {
@@ -172,7 +177,7 @@ public final class UIFactory {
     }
 
     public static JTextField createTextField(final Font font) {
-        final JTextField field = new JTextField(UIConstants.TEXT_SIZE);
+        final JTextField field = new JTextField(TEXT_SIZE);
         field.setFont(font);
         field.setBackground(UIConstants.TEXT_FIELD_BACKGROUND);
         field.setForeground(UIConstants.TEXT_COLOR);
@@ -226,8 +231,8 @@ public final class UIFactory {
         final JTable table = new JTable(model);
         final JTableHeader tableHeader = table.getTableHeader();
 
-        UIManager.put("TableHeader.cellBorder", BorderFactory.createMatteBorder(UIConstants.PADDING,
-                UIConstants.PADDING, UIConstants.PADDING, UIConstants.PADDING, UIConstants.TABLE_GRID));
+        UIManager.put("TableHeader.cellBorder", BorderFactory.createMatteBorder(PADDING,
+                PADDING, PADDING, PADDING, UIConstants.TABLE_GRID));
 
         UIManager.put("Table.focusCellHighlightBorder",
                 BorderFactory.createLineBorder(UIConstants.TABLE_CELL_SELECTION, UIConstants.CELL_BORDER_THICKNESS));
@@ -241,10 +246,9 @@ public final class UIFactory {
         table.setForeground(UIConstants.TEXT_COLOR);
         tableHeader.setForeground(UIConstants.TEXT_COLOR);
 
-        table.setRowHeight(UIConstants.TABLE_ROW_HEIGHT);
+        table.setRowHeight(TABLE_ROW_HEIGHT);
 
-        tableHeader.setPreferredSize(new Dimension(tableHeader.getPreferredSize().width,
-                UIConstants.TABLE_HEADER_HEIGHT));
+        tableHeader.setPreferredSize(new Dimension(tableHeader.getPreferredSize().width, TABLE_HEADER_HEIGHT));
 
         table.setGridColor(UIConstants.TABLE_GRID);
 
@@ -280,8 +284,8 @@ public final class UIFactory {
         scrollPane.getViewport().setBackground(UIConstants.BACKGROUND);
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
         scrollPane.setViewportBorder(BorderFactory.createEmptyBorder());
-        scrollPane.setBorder(BorderFactory.createMatteBorder(UIConstants.PADDING, UIConstants.ZERO,
-                UIConstants.PADDING, UIConstants.ZERO, UIConstants.PANEL_BORDER));
+        scrollPane.setBorder(BorderFactory.createMatteBorder(PADDING, ZERO,
+                PADDING, ZERO, UIConstants.PANEL_BORDER));
         styleScrollBar(scrollPane.getVerticalScrollBar());
         // styleScrollBar(scrollPane.getHorizontalScrollBar());
         return scrollPane;
