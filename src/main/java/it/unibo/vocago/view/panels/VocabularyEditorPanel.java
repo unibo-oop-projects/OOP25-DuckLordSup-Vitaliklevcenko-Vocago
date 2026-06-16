@@ -19,11 +19,10 @@ import javax.swing.table.DefaultTableModel;
 import it.unibo.vocago.controller.api.Controller;
 import it.unibo.vocago.model.types.MasteryLevel;
 import it.unibo.vocago.model.vocabulary.api.VocabularyItem;
-import it.unibo.vocago.view.panels.api.PanelLayout;
 import it.unibo.vocago.view.util.UIConstants;
 import it.unibo.vocago.view.util.UIFactory;
 
-public class VocabularyEditorPanel extends JPanel implements PanelLayout {
+public class VocabularyEditorPanel extends JPanel{
     
     private final DefaultTableModel model;
     private final JTable table;
@@ -56,7 +55,6 @@ public class VocabularyEditorPanel extends JPanel implements PanelLayout {
         actionRegister();
     }
 
-    @Override
     public void buildLayout() {
         setLayout(new BorderLayout());
         add(buildUpperPanel(), BorderLayout.NORTH);

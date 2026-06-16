@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import it.unibo.vocago.controller.api.Controller;
+import it.unibo.vocago.view.api.AppView;
 import it.unibo.vocago.view.panels.ConfigureProfilePanel;
 import it.unibo.vocago.view.panels.CreateNewProfilePanel;
 import it.unibo.vocago.view.panels.LearningPanel;
@@ -16,7 +17,7 @@ import it.unibo.vocago.view.panels.StartPanel;
 import it.unibo.vocago.view.panels.VocabularyEditorPanel;
 import it.unibo.vocago.view.util.UIFactory;
 
-public class AppFrame extends JFrame {
+public class AppFrame extends JFrame implements AppView{
 
     private static final Dimension SMALL_WINDOW = new Dimension(800, 600);
     private static final Dimension DASHBOARD_WINDOW = new Dimension(1280, 720);
@@ -133,6 +134,27 @@ public class AppFrame extends JFrame {
 
     public void showMessage(final String title, final String message, final int option) {
         JOptionPane.showMessageDialog(this, message, title, option);
+    }
+
+    public void showInfo(final String title, final String message) {
+        JOptionPane.showMessageDialog(this, message, title, JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    public void showWarning(final String title, final String message) {
+        JOptionPane.showMessageDialog(this, message, title, JOptionPane.WARNING_MESSAGE);
+    }
+
+    public void showError(final String title, final String message) {
+        JOptionPane.showMessageDialog(this, message, title, JOptionPane.ERROR_MESSAGE);
+    }
+
+    public boolean askConfirmation(final String title, final String message) {
+        return JOptionPane.showConfirmDialog(
+                this,
+                message,
+                title,
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION;
     }
 
 }

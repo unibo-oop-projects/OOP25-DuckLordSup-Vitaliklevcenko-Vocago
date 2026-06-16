@@ -11,11 +11,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import it.unibo.vocago.controller.api.Controller;
-import it.unibo.vocago.view.panels.api.PanelLayout;
 import it.unibo.vocago.view.util.UIConstants;
 import it.unibo.vocago.view.util.UIFactory;
 
-public class CreateNewProfilePanel extends JPanel implements PanelLayout {
+public class CreateNewProfilePanel extends JPanel{
     
     private final Controller controller;
     private final JButton createNewProfileButton;

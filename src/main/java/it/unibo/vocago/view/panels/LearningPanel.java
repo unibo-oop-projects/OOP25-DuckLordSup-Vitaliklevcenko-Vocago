@@ -2,7 +2,6 @@ package it.unibo.vocago.view.panels;
 
 import it.unibo.vocago.controller.api.Controller;
 import it.unibo.vocago.model.types.Direction;
-import it.unibo.vocago.view.panels.api.PanelLayout;
 import it.unibo.vocago.view.util.UIConstants;
 import it.unibo.vocago.view.util.UIFactory;
 
@@ -14,7 +13,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import javax.swing.*;
 
-public class LearningPanel extends JPanel implements PanelLayout {
+public class LearningPanel extends JPanel{
 
     private static final int HEADER_HEIGHT = 60;
     private static final int ANSWER_PANEL_HEIGHT = 120;
@@ -100,7 +99,6 @@ public class LearningPanel extends JPanel implements PanelLayout {
         SwingUtilities.invokeLater(() -> this.userAnswer.requestFocusInWindow());
     }
     
-    @Override
     public void buildLayout() {
         setLayout(new BorderLayout());
 

@@ -10,12 +10,12 @@ import javax.swing.SwingConstants;
 import java.awt.BorderLayout;
 import it.unibo.vocago.controller.api.Controller;
 import it.unibo.vocago.model.user.api.User;
-import it.unibo.vocago.view.panels.api.PanelLayout;
 import it.unibo.vocago.view.util.UIConstants;
 import it.unibo.vocago.view.util.UIFactory;
 
-public class StartPanel extends JPanel implements PanelLayout {
+public class StartPanel extends JPanel{
 
+    private final int MAX_USERS = 4;
     private static final String ADD_ICON = "data/resources/pictures/plus.png";
     final private Controller controller;
     private static final String[] PROFILE_ICONS = {

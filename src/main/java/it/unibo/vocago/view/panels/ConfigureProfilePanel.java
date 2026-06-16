@@ -19,11 +19,10 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import it.unibo.vocago.controller.api.Controller;
-import it.unibo.vocago.view.panels.api.PanelLayout;
 import it.unibo.vocago.view.util.UIConstants;
 import it.unibo.vocago.view.util.UIFactory;
 
-public class ConfigureProfilePanel extends JPanel implements PanelLayout {
+public class ConfigureProfilePanel extends JPanel{
 
     private static final String[] LANGUAGES = {
             "English", "Italian", "German", "French", "Spanish",
@@ -68,7 +67,6 @@ public class ConfigureProfilePanel extends JPanel implements PanelLayout {
         buttonActionRegister();
     }
 
-    @Override
     public void buildLayout() {
         setLayout(new BorderLayout());
         add(headerPanel(), BorderLayout.NORTH);

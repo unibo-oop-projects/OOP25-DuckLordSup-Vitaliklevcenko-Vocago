@@ -13,12 +13,11 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import it.unibo.vocago.controller.api.Controller;
 import it.unibo.vocago.model.progress.api.Stats;
-import it.unibo.vocago.view.panels.api.PanelLayout;
 import it.unibo.vocago.view.util.UIConstants;
 import it.unibo.vocago.view.util.UIFactory;
 import java.awt.Image;
 
-public class ProfileDashboardPanel extends JPanel implements PanelLayout {
+public class ProfileDashboardPanel extends JPanel{
 
         private final Controller controller;
         private final JButton switchProfileButton;
@@ -45,7 +44,6 @@ public class ProfileDashboardPanel extends JPanel implements PanelLayout {
                 ButtonActionRegister();
         }
 
-        @Override
         public void buildLayout() {
 
                 setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
