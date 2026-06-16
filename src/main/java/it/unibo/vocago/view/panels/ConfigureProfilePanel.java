@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import it.unibo.vocago.controller.api.Controller;
@@ -56,6 +57,8 @@ public class ConfigureProfilePanel extends JPanel implements PanelLayout {
         this.usernameTextField = UIFactory.createTextField();
         this.firstLanguageComboBox = UIFactory.createComboBox(LANGUAGES);
         this.secondLanguageComboBox = UIFactory.createComboBox(LANGUAGES);
+        ((JLabel) this.firstLanguageComboBox.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
+        ((JLabel) this.secondLanguageComboBox.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
         this.firstLanguageComboBox.setSelectedItem(this.controller.getCurrentProfile().getFirstLanguage());
         this.secondLanguageComboBox.setSelectedItem(this.controller.getCurrentProfile().getSecondLanguage());
         this.dailyGoalSlider = new JSlider(DAILY_GOAL_MIN, DAILY_GOAL_MAX, this.controller.getDailyGoal());
