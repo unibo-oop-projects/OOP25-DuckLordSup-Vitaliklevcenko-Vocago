@@ -2,7 +2,6 @@ package it.unibo.vocago.controller;
 
 import java.time.LocalDate;
 import java.util.List;
-import javax.swing.JOptionPane;
 import it.unibo.vocago.controller.api.Controller;
 import it.unibo.vocago.logic.learning.LearningSessionImpl;
 import it.unibo.vocago.logic.learning.api.LearningSession;
@@ -14,15 +13,16 @@ import it.unibo.vocago.model.types.Direction;
 import it.unibo.vocago.model.user.api.User;
 import it.unibo.vocago.model.vocabulary.api.Vocabulary;
 import it.unibo.vocago.view.AppFrame;
+import it.unibo.vocago.view.api.AppView;
 
 public class ControllerImpl implements Controller {
 
-    final private AppFrame appFrame;
+    private final AppView appView;
     private LearningSession learningSession;
-    private ProfileManager profileManager;
+    private final ProfileManager profileManager;
 
     public ControllerImpl() {
-        this.appFrame = new AppFrame(this);
+        this.appView = new AppFrame(this);
         this.learningSession = null;
         this.profileManager = new ProfileManagerImpl();//depends on the data base we choose (sql/csv file)
         showStartPanel();
@@ -31,42 +31,41 @@ public class ControllerImpl implements Controller {
             //panel space//
     public void showStartPanel() {
         if (getExistingProfiles().isEmpty()) {
-            this.appFrame.showCreateNewProfilePanel();
+            view().showCreateNewProfilePanel();
         } else {
-            this.appFrame.showStartPanel();
+            view().showStartPanel();
         }
     }
 
     public void showCreateNewProfilePanel() {
-        this.appFrame.showCreateNewProfilePanel();
+        view().showCreateNewProfilePanel();
     }
 
     public void showProfileDashboardPanel() {
         closeLearningSession();//if active
         this.profileManager.updateExpiredStreak();
-        this.appFrame.showProfileDashboardPanel();
+        view().showProfileDashboardPanel();
     }
 
     public void showVocabularyEditorPanel() {
-        this.appFrame.showVocabularyEditorPanel();
+        view().showVocabularyEditorPanel();
     }
 
     public void showLearningPanel() {
         if (this.learningSession == null) {
             if (!vocabularyIsValid()) {
-                this.appFrame.showMessage(
+                view().showWarning(
                         "No Valid Words",
-                        "There are no valid words available, add more words to your vocabulary",
-                        JOptionPane.WARNING_MESSAGE);
+                        "There are no valid words available, add more words to your vocabulary");
                 return;
             }
             this.learningSession = new LearningSessionImpl(getCurrentProfile().getVocabulary());
         }
-        this.appFrame.showLearningPanel();
+        view().showLearningPanel();
     }
     
     public void showConfigureProfilePanel() {
-        this.appFrame.showConfigureProfilePanel();
+        view().showConfigureProfilePanel();
     }
         // Learning Session getters and setters //
     public LearningSession getLearningSession() {
@@ -123,34 +122,31 @@ public class ControllerImpl implements Controller {
         try {
             return this.profileManager.getExistingProfiles();
         } catch (RuntimeException exception) {
-            this.appFrame.showMessage("Profile Error", "Could not load saved profiles.", JOptionPane.ERROR_MESSAGE);
+            view().showError("Profile Error", "Could not load saved profiles.");
             return List.of();
         }
     }
     
     public void createProfile(final String profileName, final String firstLanguage, final String secondLanguage) {
         if (profileName == null || profileName.trim().isBlank()) {
-            this.appFrame.showMessage(
+            view().showWarning(
                     "Profile Name Invalid",
-                    "Please enter a valid profile name.",
-                    JOptionPane.WARNING_MESSAGE);
+                    "Please enter a valid profile name.");
             return;
         }
         try {
             if (this.profileManager.profileExists(profileName)) {
-                    this.appFrame.showMessage(
+                    view().showError(
                         "Profile Name Invalid",
-                        "This profile already exists!",
-                        JOptionPane.ERROR_MESSAGE);
+                        "This profile already exists!");
                 return;
             }
             this.profileManager.createProfile(profileName, firstLanguage, secondLanguage);
             showProfileDashboardPanel();
         } catch (RuntimeException exception) {
-            this.appFrame.showMessage(
+            view().showError(
                     "Profile Error",
-                    "Could not create profile, try again!",
-                    JOptionPane.ERROR_MESSAGE);
+                    "Could not create profile, try again!");
         }
     }
 
@@ -158,14 +154,12 @@ public class ControllerImpl implements Controller {
         try {
             this.profileManager.saveVocabulary(vocabulary);
         } catch (RuntimeException exception) {
-            this.appFrame.showMessage("Save Failed", "Could not save changes, try again!", JOptionPane.ERROR_MESSAGE);
+            view().showError("Save Failed", "Could not save changes, try again!");
         }
     }
 
     public void deleteProfile() {
-        final int answer = JOptionPane.showConfirmDialog(this.appFrame, "Are you sure you want to delete your profile?", "Delete Profile",
-                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if (answer == JOptionPane.YES_OPTION) {
+        if (view().askConfirmation("Delete Profile", "Are you sure you want to delete your profile?")) {
             try {
                 if (this.profileManager.deleteCurrentProfile()) {
                     this.learningSession = null;
@@ -173,11 +167,9 @@ public class ControllerImpl implements Controller {
                 }
             } catch (RuntimeException exception) {
                 if (getCurrentProfile() == null) {
-                    this.appFrame.showMessage("Delete Failed", "The progress could not be deleted, try again!",
-                            JOptionPane.ERROR_MESSAGE);
+                    view().showError("Delete Failed", "The progress could not be deleted, try again!");
                 } else {
-                    this.appFrame.showMessage("Delete Failed", "The profile could not be deleted, try again!",
-                            JOptionPane.ERROR_MESSAGE);
+                    view().showError("Delete Failed", "The profile could not be deleted, try again!");
                 }
                 showStartPanel();
              }
@@ -216,23 +208,20 @@ public class ControllerImpl implements Controller {
                     : profileName.trim();
             
             if (this.profileManager.profileExists(profileName) && !profileName.equals(originalProfileName)) {
-                this.appFrame.showMessage(
+                view().showError(
                         "Profile Name Invalid",
-                        "This profile already exists!",
-                        JOptionPane.ERROR_MESSAGE);
+                        "This profile already exists!");
                 return;
             }
             this.profileManager.saveProfileConfigurations(profileName, firstLanguage, secondLanguage, dailyGoal);
-            this.appFrame.showMessage(
+            view().showInfo(
                     "Profile saved",
-                    "Profile configuration has been saved successfully!",
-                    JOptionPane.INFORMATION_MESSAGE);
+                    "Profile configuration has been saved successfully!");
             showProfileDashboardPanel();
         } catch (RuntimeException exception) {
-            this.appFrame.showMessage(
+            view().showError(
                     "Profile Error",
-                    "Could not change profile configuration, try again!",
-                    JOptionPane.ERROR_MESSAGE);
+                    "Could not change profile configuration, try again!");
         }
     }
     //progress file getters and setters//
@@ -240,7 +229,7 @@ public class ControllerImpl implements Controller {
         try {
             return this.profileManager.getDashboardStats();
         } catch (RuntimeException exception) {
-            this.appFrame.showMessage("Progress Error", "Your progress has been corrupted", JOptionPane.ERROR_MESSAGE);
+            view().showError("Progress Error", "Your progress has been corrupted");
             return new ProfileStats(
                     0,
                     0,
@@ -265,25 +254,19 @@ public class ControllerImpl implements Controller {
     }
     
     public void resetStats() {
-        final int answer = JOptionPane.showConfirmDialog(this.appFrame, "Are you sure? your streak and study time will be reset", "Reset Progress",
-                JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-        if (answer == JOptionPane.YES_OPTION) {
+        if (view().askConfirmation("Reset Progress", "Are you sure? your streak and study time will be reset")) {
             try {
                 this.profileManager.resetStats();
                 showProfileDashboardPanel();
-                this.appFrame.showMessage("Progress Reset", "Your progress has been reset",
-                        JOptionPane.INFORMATION_MESSAGE);
+                view().showInfo("Progress Reset", "Your progress has been reset");
             } catch (RuntimeException exception) {
-                this.appFrame.showMessage("Progress Error", "Failed to reset your progress, try again!",
-                        JOptionPane.ERROR_MESSAGE);
+                view().showError("Progress Error", "Failed to reset your progress, try again!");
             }
         }
     }
 
     public void dailyGoalAchieved() {
-        final int answer = JOptionPane.showConfirmDialog(this.appFrame, "you did it, good job! you want to continue to study?", "Daily Goal Achieved",
-                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if (answer == JOptionPane.NO_OPTION) {
+        if (!view().askConfirmation("Daily Goal Achieved", "You did it, good job! Do you want to continue to study?")) {
             showProfileDashboardPanel();
         }
     }
@@ -297,5 +280,9 @@ public class ControllerImpl implements Controller {
             this.learningSession = null;
         }
         System.exit(0);
+    }
+
+    private AppView view() {
+        return this.appView;
     }
 }

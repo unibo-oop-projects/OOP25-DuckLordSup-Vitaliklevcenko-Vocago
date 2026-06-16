@@ -17,7 +17,7 @@ import it.unibo.vocago.view.panels.StartPanel;
 import it.unibo.vocago.view.panels.VocabularyEditorPanel;
 import it.unibo.vocago.view.util.UIFactory;
 
-public class AppFrame extends JFrame implements AppView{
+public class AppFrame extends JFrame implements AppView {
 
     private static final Dimension SMALL_WINDOW = new Dimension(800, 600);
     private static final Dimension DASHBOARD_WINDOW = new Dimension(1280, 720);
@@ -40,6 +40,19 @@ public class AppFrame extends JFrame implements AppView{
         this.mainPanel = UIFactory.createPanel(this.cardLayout);
 
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        this.setTitle("Vocago");
+        this.setSize(800, 600);
+        this.setLocationRelativeTo(null);
+        ImageIcon icon = UIFactory.loadIcon("data/resources/pictures/wizard.png");
+        this.setIconImage(icon.getImage());
+        this.startPanel = null;
+        this.profileDashboardPanel = null;
+        this.learningPanel = null;
+        this.createNewProfilePanel = null;
+        this.vocabularyEditorPanel = null;
+        this.configureProfilePanel = null;
+        add(this.mainPanel);
+
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
@@ -47,25 +60,10 @@ public class AppFrame extends JFrame implements AppView{
             }
         });
         
-        this.setTitle("Vocago");
-        this.setSize(800, 600);
-        this.setLocationRelativeTo(null);
-        ImageIcon icon = UIFactory.loadIcon("data/resources/pictures/wizard.png");
-        this.setIconImage(icon.getImage());
-
-        // nulling the panels
-        this.startPanel = null;
-        this.profileDashboardPanel = null;
-        this.learningPanel = null;
-        this.createNewProfilePanel = null;
-        this.vocabularyEditorPanel = null;
-        this.configureProfilePanel = null;
-
-        add(this.mainPanel);
-
         this.setVisible(true);
     }
 
+    @Override
     public void showStartPanel() {
         resizeWindow(SMALL_WINDOW);
         this.startPanel = replacePanel(
@@ -74,6 +72,7 @@ public class AppFrame extends JFrame implements AppView{
                 "StartPanel");
     }
 
+    @Override
     public void showCreateNewProfilePanel() {
         resizeWindow(SMALL_WINDOW);
         this.createNewProfilePanel = replacePanel(
@@ -82,6 +81,7 @@ public class AppFrame extends JFrame implements AppView{
                 "CreateNewProfilePanel");
     }
 
+    @Override
     public void showProfileDashboardPanel() {
         resizeWindow(DASHBOARD_WINDOW);
         this.profileDashboardPanel = replacePanel(
@@ -90,6 +90,7 @@ public class AppFrame extends JFrame implements AppView{
                 "ProfileDashboardPanel");
     }
 
+    @Override
     public void showVocabularyEditorPanel() {
         this.vocabularyEditorPanel = replacePanel(
                 this.vocabularyEditorPanel,
@@ -97,6 +98,7 @@ public class AppFrame extends JFrame implements AppView{
                 "VocabularyEditorPanel");
     }
 
+    @Override
     public void showLearningPanel() {
         this.learningPanel = replacePanel(
                 this.learningPanel,
@@ -104,12 +106,38 @@ public class AppFrame extends JFrame implements AppView{
                 "LearningPanel");
     }
 
+    @Override
     public void showConfigureProfilePanel() {
         resizeWindow(SMALL_WINDOW);
         this.configureProfilePanel = replacePanel(
                 this.configureProfilePanel,
                 new ConfigureProfilePanel(this.controller),
                 "ConfigureProfilePanel");
+    }
+
+    @Override
+    public void showInfo(final String title, final String message) {
+        JOptionPane.showMessageDialog(this, message, title, JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    @Override
+    public void showWarning(final String title, final String message) {
+        JOptionPane.showMessageDialog(this, message, title, JOptionPane.WARNING_MESSAGE);
+    }
+
+    @Override
+    public void showError(final String title, final String message) {
+        JOptionPane.showMessageDialog(this, message, title, JOptionPane.ERROR_MESSAGE);
+    }
+
+    @Override
+    public boolean askConfirmation(final String title, final String message) {
+        return JOptionPane.showConfirmDialog(
+                this,
+                message,
+                title,
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION;
     }
 
     private void resizeWindow(final Dimension size) {
@@ -131,30 +159,4 @@ public class AppFrame extends JFrame implements AppView{
         this.mainPanel.revalidate();
         this.mainPanel.repaint();
     }
-
-    public void showMessage(final String title, final String message, final int option) {
-        JOptionPane.showMessageDialog(this, message, title, option);
-    }
-
-    public void showInfo(final String title, final String message) {
-        JOptionPane.showMessageDialog(this, message, title, JOptionPane.INFORMATION_MESSAGE);
-    }
-
-    public void showWarning(final String title, final String message) {
-        JOptionPane.showMessageDialog(this, message, title, JOptionPane.WARNING_MESSAGE);
-    }
-
-    public void showError(final String title, final String message) {
-        JOptionPane.showMessageDialog(this, message, title, JOptionPane.ERROR_MESSAGE);
-    }
-
-    public boolean askConfirmation(final String title, final String message) {
-        return JOptionPane.showConfirmDialog(
-                this,
-                message,
-                title,
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION;
-    }
-
 }
