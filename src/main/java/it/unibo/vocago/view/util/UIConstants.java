@@ -5,15 +5,6 @@ import java.awt.Font;
 
 public final class UIConstants {
 
-    public static final int CELL_BORDER_THICKNESS = 2;
-    public static final int BIG_PADDING = 15;
-    public static final int GOAL = 10;
-    public static final int HOVER_COLOR_ADDITION = 50;
-
-    public static final int OUTER_PADDING = 24;
-    public static final int GAP = 12;
-    public static final int LARGE_GAP = 24;
-    public static final int ONE_DAY = 1;
     // dark grey theme
     public static final Color BACKGROUND = new Color(50, 50, 50);
     public static final Color BUTTON_BACKGROUND = new Color(80, 80, 80);

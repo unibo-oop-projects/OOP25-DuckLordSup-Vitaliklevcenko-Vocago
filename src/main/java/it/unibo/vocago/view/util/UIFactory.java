@@ -39,9 +39,7 @@ public final class UIFactory {
     private static final int TABLE_ROW_HEIGHT = 32;
     private static final int TABLE_HEADER_HEIGHT = 36;
     private static final int TEXT_SIZE = 14;
-
-    private UIFactory() {
-    }
+    private static final int CELL_BORDER_THICKNESS = 2;
 
     public static JButton createButton(final String text, final String iconPath,
             final int iconSize, final Color backGround, final int height, final int width,
@@ -235,7 +233,7 @@ public final class UIFactory {
                 PADDING, PADDING, PADDING, UIConstants.TABLE_GRID));
 
         UIManager.put("Table.focusCellHighlightBorder",
-                BorderFactory.createLineBorder(UIConstants.TABLE_CELL_SELECTION, UIConstants.CELL_BORDER_THICKNESS));
+                BorderFactory.createLineBorder(UIConstants.TABLE_CELL_SELECTION, CELL_BORDER_THICKNESS));
 
         table.setBackground(UIConstants.BACKGROUND.brighter());
         tableHeader.setBackground(UIConstants.TABLE_HEADER);
@@ -351,4 +349,8 @@ public final class UIFactory {
                 color.getGreen(),
                 color.getBlue());
     }
+
+    private UIFactory() {
+    }
+
 }
