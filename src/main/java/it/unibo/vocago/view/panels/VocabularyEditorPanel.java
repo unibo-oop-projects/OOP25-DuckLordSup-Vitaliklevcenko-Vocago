@@ -6,6 +6,8 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
@@ -17,13 +19,33 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import it.unibo.vocago.controller.api.Controller;
+import it.unibo.vocago.model.progress.WordProgress;
+import it.unibo.vocago.model.progress.api.Progress;
+import it.unibo.vocago.model.types.Direction;
 import it.unibo.vocago.model.types.MasteryLevel;
+import it.unibo.vocago.model.vocabulary.Dictionary;
+import it.unibo.vocago.model.vocabulary.DictionaryEntry;
+import it.unibo.vocago.model.vocabulary.WordEntry;
+import it.unibo.vocago.model.vocabulary.api.Vocabulary;
 import it.unibo.vocago.model.vocabulary.api.VocabularyItem;
+import it.unibo.vocago.model.vocabulary.api.Word;
 import it.unibo.vocago.view.util.UIConstants;
 import it.unibo.vocago.view.util.UIFactory;
 
 public class VocabularyEditorPanel extends JPanel{
     
+    private final int FIRST_WORDS_COLUMN = 0;
+    private final int SECOND_WORDS_COLUMN = 1;
+    private final int MEMORIZATION_COLUMN = 2;
+    private final int RECOGNITION_COLUMN = 3;
+    private final int FIRST_PROGRESS_COLUMN = 4;
+    private final int SECOND_PROGRESS_COLUMN = 5;
+    private final int MASTERY_COLUMN_WIDTH = 160;
+    private final int HEADER_HEIGHT = 60;
+    private final int FOOTER_HEIGHT = 60;
+    private final int ZERO = 0;
+    private final int WORD_COLUMN_WIDTH = 280;
+
     private final DefaultTableModel model;
     private final JTable table;
     private final JButton addRowButton;
@@ -65,7 +87,7 @@ public class VocabularyEditorPanel extends JPanel{
 
     private JPanel buildUpperPanel() {
         final JPanel upperButtonsPanel = UIFactory.createPanel(new GridLayout());
-        upperButtonsPanel.setPreferredSize(new Dimension(Integer.MAX_VALUE, VocabularyEditorHelper.HEADER_HEIGHT));
+        upperButtonsPanel.setPreferredSize(new Dimension(Integer.MAX_VALUE, HEADER_HEIGHT));
 
         final JPanel leftPanel = UIFactory.createPanel(new BorderLayout());
         leftPanel.add(this.goBackButton, BorderLayout.WEST);
@@ -93,24 +115,24 @@ public class VocabularyEditorPanel extends JPanel{
         model.addColumn("secondProgress");
 
         final DefaultCellEditor wordEditor = new DefaultCellEditor(UIFactory.createTextField());
-        this.table.getColumnModel().getColumn(VocabularyEditorHelper.FIRST_WORDS_COLUMN).setCellEditor(wordEditor);
-        this.table.getColumnModel().getColumn(VocabularyEditorHelper.SECOND_WORDS_COLUMN).setCellEditor(wordEditor);
+        this.table.getColumnModel().getColumn(FIRST_WORDS_COLUMN).setCellEditor(wordEditor);
+        this.table.getColumnModel().getColumn(SECOND_WORDS_COLUMN).setCellEditor(wordEditor);
 
         final DefaultCellEditor masteryEditor = new DefaultCellEditor(UIFactory.createComboBox(MasteryLevel.values()));
-        this.table.getColumnModel().getColumn(VocabularyEditorHelper.MEMORIZATION_COLUMN).setCellEditor(masteryEditor);
-        this.table.getColumnModel().getColumn(VocabularyEditorHelper.RECOGNITION_COLUMN).setCellEditor(masteryEditor);
+        this.table.getColumnModel().getColumn(MEMORIZATION_COLUMN).setCellEditor(masteryEditor);
+        this.table.getColumnModel().getColumn(RECOGNITION_COLUMN).setCellEditor(masteryEditor);
 
-        this.table.getColumnModel().getColumn(VocabularyEditorHelper.FIRST_WORDS_COLUMN)
-                .setPreferredWidth(VocabularyEditorHelper.WORD_COLUMN_WIDTH);
-        this.table.getColumnModel().getColumn(VocabularyEditorHelper.SECOND_WORDS_COLUMN)
-                .setPreferredWidth(VocabularyEditorHelper.WORD_COLUMN_WIDTH);
-        this.table.getColumnModel().getColumn(VocabularyEditorHelper.MEMORIZATION_COLUMN)
-                .setPreferredWidth(VocabularyEditorHelper.MASTERY_COLUMN_WIDTH);
-        this.table.getColumnModel().getColumn(VocabularyEditorHelper.RECOGNITION_COLUMN)
-                .setPreferredWidth(VocabularyEditorHelper.MASTERY_COLUMN_WIDTH);
+        this.table.getColumnModel().getColumn(FIRST_WORDS_COLUMN)
+                .setPreferredWidth(WORD_COLUMN_WIDTH);
+        this.table.getColumnModel().getColumn(SECOND_WORDS_COLUMN)
+                .setPreferredWidth(WORD_COLUMN_WIDTH);
+        this.table.getColumnModel().getColumn(MEMORIZATION_COLUMN)
+                .setPreferredWidth(MASTERY_COLUMN_WIDTH);
+        this.table.getColumnModel().getColumn(RECOGNITION_COLUMN)
+                .setPreferredWidth(MASTERY_COLUMN_WIDTH);
 
-        hideColumn(VocabularyEditorHelper.FIRST_PROGRESS_COLUMN);
-        hideColumn(VocabularyEditorHelper.SECOND_PROGRESS_COLUMN);
+        hideColumn(FIRST_PROGRESS_COLUMN);
+        hideColumn(SECOND_PROGRESS_COLUMN);
 
         return UIFactory.createScrollPane(this.table);
     }
@@ -123,15 +145,15 @@ public class VocabularyEditorPanel extends JPanel{
         lowerButtonsPanel.add(this.addRowButton);
         lowerButtonsPanel.add(this.deleteRowButton);
         lowerButtonsPanel.add(this.saveChangesButton);
-        lowerButtonsPanel.setPreferredSize(new Dimension(Integer.MAX_VALUE, VocabularyEditorHelper.FOOTER_HEIGHT));
+        lowerButtonsPanel.setPreferredSize(new Dimension(Integer.MAX_VALUE, FOOTER_HEIGHT));
         return lowerButtonsPanel;
     }
 
     private void hideColumn(final int columnIndex) {
-        this.table.getColumnModel().getColumn(columnIndex).setMinWidth(VocabularyEditorHelper.ZERO);
-        this.table.getColumnModel().getColumn(columnIndex).setMaxWidth(VocabularyEditorHelper.ZERO);
-        this.table.getColumnModel().getColumn(columnIndex).setPreferredWidth(VocabularyEditorHelper.ZERO);
-        this.table.getColumnModel().getColumn(columnIndex).setWidth(VocabularyEditorHelper.ZERO);
+        this.table.getColumnModel().getColumn(columnIndex).setMinWidth(ZERO);
+        this.table.getColumnModel().getColumn(columnIndex).setMaxWidth(ZERO);
+        this.table.getColumnModel().getColumn(columnIndex).setPreferredWidth(ZERO);
+        this.table.getColumnModel().getColumn(columnIndex).setWidth(ZERO);
     }
 
     private void actionRegister() {
@@ -153,19 +175,19 @@ public class VocabularyEditorPanel extends JPanel{
         if (!stopTableEditing()) {
             return false;
         }
-        this.controller.saveVocabulary(VocabularyEditorHelper.toVocabulary(this.model));
+        this.controller.saveVocabulary(toVocabulary(this.model));
         return true;
     }
 
     private void showVocabulary() {
         for (final VocabularyItem item : this.controller.getCurrentProfile().getVocabulary().getItems()) {
-            this.model.addRow(VocabularyEditorHelper.rowFromVocabularyItem(item));
+            this.model.addRow(rowFromVocabularyItem(item));
         }
         addEmptyRow();
     }
 
     private void addEmptyRow() {
-        this.model.addRow(VocabularyEditorHelper.emptyRow());
+        this.model.addRow(emptyRow());
     }
 
     private void deleteSelectedRows() {
@@ -210,10 +232,10 @@ public class VocabularyEditorPanel extends JPanel{
         }
 
         for (int row = 0; row < this.table.getRowCount(); row++) {
-            final String firstColumn = VocabularyEditorHelper.cellToText(
-                    this.table.getValueAt(row, VocabularyEditorHelper.FIRST_WORDS_COLUMN)).toLowerCase();
-            final String secondColumn = VocabularyEditorHelper.cellToText(
-                    this.table.getValueAt(row, VocabularyEditorHelper.SECOND_WORDS_COLUMN)).toLowerCase();
+            final String firstColumn = cellToText(
+                    this.table.getValueAt(row, FIRST_WORDS_COLUMN)).toLowerCase();
+            final String secondColumn = cellToText(
+                    this.table.getValueAt(row, SECOND_WORDS_COLUMN)).toLowerCase();
 
             if (firstColumn.contains(searchText) || secondColumn.contains(searchText)) {
                 this.table.setRowSelectionInterval(row, row);
@@ -233,5 +255,86 @@ public class VocabularyEditorPanel extends JPanel{
         if (answer != JOptionPane.CANCEL_OPTION && answer != JOptionPane.CLOSED_OPTION) {
             this.controller.showProfileDashboardPanel();
         }
+    }
+
+    private Object[] rowFromVocabularyItem(final VocabularyItem item) {
+        return new Object[] {
+                wordsToText(item.getFirstLanguageWords()),
+                wordsToText(item.getSecondLanguageWords()),
+                item.getProgress(Direction.FIRST_TO_SECOND).getMasteryLevel(),
+                item.getProgress(Direction.SECOND_TO_FIRST).getMasteryLevel(),
+                item.getProgress(Direction.FIRST_TO_SECOND),
+                item.getProgress(Direction.SECOND_TO_FIRST)
+        };
+    }
+
+    private String wordsToText(final List<Word> words) {
+        final StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < words.size(); i++) {
+            builder.append(words.get(i).getWord());
+            if (i < words.size() - 1) {
+                builder.append(", ");
+            }
+        }
+        return builder.toString();
+    }
+
+    private Object[] emptyRow() {
+        return new Object[] {
+                "",
+                "",
+                MasteryLevel.NEW,
+                MasteryLevel.NEW,
+                new WordProgress(),
+                new WordProgress()
+        };
+    }
+
+    private Vocabulary toVocabulary(final DefaultTableModel model) {
+        final List<VocabularyItem> vocabularyItems = new ArrayList<>();
+
+        for (int row = 0; row < model.getRowCount(); row++) {
+
+            final String firstText = cellToText(model.getValueAt(row, FIRST_WORDS_COLUMN));
+            final String secondText = cellToText(model.getValueAt(row, SECOND_WORDS_COLUMN));
+            if (firstText.isBlank() && secondText.isBlank()) {
+                continue;
+            }
+
+            final MasteryLevel firstMasteryLevel = masteryLevelAt(model, row, MEMORIZATION_COLUMN);
+            final MasteryLevel secondMasteryLevel = masteryLevelAt(model, row, RECOGNITION_COLUMN);
+
+            vocabularyItems.add(new DictionaryEntry(
+                    parseWordEntries(firstText),
+                    parseWordEntries(secondText),
+                    progressWithMastery(model.getValueAt(row, FIRST_PROGRESS_COLUMN), firstMasteryLevel),
+                    progressWithMastery(model.getValueAt(row, SECOND_PROGRESS_COLUMN), secondMasteryLevel)));
+        }
+
+        return new Dictionary(vocabularyItems);
+    }
+
+    private String cellToText(final Object value) {
+        return value == null ? "" : value.toString().trim();
+    }
+
+    private List<Word> parseWordEntries(final String text) {
+        final List<Word> entries = new ArrayList<>();
+        for (final String part : text.split(",")) {
+            final String trimmed = part.trim();
+            if (!trimmed.isBlank()) {
+                entries.add(new WordEntry(trimmed));
+            }
+        }
+        return entries;
+    }
+    
+    private MasteryLevel masteryLevelAt(final DefaultTableModel model, final int row, final int column) {
+        return model.getValueAt(row, column) instanceof MasteryLevel masteryLevel ? masteryLevel : MasteryLevel.NEW;
+    }
+
+    private Progress progressWithMastery(final Object value, final MasteryLevel masteryLevel) {
+        return value instanceof Progress progress ? new WordProgress(masteryLevel, progress.getCorrectAnswers(),
+            progress.getWrongAnswers()) : new WordProgress(masteryLevel);
     }
 }
