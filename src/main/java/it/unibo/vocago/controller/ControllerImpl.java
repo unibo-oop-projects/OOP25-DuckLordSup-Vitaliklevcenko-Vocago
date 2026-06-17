@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 import it.unibo.vocago.controller.api.Controller;
 import it.unibo.vocago.controller.coordinators.LearningCoordinator;
+import it.unibo.vocago.controller.coordinators.ProfileCoordinator;
 import it.unibo.vocago.logic.profile.ProfileManagerImpl;
 import it.unibo.vocago.logic.profile.api.ProfileManager;
 import it.unibo.vocago.model.progress.ProfileStats;
@@ -19,11 +20,13 @@ public class ControllerImpl implements Controller {
     private final AppView appView;
     private final ProfileManager profileManager;
     private final LearningCoordinator learningCoordinator;
+    private final ProfileCoordinator profileCoordinator;
 
     public ControllerImpl() {
         this.appView = new AppFrame(this);
         this.profileManager = new ProfileManagerImpl();//depends on the data base we choose (sql/csv file)
         this.learningCoordinator = new LearningCoordinator(this.profileManager, this.appView);
+        this.profileCoordinator = new ProfileCoordinator(this.profileManager, this.appView);
         showStartPanel();
     }
 
@@ -42,7 +45,7 @@ public class ControllerImpl implements Controller {
 
     public void showProfileDashboardPanel() {
         this.learningCoordinator.closeLearningSession();
-        this.profileManager.updateExpiredStreak();
+        this.profileCoordinator.updateExpiredStreak();
         view().showProfileDashboardPanel();
     }
 
@@ -96,112 +99,51 @@ public class ControllerImpl implements Controller {
 
     // profile Manager getters and setters //
     public List<User> getExistingProfiles() {
-        try {
-            return this.profileManager.getExistingProfiles();
-        } catch (RuntimeException exception) {
-            view().showError("Profile Error", "Could not load saved profiles.");
-            return List.of();
-        }
+        return this.profileCoordinator.getExistingProfiles();
     }
     
     public void createProfile(final String profileName, final String firstLanguage, final String secondLanguage) {
-        if (profileName == null || profileName.trim().isBlank()) {
-            view().showWarning(
-                    "Profile Name Invalid",
-                    "Please enter a valid profile name.");
-            return;
-        }
-        try {
-            if (this.profileManager.profileExists(profileName)) {
-                    view().showError(
-                        "Profile Name Invalid",
-                        "This profile already exists!");
-                return;
-            }
-            this.profileManager.createProfile(profileName, firstLanguage, secondLanguage);
+        if (this.profileCoordinator.createProfile(profileName, firstLanguage, secondLanguage)) {
             showProfileDashboardPanel();
-        } catch (RuntimeException exception) {
-            view().showError(
-                    "Profile Error",
-                    "Could not create profile, try again!");
         }
     }
 
     public void saveVocabulary(final Vocabulary vocabulary) {
-        try {
-            this.profileManager.saveVocabulary(vocabulary);
-        } catch (RuntimeException exception) {
-            view().showError("Save Failed", "Could not save changes, try again!");
-        }
+        this.profileCoordinator.saveVocabulary(vocabulary);
     }
 
     public void deleteProfile() {
-        if (view().askConfirmation("Delete Profile", "Are you sure you want to delete your profile?")) {
-            try {
-                if (this.profileManager.deleteCurrentProfile()) {
-                    this.learningCoordinator.resetSession();
-                    showStartPanel();
-                }
-            } catch (RuntimeException exception) {
-                if (getCurrentProfile() == null) {
-                    view().showError("Delete Failed", "The progress could not be deleted, try again!");
-                } else {
-                    view().showError("Delete Failed", "The profile could not be deleted, try again!");
-                }
-                showStartPanel();
-             }
+        if (this.profileCoordinator.deleteProfile()) {
+            this.learningCoordinator.resetSession();
+            showStartPanel();
         }
     }
 
     public boolean vocabularyIsValid() {
-        return this.profileManager.vocabularyIsValid();
+        return this.profileCoordinator.vocabularyIsValid();
     }
 
     public void chooseProfile(final User profile) {
-        this.profileManager.chooseProfile(profile);
+        this.profileCoordinator.chooseProfile(profile);
         this.learningCoordinator.resetSession();
         showProfileDashboardPanel();
     }
 
     public User getCurrentProfile() {
-        return this.profileManager.getCurrentProfile();
+        return this.profileCoordinator.getCurrentProfile();
     }
 
     public int getDailyGoal() {
-        try {
-            return this.profileManager.getDailyGoal();
-        } catch (RuntimeException exception) {
-            exception.printStackTrace();
-            return 10;
-        }
+        return this.profileCoordinator.getDailyGoal();
     }
 
     public void saveProfileConfigurations(String profileName, final String firstLanguage,
             final String secondLanguage, final int dailyGoal) {
-        try{
-            String originalProfileName = getCurrentProfile().getUserName();
-            profileName = (profileName == null || profileName.trim().isBlank())
-                    ? originalProfileName
-                    : profileName.trim();
-            
-            if (this.profileManager.profileExists(profileName) && !profileName.equals(originalProfileName)) {
-                view().showError(
-                        "Profile Name Invalid",
-                        "This profile already exists!");
-                return;
-            }
-            this.profileManager.saveProfileConfigurations(profileName, firstLanguage, secondLanguage, dailyGoal);
-            view().showInfo(
-                    "Profile saved",
-                    "Profile configuration has been saved successfully!");
+        if (this.profileCoordinator.saveProfileConfigurations(profileName, firstLanguage, secondLanguage, dailyGoal)) {
             showProfileDashboardPanel();
-        } catch (RuntimeException exception) {
-            view().showError(
-                    "Profile Error",
-                    "Could not change profile configuration, try again!");
         }
     }
-    //progress file getters and setters//
+
     public Stats getDashboardStats() {
         try {
             return this.profileManager.getDashboardStats();
@@ -238,10 +180,9 @@ public class ControllerImpl implements Controller {
     }
 
     public void closeApp() {
-        if (this.profileManager.hasCurrentProfile() && getCurrentProfile().getVocabulary() != null) {
+        if (this.profileCoordinator.hasCurrentProfile() && getCurrentProfile().getVocabulary() != null) {
             saveVocabulary(getCurrentProfile().getVocabulary());
         }
-
         saveLearningStats();
         this.learningCoordinator.resetSession();
         System.exit(0);

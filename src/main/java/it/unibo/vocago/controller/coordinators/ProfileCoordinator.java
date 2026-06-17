@@ -1,5 +1,132 @@
 package it.unibo.vocago.controller.coordinators;
 
-public class ProfileCoordinator {
+import java.util.List;
 
+import it.unibo.vocago.logic.profile.api.ProfileManager;
+import it.unibo.vocago.model.user.api.User;
+import it.unibo.vocago.model.vocabulary.api.Vocabulary;
+import it.unibo.vocago.view.api.AppView;
+
+public final class ProfileCoordinator {
+
+    private final ProfileManager profileManager;
+    private final AppView appView;
+
+    public ProfileCoordinator(final ProfileManager profileManager, final AppView appView) {
+        this.profileManager = profileManager;
+        this.appView = appView;
+    }
+
+    public List<User> getExistingProfiles() {
+        try {
+            return this.profileManager.getExistingProfiles();
+        } catch (RuntimeException exception) {
+            this.appView.showError("Profile Error", "Could not load saved profiles.");
+            return List.of();
+        }
+    }
+
+    public boolean createProfile(final String profileName, final String firstLanguage, final String secondLanguage) {
+        if (profileName == null || profileName.trim().isBlank()) {
+            this.appView.showWarning(
+                    "Profile Name Invalid",
+                    "Please enter a valid profile name.");
+            return false;
+        }
+        try {
+            if (this.profileManager.profileExists(profileName)) {
+                this.appView.showError(
+                        "Profile Name Invalid",
+                        "This profile already exists!");
+                return false;
+            }
+            this.profileManager.createProfile(profileName, firstLanguage, secondLanguage);
+            return true;
+        } catch (RuntimeException exception) {
+            this.appView.showError(
+                    "Profile Error",
+                    "Could not create profile, try again!");
+            return false;
+        }
+    }
+
+    public void saveVocabulary(final Vocabulary vocabulary) {
+        try {
+            this.profileManager.saveVocabulary(vocabulary);
+        } catch (RuntimeException exception) {
+            this.appView.showError("Save Failed", "Could not save changes, try again!");
+        }
+    }
+
+    public boolean deleteProfile() {
+        if (!this.appView.askConfirmation("Delete Profile", "Are you sure you want to delete your profile?")) {
+            return false;
+        }
+        try {
+            return this.profileManager.deleteCurrentProfile();
+        } catch (RuntimeException exception) {
+            if (getCurrentProfile() == null) {
+                this.appView.showError("Delete Failed", "The progress could not be deleted, try again!");
+            } else {
+                this.appView.showError("Delete Failed", "The profile could not be deleted, try again!");
+            }
+            return true;
+        }
+    }
+
+    public boolean vocabularyIsValid() {
+        return this.profileManager.vocabularyIsValid();
+    }
+
+    public void chooseProfile(final User profile) {
+        this.profileManager.chooseProfile(profile);
+    }
+
+    public User getCurrentProfile() {
+        return this.profileManager.getCurrentProfile();
+    }
+
+    public boolean hasCurrentProfile() {
+        return this.profileManager.hasCurrentProfile();
+    }
+
+    public int getDailyGoal() {
+        try {
+            return this.profileManager.getDailyGoal();
+        } catch (RuntimeException exception) {
+            exception.printStackTrace();
+            return 10;
+        }
+    }
+
+    public boolean saveProfileConfigurations(String profileName, final String firstLanguage,
+            final String secondLanguage, final int dailyGoal) {
+        try {
+            final String originalProfileName = getCurrentProfile().getUserName();
+            profileName = (profileName == null || profileName.trim().isBlank())
+                    ? originalProfileName
+                    : profileName.trim();
+
+            if (this.profileManager.profileExists(profileName) && !profileName.equals(originalProfileName)) {
+                this.appView.showError(
+                        "Profile Name Invalid",
+                        "This profile already exists!");
+                return false;
+            }
+            this.profileManager.saveProfileConfigurations(profileName, firstLanguage, secondLanguage, dailyGoal);
+            this.appView.showInfo(
+                    "Profile saved",
+                    "Profile configuration has been saved successfully!");
+            return true;
+        } catch (RuntimeException exception) {
+            this.appView.showError(
+                    "Profile Error",
+                    "Could not change profile configuration, try again!");
+            return false;
+        }
+    }
+
+    public void updateExpiredStreak() {
+        this.profileManager.updateExpiredStreak();
+    }
 }
