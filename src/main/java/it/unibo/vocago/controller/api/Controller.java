@@ -49,6 +49,8 @@ public interface Controller {
 
     boolean vocabularyIsValid();
 
+    int saveBeforeLeaving();
+
     void chooseProfile(User profile);
 
     User getCurrentProfile();

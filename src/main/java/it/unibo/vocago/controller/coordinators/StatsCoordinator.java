@@ -2,6 +2,8 @@ package it.unibo.vocago.controller.coordinators;
 
 import java.time.LocalDate;
 
+import javax.swing.JOptionPane;
+
 import it.unibo.vocago.logic.profile.api.ProfileManager;
 import it.unibo.vocago.model.progress.ProfileStats;
 import it.unibo.vocago.model.progress.api.Stats;
@@ -35,9 +37,10 @@ public final class StatsCoordinator {
     }
 
     public boolean resetStats() {
-        if (!this.appView.askConfirmation(
+        final int answer = this.appView.askConfirmationWithCancel(
                 "Reset Stats",
-                "Are you sure? your streak and study time will be reset")) {
+                "Are you sure? your streak and study time will be reset");
+        if (answer != JOptionPane.YES_OPTION) {
             return false;
         }
 

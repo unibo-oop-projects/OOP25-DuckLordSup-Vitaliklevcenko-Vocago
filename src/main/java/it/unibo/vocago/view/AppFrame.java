@@ -140,6 +140,16 @@ public class AppFrame extends JFrame implements AppView {
                 JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION;
     }
 
+    @Override
+    public int askConfirmationWithCancel(final String title, final String message) {
+        return JOptionPane.showConfirmDialog(
+                this,
+                message,
+                title,
+                JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE);
+    }
+
     private void resizeWindow(final Dimension size) {
         this.setSize(size);
         this.setLocationRelativeTo(null);

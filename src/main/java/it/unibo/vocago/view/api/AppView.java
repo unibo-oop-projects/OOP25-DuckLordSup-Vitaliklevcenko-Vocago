@@ -20,4 +20,6 @@ public interface AppView {
     void showError(String title, String message);
 
     boolean askConfirmation(String title, String message);
+
+    int askConfirmationWithCancel(String title, String message);
 }

@@ -2,6 +2,8 @@ package it.unibo.vocago.controller.coordinators;
 
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import it.unibo.vocago.logic.profile.api.ProfileManager;
 import it.unibo.vocago.model.user.api.User;
 import it.unibo.vocago.view.api.AppView;
@@ -50,7 +52,10 @@ public final class ProfileCoordinator {
     }
 
     public boolean deleteProfile() {
-        if (!this.appView.askConfirmation("Delete Profile", "Are you sure you want to delete your profile?")) {
+        final int answer = this.appView.askConfirmationWithCancel(
+                "Delete Profile",
+                "Are you sure you want to delete your profile?");
+        if (answer != JOptionPane.YES_OPTION) {
             return false;
         }
         try {

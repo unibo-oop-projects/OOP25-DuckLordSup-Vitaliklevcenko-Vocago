@@ -26,5 +26,7 @@ public final class VocabularyCoordinator {
         return this.profileManager.vocabularyIsValid();
     }
 
-    
+    public int saveBeforeLeaving() {
+        return this.appView.askConfirmationWithCancel("Before Exit", "Save changes?");
+    }
 }

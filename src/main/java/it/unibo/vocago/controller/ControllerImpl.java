@@ -116,6 +116,10 @@ public class ControllerImpl implements Controller {
         return this.vocabularyCoordinator.vocabularyIsValid();
     }
 
+    public int saveBeforeLeaving() {
+        return this.vocabularyCoordinator.saveBeforeLeaving();
+    }
+
     public void deleteProfile() {
         if (this.profileCoordinator.deleteProfile()) {
             this.learningCoordinator.stopLearningSession();

@@ -246,8 +246,7 @@ public class VocabularyEditorPanel extends JPanel{
     }
     
     private void askBeforeLeaving() {
-        final int answer = JOptionPane.showConfirmDialog(this, "Save changes?", "Before Exit",
-                JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+        final int answer = this.controller.saveBeforeLeaving();
 
         if (answer == JOptionPane.YES_OPTION && !saveChanges()) {
             return;
