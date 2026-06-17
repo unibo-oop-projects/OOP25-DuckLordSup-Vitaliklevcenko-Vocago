@@ -19,6 +19,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import it.unibo.vocago.controller.api.Controller;
+import it.unibo.vocago.model.types.DailyGoalSettings;
 import it.unibo.vocago.view.util.UIConstants;
 import it.unibo.vocago.view.util.UIFactory;
 
@@ -29,8 +30,6 @@ public class ConfigureProfilePanel extends JPanel{
             "Portuguese", "Dutch", "Polish", "Japanese", "Chinese"
     };
     private static final int PANEL_WIDTH = 660;
-    private static final int DAILY_GOAL_MIN = 5;
-    private static final int DAILY_GOAL_MAX = 40;
     private static final int BUTTON_WIDTH = 70;
     private final Controller controller;
     private final JButton saveChangesButton;
@@ -60,7 +59,10 @@ public class ConfigureProfilePanel extends JPanel{
         ((JLabel) this.secondLanguageComboBox.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
         this.firstLanguageComboBox.setSelectedItem(this.controller.getCurrentProfile().getFirstLanguage());
         this.secondLanguageComboBox.setSelectedItem(this.controller.getCurrentProfile().getSecondLanguage());
-        this.dailyGoalSlider = new JSlider(DAILY_GOAL_MIN, DAILY_GOAL_MAX, this.controller.getDailyGoal());
+        this.dailyGoalSlider = new JSlider(
+                DailyGoalSettings.MIN,
+                DailyGoalSettings.MAX,
+                this.controller.getDailyGoal());
         this.dailyGoalValueLabel = UIFactory.createLabel(Integer.toString(this.controller.getDailyGoal()), UIConstants.FONT);
 
         buildLayout();
@@ -146,8 +148,10 @@ public class ConfigureProfilePanel extends JPanel{
         panel.add(this.dailyGoalSlider, BorderLayout.CENTER);
         final JPanel limitsPanel = UIFactory.createPanel(new BorderLayout());
         limitsPanel.setBackground(background);
-        limitsPanel.add(UIFactory.createLabel(Integer.toString(DAILY_GOAL_MIN), UIConstants.FONT), BorderLayout.WEST);
-        limitsPanel.add(UIFactory.createLabel(Integer.toString(DAILY_GOAL_MAX), UIConstants.FONT), BorderLayout.EAST);
+        limitsPanel.add(UIFactory.createLabel(Integer.toString(DailyGoalSettings.MIN), UIConstants.FONT),
+                BorderLayout.WEST);
+        limitsPanel.add(UIFactory.createLabel(Integer.toString(DailyGoalSettings.MAX), UIConstants.FONT),
+                BorderLayout.EAST);
         panel.add(limitsPanel, BorderLayout.SOUTH);
         return panel;
     }

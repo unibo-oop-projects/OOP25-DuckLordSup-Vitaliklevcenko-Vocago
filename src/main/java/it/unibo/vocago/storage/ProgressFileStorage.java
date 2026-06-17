@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.List;
+import it.unibo.vocago.model.types.DailyGoalSettings;
 import it.unibo.vocago.storage.api.ProgressRepository;
 
 public class ProgressFileStorage implements ProgressRepository {
@@ -16,7 +17,6 @@ public class ProgressFileStorage implements ProgressRepository {
     private static final int CURRENT_STREAK_INDEX = 1;
     private static final int TOTAL_STUDY_TIME_INDEX = 2;
     private static final int DAILY_GOAL_INDEX = 3;
-    private static final int DEFAULT_DAILY_GOAL = 10;
 
     @Override
     public void createProgressFile(final String userName) {
@@ -24,7 +24,7 @@ public class ProgressFileStorage implements ProgressRepository {
             Files.createDirectories(USERS_DIRECTORY);
             final Path file = fileFor(userName);
             if (!Files.exists(file)) {
-                saveStats(userName, LocalDate.now(), 0, 0L, DEFAULT_DAILY_GOAL);
+                saveStats(userName, LocalDate.now(), 0, 0L, DailyGoalSettings.DEFAULT);
             }
         } catch (IOException exception) {
             throw new UncheckedIOException("Could not create progress file for user: " + userName, exception);
@@ -53,16 +53,14 @@ public class ProgressFileStorage implements ProgressRepository {
         if (totalStudyTime < 0) {
             totalStudyTime = 0L;
         }
-        if (dailyGoal < 5 || dailyGoal > 40) {
-            dailyGoal = DEFAULT_DAILY_GOAL;
-        }
+
         try {
             Files.createDirectories(USERS_DIRECTORY);
             Files.write(fileFor(userName), List.of(
                     lastStudyDate.toString(),
                     Integer.toString(currentStreak),
                     Long.toString(totalStudyTime),
-                    Integer.toString(dailyGoal)), StandardCharsets.UTF_8);
+                    Integer.toString(DailyGoalSettings.normalize(dailyGoal))), StandardCharsets.UTF_8);
         } catch (IOException exception) {
             throw new UncheckedIOException("Could not save progress for user: " + userName, exception);
         }
@@ -97,13 +95,33 @@ public class ProgressFileStorage implements ProgressRepository {
         }
     }
 
+    @Override
+    public void saveProfileConfigurations(final String profileName, final String newProfileName, final int dailyGoal) {
+        final String currentProfileName = profileName.trim();
+        final String targetProfileName = newProfileName.trim();
+        final LocalDate lastStudyDate = getLastStudyDate(currentProfileName);
+        final int currentStreak = getCurrentStreak(currentProfileName);
+        final long totalStudyTime = getTotalStudyTime(currentProfileName);
+
+        try {
+            Files.createDirectories(USERS_DIRECTORY);
+            if (!currentProfileName.equals(targetProfileName)) {
+                Files.move(fileFor(currentProfileName), fileFor(targetProfileName));
+            }
+            saveStats(targetProfileName, lastStudyDate, currentStreak, totalStudyTime, dailyGoal);
+        } catch (IOException exception) {
+            throw new UncheckedIOException("Could not save progress configuration for profile: " + currentProfileName,
+                    exception);
+        }
+    }
+
     private List<String> readProgressLines(final String userName) {
         createProgressFile(userName);
         try {
 
             final List<String> lines = Files.readAllLines(fileFor(userName), StandardCharsets.UTF_8);
             if (lines.size() != 4) {
-                resetProgressFile(userName, LocalDate.now(), 0, 0L, DEFAULT_DAILY_GOAL);
+                resetProgressFile(userName, LocalDate.now(), 0, 0L, DailyGoalSettings.DEFAULT);
                 return Files.readAllLines(fileFor(userName), StandardCharsets.UTF_8);
             }
 
@@ -129,11 +147,9 @@ public class ProgressFileStorage implements ProgressRepository {
             }
             try {
                 dailyGoal = Integer.parseInt(lines.get(DAILY_GOAL_INDEX));
-                if (dailyGoal < 5 || dailyGoal > 40) {
-                    dailyGoal = DEFAULT_DAILY_GOAL;
-                }
+                dailyGoal = DailyGoalSettings.normalize(dailyGoal);
             } catch (RuntimeException exception) {
-                dailyGoal = DEFAULT_DAILY_GOAL;
+                dailyGoal = DailyGoalSettings.DEFAULT;
             }
             saveStats(userName, lastStudyDate, currentStreak, totalStudyTime, dailyGoal);
             return Files.readAllLines(fileFor(userName), StandardCharsets.UTF_8);
@@ -147,7 +163,7 @@ public class ProgressFileStorage implements ProgressRepository {
             int currentStreak, long totalStudyTime, int dailyGoal) {
         try{
             Files.deleteIfExists(fileFor(userName));
-            saveStats(userName, LocalDate.now(), 0, 0L, DEFAULT_DAILY_GOAL);
+            saveStats(userName, LocalDate.now(), 0, 0L, DailyGoalSettings.DEFAULT);
         } catch (IOException exception) {
             throw new UncheckedIOException("Could not reset progress for user: " + userName, exception);
         }
@@ -157,31 +173,11 @@ public class ProgressFileStorage implements ProgressRepository {
         return USERS_DIRECTORY.resolve(userName.trim() + ".progress");
     }
 
-    @Override
-    public void saveProfileConfigurations(final String profileName, final String newProfileName, final int dailyGoal) {
-        final String currentProfileName = profileName.trim();
-        final String targetProfileName = newProfileName.trim();
-        final LocalDate lastStudyDate = getLastStudyDate(currentProfileName);
-        final int currentStreak = getCurrentStreak(currentProfileName);
-        final long totalStudyTime = getTotalStudyTime(currentProfileName);
-
-        try {
-            Files.createDirectories(USERS_DIRECTORY);
-            if (!currentProfileName.equals(targetProfileName)) {
-                Files.move(fileFor(currentProfileName), fileFor(targetProfileName));
-            }
-            saveStats(targetProfileName, lastStudyDate, currentStreak, totalStudyTime, dailyGoal);
-        } catch (IOException exception) {
-            throw new UncheckedIOException("Could not save progress configuration for profile: " + currentProfileName,
-                    exception);
-        }
-    }
-
     private int dailyGoalOrDefault(final String userName) {
         try {
             return getDailyGoal(userName);
         } catch (RuntimeException exception) {
-            return DEFAULT_DAILY_GOAL;
+            return DailyGoalSettings.DEFAULT;
         }
     }
 

@@ -5,6 +5,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import it.unibo.vocago.logic.profile.api.ProfileManager;
+import it.unibo.vocago.model.types.DailyGoalSettings;
 import it.unibo.vocago.model.user.api.User;
 import it.unibo.vocago.view.api.AppView;
 
@@ -82,8 +83,7 @@ public final class ProfileCoordinator {
         try {
             return this.profileManager.getDailyGoal();
         } catch (RuntimeException exception) {
-            exception.printStackTrace();
-            return 10;
+            return DailyGoalSettings.DEFAULT;
         }
     }
 

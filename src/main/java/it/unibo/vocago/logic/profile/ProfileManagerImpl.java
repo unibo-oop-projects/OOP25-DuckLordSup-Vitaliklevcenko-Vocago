@@ -9,6 +9,7 @@ import it.unibo.vocago.logic.profile.api.ProfileManager;
 import it.unibo.vocago.model.progress.ProfileStats;
 import it.unibo.vocago.model.progress.api.Progress;
 import it.unibo.vocago.model.progress.api.Stats;
+import it.unibo.vocago.model.types.DailyGoalSettings;
 import it.unibo.vocago.model.types.Direction;
 import it.unibo.vocago.model.types.MasteryLevel;
 import it.unibo.vocago.model.user.Profile;
@@ -21,10 +22,6 @@ import it.unibo.vocago.storage.api.ProgressRepository;
 import it.unibo.vocago.storage.api.UserRepository;
 
 public class ProfileManagerImpl implements ProfileManager{
-
-    private static final int DEFAULT_DAILY_GOAL = 10;
-    private static final int MIN_DAILY_GOAL = 5;
-    private static final int MAX_DAILY_GOAL = 40;
 
     private final UserRepository userRepository;
     private final ProgressRepository progressRepository;
@@ -222,9 +219,7 @@ public class ProfileManagerImpl implements ProfileManager{
             final String targetProfileName = newProfileName == null || newProfileName.trim().isBlank()
                     ? originalProfileName
                     : newProfileName.trim();
-            if (dailyGoal < MIN_DAILY_GOAL || dailyGoal > MAX_DAILY_GOAL) {
-                dailyGoal = DEFAULT_DAILY_GOAL;
-            }
+            dailyGoal = DailyGoalSettings.normalize(dailyGoal);
             this.progressRepository.saveProfileConfigurations(originalProfileName, targetProfileName, dailyGoal);
             final User updatedUser = new Profile(
                     targetProfileName,
