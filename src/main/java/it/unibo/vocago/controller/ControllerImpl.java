@@ -4,8 +4,6 @@ import java.time.LocalDate;
 import java.util.List;
 import it.unibo.vocago.controller.api.Controller;
 import it.unibo.vocago.controller.coordinators.LearningCoordinator;
-import it.unibo.vocago.logic.learning.LearningSessionImpl;
-import it.unibo.vocago.logic.learning.api.LearningSession;
 import it.unibo.vocago.logic.profile.ProfileManagerImpl;
 import it.unibo.vocago.logic.profile.api.ProfileManager;
 import it.unibo.vocago.model.progress.ProfileStats;
@@ -19,13 +17,11 @@ import it.unibo.vocago.view.api.AppView;
 public class ControllerImpl implements Controller {
 
     private final AppView appView;
-    private LearningSession learningSession;
     private final ProfileManager profileManager;
     private final LearningCoordinator learningCoordinator;
 
     public ControllerImpl() {
         this.appView = new AppFrame(this);
-        this.learningSession = null;
         this.profileManager = new ProfileManagerImpl();//depends on the data base we choose (sql/csv file)
         this.learningCoordinator = new LearningCoordinator(this.profileManager, this.appView);
         showStartPanel();
@@ -45,7 +41,7 @@ public class ControllerImpl implements Controller {
     }
 
     public void showProfileDashboardPanel() {
-        closeLearningSession();//if active
+        this.learningCoordinator.closeLearningSession();
         this.profileManager.updateExpiredStreak();
         view().showProfileDashboardPanel();
     }
@@ -55,69 +51,47 @@ public class ControllerImpl implements Controller {
     }
 
     public void showLearningPanel() {
-        if (this.learningSession == null) {
-            if (!vocabularyIsValid()) {
-                view().showWarning(
-                        "No Valid Words",
-                        "There are no valid words available, add more words to your vocabulary");
-                return;
-            }
-            this.learningSession = new LearningSessionImpl(getCurrentProfile().getVocabulary());
-        }
-        view().showLearningPanel();
+        this.learningCoordinator.showLearningPanel();
     }
     
     public void showConfigureProfilePanel() {
         view().showConfigureProfilePanel();
     }
-        // Learning Session getters and setters //
-    public LearningSession getLearningSession() {
-        if (this.learningSession == null) {
-            throw new IllegalStateException("No active learning session.");
-        }
-        return this.learningSession;
-    }
 
     public String getNextQuestion() {
-        return getLearningSession().getNextQuestion();
+        return this.learningCoordinator.getNextQuestion();
     }
 
     public boolean evaluateAnswer(final String userAnswer) {
-        return getLearningSession().evaluateAnswer(userAnswer);
+        return this.learningCoordinator.evaluateAnswer(userAnswer);
     }
 
     public String getCorrectAnswer() {
-        return getLearningSession().getCorrectAnswer();
+        return this.learningCoordinator.getCorrectAnswer();
     }
 
     public void switchDirection() {
-        getLearningSession().switchDirection();
+        this.learningCoordinator.switchDirection();
     }
 
     public boolean currentQuestionEvaluated() {
-        return getLearningSession().currentQuestionEvaluated();
+        return this.learningCoordinator.currentQuestionEvaluated();
     }
 
     public Direction getDirection() {
-        return getLearningSession().getDirection();
+        return this.learningCoordinator.getDirection();
     }
 
     public long getLearningStartTime() {
-        return getLearningSession().getTime();
+        return this.learningCoordinator.getLearningStartTime();
     }
 
     public int getCurrentQuestionNumber() {
-        return getLearningSession().getCorrectAnsweredQuestions();
+        return this.learningCoordinator.getCurrentQuestionNumber();
     }
-    
-    private void closeLearningSession() {
-        if (this.learningSession != null) {
-            if (this.profileManager.hasCurrentProfile() && getCurrentProfile().getVocabulary() != null) {
-                saveVocabulary(getCurrentProfile().getVocabulary());
-            }
-            saveLearningStats();
-            this.learningSession = null;
-        }
+
+    public void saveLearningStats() {
+        this.learningCoordinator.saveLearningStats();
     }
 
     // profile Manager getters and setters //
@@ -165,7 +139,7 @@ public class ControllerImpl implements Controller {
         if (view().askConfirmation("Delete Profile", "Are you sure you want to delete your profile?")) {
             try {
                 if (this.profileManager.deleteCurrentProfile()) {
-                    this.learningSession = null;
+                    this.learningCoordinator.resetSession();
                     showStartPanel();
                 }
             } catch (RuntimeException exception) {
@@ -185,7 +159,7 @@ public class ControllerImpl implements Controller {
 
     public void chooseProfile(final User profile) {
         this.profileManager.chooseProfile(profile);
-        this.learningSession = null;
+        this.learningCoordinator.resetSession();
         showProfileDashboardPanel();
     }
 
@@ -244,17 +218,6 @@ public class ControllerImpl implements Controller {
                     0L);
         }
     }
-
-    public void saveLearningStats() {
-        if (this.learningSession != null) {
-            try {
-                this.profileManager.saveLearningStats(learningSession);
-            } catch (RuntimeException exception) {
-                System.err.println("Could not save progress file");
-                exception.printStackTrace();
-            }
-        }
-    }
     
     public void resetStats() {
         if (view().askConfirmation("Reset Progress", "Are you sure? your streak and study time will be reset")) {
@@ -278,10 +241,9 @@ public class ControllerImpl implements Controller {
         if (this.profileManager.hasCurrentProfile() && getCurrentProfile().getVocabulary() != null) {
             saveVocabulary(getCurrentProfile().getVocabulary());
         }
-        if (this.learningSession != null) {
-            saveLearningStats();
-            this.learningSession = null;
-        }
+
+        saveLearningStats();
+        this.learningCoordinator.resetSession();
         System.exit(0);
     }
 
