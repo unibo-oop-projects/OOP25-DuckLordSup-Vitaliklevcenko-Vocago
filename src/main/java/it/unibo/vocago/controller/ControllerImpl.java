@@ -5,6 +5,7 @@ import it.unibo.vocago.controller.api.Controller;
 import it.unibo.vocago.controller.coordinators.LearningCoordinator;
 import it.unibo.vocago.controller.coordinators.ProfileCoordinator;
 import it.unibo.vocago.controller.coordinators.StatsCoordinator;
+import it.unibo.vocago.controller.coordinators.VocabularyCoordinator;
 import it.unibo.vocago.logic.profile.ProfileManagerImpl;
 import it.unibo.vocago.logic.profile.api.ProfileManager;
 import it.unibo.vocago.model.progress.api.Stats;
@@ -21,6 +22,7 @@ public class ControllerImpl implements Controller {
     private final LearningCoordinator learningCoordinator;
     private final ProfileCoordinator profileCoordinator;
     private final StatsCoordinator statsCoordinator;
+    private final VocabularyCoordinator vocabularyCoordinator;
 
     public ControllerImpl() {
         this.appView = new AppFrame(this);
@@ -28,6 +30,7 @@ public class ControllerImpl implements Controller {
         this.learningCoordinator = new LearningCoordinator(this.profileManager, this.appView);
         this.profileCoordinator = new ProfileCoordinator(this.profileManager, this.appView);
         this.statsCoordinator = new StatsCoordinator(this.profileManager, this.appView);
+        this.vocabularyCoordinator = new VocabularyCoordinator(this.profileManager, this.appView);
         showStartPanel();
     }
 
@@ -106,7 +109,11 @@ public class ControllerImpl implements Controller {
     }
 
     public void saveVocabulary(final Vocabulary vocabulary) {
-        this.profileCoordinator.saveVocabulary(vocabulary);
+        this.vocabularyCoordinator.saveVocabulary(vocabulary);
+    }
+
+    public boolean vocabularyIsValid() {
+        return this.vocabularyCoordinator.vocabularyIsValid();
     }
 
     public void deleteProfile() {
@@ -114,10 +121,6 @@ public class ControllerImpl implements Controller {
             this.learningCoordinator.stopLearningSession();
             showStartPanel();
         }
-    }
-
-    public boolean vocabularyIsValid() {
-        return this.profileCoordinator.vocabularyIsValid();
     }
 
     public void chooseProfile(final User profile) {

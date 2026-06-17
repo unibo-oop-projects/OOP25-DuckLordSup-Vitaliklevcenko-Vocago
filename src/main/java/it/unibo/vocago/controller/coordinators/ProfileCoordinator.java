@@ -50,14 +50,6 @@ public final class ProfileCoordinator {
         }
     }
 
-    public void saveVocabulary(final Vocabulary vocabulary) {
-        try {
-            this.profileManager.saveVocabulary(vocabulary);
-        } catch (RuntimeException exception) {
-            this.appView.showError("Save Failed", "Could not save changes, try again!");
-        }
-    }
-
     public boolean deleteProfile() {
         if (!this.appView.askConfirmation("Delete Profile", "Are you sure you want to delete your profile?")) {
             return false;
@@ -72,10 +64,6 @@ public final class ProfileCoordinator {
             }
             return true;
         }
-    }
-
-    public boolean vocabularyIsValid() {
-        return this.profileManager.vocabularyIsValid();
     }
 
     public void chooseProfile(final User profile) {
