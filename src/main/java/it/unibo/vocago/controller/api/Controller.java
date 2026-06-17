@@ -55,11 +55,11 @@ public interface Controller {
 
     Stats getDashboardStats();
 
-    void closeApp();
-
     int getDailyGoal();
 
     void saveProfileConfigurations(String profileName, String firstLanguage, String secondLanguage, int dailyGoal);
     
     void dailyGoalAchieved();
+
+    void closeApp();
 }

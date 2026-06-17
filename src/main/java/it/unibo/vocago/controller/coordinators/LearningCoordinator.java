@@ -91,6 +91,12 @@ public final class LearningCoordinator {
         }
     }
 
+    public boolean continueAfterDailyGoal() {
+        return this.appView.askConfirmation(
+                "Daily Goal Achieved",
+                "You did it, good job! Do you want to continue to study?");
+    }
+
     private LearningSession getLearningSession() {
         if (this.learningSession == null) {
             throw new IllegalStateException("No active learning session.");

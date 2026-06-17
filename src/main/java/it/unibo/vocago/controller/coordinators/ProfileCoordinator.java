@@ -4,7 +4,6 @@ import java.util.List;
 
 import it.unibo.vocago.logic.profile.api.ProfileManager;
 import it.unibo.vocago.model.user.api.User;
-import it.unibo.vocago.model.vocabulary.api.Vocabulary;
 import it.unibo.vocago.view.api.AppView;
 
 public final class ProfileCoordinator {
