@@ -75,15 +75,15 @@ public final class LearningCoordinator {
                 this.profileManager.saveVocabulary(
                         this.profileManager.getCurrentProfile().getVocabulary());
             }
-            saveLearningStats();
+            saveLearningProgress();
             stopLearningSession();
         }
     }
 
-    public void saveLearningStats() {
+    public void saveLearningProgress() {
         if (this.learningSession != null) {
             try {
-                this.profileManager.saveLearningStats(this.learningSession);
+                this.profileManager.saveLearningProgress(this.learningSession);
             } catch (RuntimeException exception) {
                 System.err.println("Could not save progress file");
                 exception.printStackTrace();

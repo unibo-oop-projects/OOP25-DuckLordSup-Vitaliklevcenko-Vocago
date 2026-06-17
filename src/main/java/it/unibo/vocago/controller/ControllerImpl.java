@@ -1,13 +1,12 @@
 package it.unibo.vocago.controller;
 
-import java.time.LocalDate;
 import java.util.List;
 import it.unibo.vocago.controller.api.Controller;
 import it.unibo.vocago.controller.coordinators.LearningCoordinator;
 import it.unibo.vocago.controller.coordinators.ProfileCoordinator;
+import it.unibo.vocago.controller.coordinators.StatsCoordinator;
 import it.unibo.vocago.logic.profile.ProfileManagerImpl;
 import it.unibo.vocago.logic.profile.api.ProfileManager;
-import it.unibo.vocago.model.progress.ProfileStats;
 import it.unibo.vocago.model.progress.api.Stats;
 import it.unibo.vocago.model.types.Direction;
 import it.unibo.vocago.model.user.api.User;
@@ -21,12 +20,14 @@ public class ControllerImpl implements Controller {
     private final ProfileManager profileManager;
     private final LearningCoordinator learningCoordinator;
     private final ProfileCoordinator profileCoordinator;
+    private final StatsCoordinator statsCoordinator;
 
     public ControllerImpl() {
         this.appView = new AppFrame(this);
         this.profileManager = new ProfileManagerImpl();//depends on the data base we choose (sql/csv file)
         this.learningCoordinator = new LearningCoordinator(this.profileManager, this.appView);
         this.profileCoordinator = new ProfileCoordinator(this.profileManager, this.appView);
+        this.statsCoordinator = new StatsCoordinator(this.profileManager, this.appView);
         showStartPanel();
     }
 
@@ -93,10 +94,6 @@ public class ControllerImpl implements Controller {
         return this.learningCoordinator.getCurrentQuestionNumber();
     }
 
-    public void saveLearningStats() {
-        this.learningCoordinator.saveLearningStats();
-    }
-
     // profile Manager getters and setters //
     public List<User> getExistingProfiles() {
         return this.profileCoordinator.getExistingProfiles();
@@ -145,31 +142,12 @@ public class ControllerImpl implements Controller {
     }
 
     public Stats getDashboardStats() {
-        try {
-            return this.profileManager.getDashboardStats();
-        } catch (RuntimeException exception) {
-            view().showError("Progress Error", "Your progress has been corrupted");
-            return new ProfileStats(
-                    0,
-                    0,
-                    0,
-                    0,
-                    0.0,
-                    LocalDate.now(),
-                    0,
-                    0L);
-        }
+        return this.statsCoordinator.getDashboardStats();
     }
     
     public void resetStats() {
-        if (view().askConfirmation("Reset Progress", "Are you sure? your streak and study time will be reset")) {
-            try {
-                this.profileManager.resetStats();
-                showProfileDashboardPanel();
-                view().showInfo("Progress Reset", "Your progress has been reset");
-            } catch (RuntimeException exception) {
-                view().showError("Progress Error", "Failed to reset your progress, try again!");
-            }
+        if (this.statsCoordinator.resetStats()) {
+            showProfileDashboardPanel();
         }
     }
 
@@ -180,11 +158,10 @@ public class ControllerImpl implements Controller {
     }
     
     public void closeApp() {
+        this.learningCoordinator.closeLearningSession();
         if (this.profileCoordinator.hasCurrentProfile() && getCurrentProfile().getVocabulary() != null) {
             saveVocabulary(getCurrentProfile().getVocabulary());
         }
-        saveLearningStats();
-        this.learningCoordinator.stopLearningSession();
         System.exit(0);
     }
 

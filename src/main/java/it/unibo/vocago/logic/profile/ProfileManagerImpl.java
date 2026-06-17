@@ -82,8 +82,16 @@ public class ProfileManagerImpl implements ProfileManager{
     }
 
     public void saveVocabulary(final Vocabulary vocabulary) {
-        this.currentProfile = new Profile(this.currentProfile.getUserName(), vocabulary,
-                this.currentProfile.getFirstLanguage(), this.currentProfile.getSecondLanguage());
+        if (!hasCurrentProfile() || vocabulary == null) {
+            return;
+        }
+
+        this.currentProfile = new Profile(
+                this.currentProfile.getUserName(),
+                vocabulary,
+                this.currentProfile.getFirstLanguage(),
+                this.currentProfile.getSecondLanguage());
+
         this.userRepository.save(this.currentProfile);
     }
 
@@ -161,7 +169,7 @@ public class ProfileManagerImpl implements ProfileManager{
         }
     }
 
-    public void saveLearningStats(final LearningSession session) {
+    public void saveLearningProgress(final LearningSession session) {
         if (!hasCurrentProfile() || session == null) {
             return;
         }

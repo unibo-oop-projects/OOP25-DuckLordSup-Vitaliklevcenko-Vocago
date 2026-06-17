@@ -31,7 +31,7 @@ public interface ProfileManager {
 
     void resetStats();
 
-    void saveLearningStats(LearningSession session);
+    void saveLearningProgress(LearningSession session);
 
     void updateExpiredStreak();
 

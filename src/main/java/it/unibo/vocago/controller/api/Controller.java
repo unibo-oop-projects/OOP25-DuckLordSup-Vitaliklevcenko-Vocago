@@ -55,8 +55,6 @@ public interface Controller {
 
     Stats getDashboardStats();
 
-    void saveLearningStats();
-
     void closeApp();
 
     int getDailyGoal();
