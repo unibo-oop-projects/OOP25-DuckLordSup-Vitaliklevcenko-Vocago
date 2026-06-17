@@ -88,8 +88,9 @@ public final class LearningCoordinator {
             try {
                 this.profileManager.saveLearningProgress(this.learningSession);
             } catch (RuntimeException exception) {
-                System.err.println("Could not save progress file");
-                exception.printStackTrace();
+                this.appView.showWarning(
+                        "Save progress failed",
+                        "Could not save progress file");
             }
         }
     }
