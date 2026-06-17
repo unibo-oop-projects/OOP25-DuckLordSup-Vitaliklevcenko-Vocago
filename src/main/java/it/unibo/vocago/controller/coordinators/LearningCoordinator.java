@@ -11,11 +11,13 @@ public final class LearningCoordinator {
     private final ProfileManager profileManager;
     private final AppView appView;
     private LearningSession learningSession;
+    private boolean dailyGoalNotified;
 
     public LearningCoordinator(final ProfileManager profileManager, final AppView appView) {
         this.profileManager = profileManager;
         this.appView = appView;
         this.learningSession = null;
+        this.dailyGoalNotified = false;
     }
 
     public void showLearningPanel() {
@@ -26,8 +28,8 @@ public final class LearningCoordinator {
                         "There are no valid words available, add more words to your vocabulary");
                 return;
             }
-            this.learningSession = new LearningSessionImpl(
-                    this.profileManager.getCurrentProfile().getVocabulary());
+            this.learningSession = new LearningSessionImpl(this.profileManager.getCurrentProfile().getVocabulary());
+            this.dailyGoalNotified = false;
         }
         this.appView.showLearningPanel();
     }
@@ -66,6 +68,7 @@ public final class LearningCoordinator {
 
     public void stopLearningSession() {
         this.learningSession = null;
+        this.dailyGoalNotified = false;
     }
 
     public void closeLearningSession() {
@@ -91,7 +94,12 @@ public final class LearningCoordinator {
         }
     }
 
-    public boolean continueAfterDailyGoal() {
+    public boolean continueAfterDailyGoalIfReached() {
+        if (this.learningSession == null || this.dailyGoalNotified
+                || this.learningSession.getCorrectAnsweredQuestions() < this.profileManager.getDailyGoal()) {
+            return true;
+        }
+        this.dailyGoalNotified = true;
         return this.appView.askConfirmation(
                 "Daily Goal Achieved",
                 "You did it, good job! Do you want to continue to study?");

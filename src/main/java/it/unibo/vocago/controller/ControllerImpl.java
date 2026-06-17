@@ -155,7 +155,7 @@ public class ControllerImpl implements Controller {
     }
 
     public void dailyGoalAchieved() {
-        if (!this.learningCoordinator.continueAfterDailyGoal()) {
+        if (!this.learningCoordinator.continueAfterDailyGoalIfReached()) {
             showProfileDashboardPanel();
         }
     }

@@ -125,10 +125,7 @@ public class LearningPanel extends JPanel{
             welcomPanel.add(UIFactory.createLabel(
                     "WORD " + this.controller.getCurrentQuestionNumber() + " OUT OF " + dailyGoal,
                     UIConstants.TITLE_FONT), BorderLayout.CENTER);
-        } else if(dailyGoal == this.controller.getCurrentQuestionNumber()) {
-            this.controller.dailyGoalAchieved();
-            welcomPanel.add(UIFactory.createLabel("GOOD JOB!", UIConstants.TITLE_FONT), BorderLayout.CENTER);
-        }else{
+        } else {
             welcomPanel.add(UIFactory.createLabel("GOOD JOB!", UIConstants.TITLE_FONT), BorderLayout.CENTER);
         }
 
@@ -250,6 +247,7 @@ public class LearningPanel extends JPanel{
             showFeedback(UIConstants.RED, "the correct answer is: (" + this.controller.getCorrectAnswer() + "), Press Enter for the next word." );
         }
         this.controller.saveVocabulary(this.controller.getCurrentProfile().getVocabulary());
+        this.controller.dailyGoalAchieved();
     }
 
     private void startTimer() {

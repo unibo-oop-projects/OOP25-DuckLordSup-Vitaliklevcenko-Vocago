@@ -56,12 +56,8 @@ public final class ProfileCoordinator {
         try {
             return this.profileManager.deleteCurrentProfile();
         } catch (RuntimeException exception) {
-            if (getCurrentProfile() == null) {
-                this.appView.showError("Delete Failed", "The progress could not be deleted, try again!");
-            } else {
-                this.appView.showError("Delete Failed", "The profile could not be deleted, try again!");
-            }
-            return true;
+            this.appView.showError("Delete Failed", "The profile could not be deleted, try again!");
+            return false;
         }
     }
 
