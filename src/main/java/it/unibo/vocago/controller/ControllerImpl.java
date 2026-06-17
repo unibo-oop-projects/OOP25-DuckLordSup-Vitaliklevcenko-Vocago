@@ -3,6 +3,7 @@ package it.unibo.vocago.controller;
 import java.time.LocalDate;
 import java.util.List;
 import it.unibo.vocago.controller.api.Controller;
+import it.unibo.vocago.controller.coordinators.LearningCoordinator;
 import it.unibo.vocago.logic.learning.LearningSessionImpl;
 import it.unibo.vocago.logic.learning.api.LearningSession;
 import it.unibo.vocago.logic.profile.ProfileManagerImpl;
@@ -20,11 +21,13 @@ public class ControllerImpl implements Controller {
     private final AppView appView;
     private LearningSession learningSession;
     private final ProfileManager profileManager;
+    private final LearningCoordinator learningCoordinator;
 
     public ControllerImpl() {
         this.appView = new AppFrame(this);
         this.learningSession = null;
         this.profileManager = new ProfileManagerImpl();//depends on the data base we choose (sql/csv file)
+        this.learningCoordinator = new LearningCoordinator(this.profileManager, this.appView);
         showStartPanel();
     }
 
