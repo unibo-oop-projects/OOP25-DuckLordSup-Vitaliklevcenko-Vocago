@@ -64,7 +64,7 @@ public final class LearningCoordinator {
         return getLearningSession().getCorrectAnsweredQuestions();
     }
 
-    public void resetSession() {
+    public void stopLearningSession() {
         this.learningSession = null;
     }
 
@@ -76,7 +76,7 @@ public final class LearningCoordinator {
                         this.profileManager.getCurrentProfile().getVocabulary());
             }
             saveLearningStats();
-            this.learningSession = null;
+            stopLearningSession();
         }
     }
 

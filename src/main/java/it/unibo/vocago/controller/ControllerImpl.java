@@ -114,7 +114,7 @@ public class ControllerImpl implements Controller {
 
     public void deleteProfile() {
         if (this.profileCoordinator.deleteProfile()) {
-            this.learningCoordinator.resetSession();
+            this.learningCoordinator.stopLearningSession();
             showStartPanel();
         }
     }
@@ -124,8 +124,8 @@ public class ControllerImpl implements Controller {
     }
 
     public void chooseProfile(final User profile) {
+        this.learningCoordinator.closeLearningSession();
         this.profileCoordinator.chooseProfile(profile);
-        this.learningCoordinator.resetSession();
         showProfileDashboardPanel();
     }
 
@@ -178,13 +178,13 @@ public class ControllerImpl implements Controller {
             showProfileDashboardPanel();
         }
     }
-
+    
     public void closeApp() {
         if (this.profileCoordinator.hasCurrentProfile() && getCurrentProfile().getVocabulary() != null) {
             saveVocabulary(getCurrentProfile().getVocabulary());
         }
         saveLearningStats();
-        this.learningCoordinator.resetSession();
+        this.learningCoordinator.stopLearningSession();
         System.exit(0);
     }
 
