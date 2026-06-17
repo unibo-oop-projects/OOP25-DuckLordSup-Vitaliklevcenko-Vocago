@@ -26,7 +26,7 @@ public class ControllerImpl implements Controller {
 
     public ControllerImpl() {
         this.appView = new AppFrame(this);
-        this.profileManager = new ProfileManagerImpl();//depends on the data base we choose (sql/csv file)
+        this.profileManager = new ProfileManagerImpl();
         this.learningCoordinator = new LearningCoordinator(this.profileManager, this.appView);
         this.profileCoordinator = new ProfileCoordinator(this.profileManager, this.appView);
         this.statsCoordinator = new StatsCoordinator(this.profileManager, this.appView);
@@ -34,7 +34,7 @@ public class ControllerImpl implements Controller {
         showStartPanel();
     }
 
-            //panel space//
+    @Override
     public void showStartPanel() {
         if (getExistingProfiles().isEmpty()) {
             view().showCreateNewProfilePanel();
@@ -43,83 +43,102 @@ public class ControllerImpl implements Controller {
         }
     }
 
+    @Override
     public void showCreateNewProfilePanel() {
         view().showCreateNewProfilePanel();
     }
 
+    @Override
     public void showProfileDashboardPanel() {
         this.learningCoordinator.closeLearningSession();
         this.profileCoordinator.updateExpiredStreak();
         view().showProfileDashboardPanel();
     }
 
+    @Override
     public void showVocabularyEditorPanel() {
         view().showVocabularyEditorPanel();
     }
 
+    @Override
     public void showLearningPanel() {
         this.learningCoordinator.showLearningPanel();
     }
     
+    @Override
     public void showConfigureProfilePanel() {
         view().showConfigureProfilePanel();
     }
 
+    @Override
     public String getNextQuestion() {
         return this.learningCoordinator.getNextQuestion();
     }
 
+    @Override
     public boolean evaluateAnswer(final String userAnswer) {
         return this.learningCoordinator.evaluateAnswer(userAnswer);
     }
 
+    @Override
     public String getCorrectAnswer() {
         return this.learningCoordinator.getCorrectAnswer();
     }
 
+    @Override
     public void switchDirection() {
         this.learningCoordinator.switchDirection();
     }
 
+    @Override
     public boolean currentQuestionEvaluated() {
         return this.learningCoordinator.currentQuestionEvaluated();
     }
 
+    @Override
     public Direction getDirection() {
         return this.learningCoordinator.getDirection();
     }
 
+    @Override
     public long getLearningStartTime() {
         return this.learningCoordinator.getLearningStartTime();
     }
 
+    @Override
     public int getCurrentQuestionNumber() {
         return this.learningCoordinator.getCurrentQuestionNumber();
     }
 
     // profile Manager getters and setters //
+    @Override
     public List<User> getExistingProfiles() {
         return this.profileCoordinator.getExistingProfiles();
     }
     
+    @Override
     public void createProfile(final String profileName, final String firstLanguage, final String secondLanguage) {
         if (this.profileCoordinator.createProfile(profileName, firstLanguage, secondLanguage)) {
             showProfileDashboardPanel();
         }
     }
 
+    @Override
     public void saveVocabulary(final Vocabulary vocabulary) {
         this.vocabularyCoordinator.saveVocabulary(vocabulary);
     }
 
+    @Override
     public boolean vocabularyIsValid() {
         return this.vocabularyCoordinator.vocabularyIsValid();
     }
 
+    @Override
     public int saveBeforeLeaving() {
         return this.vocabularyCoordinator.saveBeforeLeaving();
     }
 
+    @Override
     public void deleteProfile() {
         if (this.profileCoordinator.deleteProfile()) {
             this.learningCoordinator.stopLearningSession();
@@ -127,20 +146,24 @@ public class ControllerImpl implements Controller {
         }
     }
 
+    @Override
     public void chooseProfile(final User profile) {
         this.learningCoordinator.closeLearningSession();
         this.profileCoordinator.chooseProfile(profile);
         showProfileDashboardPanel();
     }
 
+    @Override
     public User getCurrentProfile() {
         return this.profileCoordinator.getCurrentProfile();
     }
 
+    @Override
     public int getDailyGoal() {
         return this.profileCoordinator.getDailyGoal();
     }
 
+    @Override
     public void saveProfileConfigurations(String profileName, final String firstLanguage,
             final String secondLanguage, final int dailyGoal) {
         if (this.profileCoordinator.saveProfileConfigurations(profileName, firstLanguage, secondLanguage, dailyGoal)) {
@@ -148,22 +171,26 @@ public class ControllerImpl implements Controller {
         }
     }
 
+    @Override
     public Stats getDashboardStats() {
         return this.statsCoordinator.getDashboardStats();
     }
     
+    @Override
     public void resetStats() {
         if (this.statsCoordinator.resetStats()) {
             showProfileDashboardPanel();
         }
     }
 
+    @Override
     public void dailyGoalAchieved() {
         if (!this.learningCoordinator.continueAfterDailyGoalIfReached()) {
             showProfileDashboardPanel();
         }
     }
     
+    @Override
     public void closeApp() {
         this.learningCoordinator.closeLearningSession();
         if (this.profileCoordinator.hasCurrentProfile() && getCurrentProfile().getVocabulary() != null) {

@@ -103,20 +103,15 @@ public class LearningPanel extends JPanel{
         setLayout(new BorderLayout());
 
         add(createHeaderPanel(), BorderLayout.NORTH);
-        // add(Box.createVerticalStrut(20));
         add(createMainPanel(), BorderLayout.CENTER);
-        // add(Box.createVerticalStrut(20));
         add(createButtonsPanel(), BorderLayout.SOUTH);
     }
     
     private JPanel createHeaderPanel() {
         JPanel welcomPanel = UIFactory.createPanel(new GridLayout());
-        // UIFactory.highlight(welcomPanel);
-        // UIFactory.brighter(welcomPanel);
         welcomPanel.setPreferredSize(new Dimension(Integer.MAX_VALUE, HEADER_HEIGHT));
 
         final JPanel leftPanel = UIFactory.createPanel(new BorderLayout());
-        //UIFactory.brighter(leftPanel);
         leftPanel.add(this.goBackButton, BorderLayout.WEST);
         welcomPanel.add(leftPanel);
 
@@ -131,14 +126,12 @@ public class LearningPanel extends JPanel{
 
         final JPanel rightPanel = UIFactory.createPanel(new FlowLayout(FlowLayout.RIGHT, 12, 12));
         rightPanel.add(this.timerLabel);
-        // UIFactory.brighter(rightPanel);
         welcomPanel.add(rightPanel, BorderLayout.EAST);
         return welcomPanel;
     }
     
     private JPanel createMainPanel() {
         JPanel mainPanel = UIFactory.createPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
-        // UIFactory.brighter(mainPanel);
         mainPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, LANGUAGE_PANEL_HEIGHT));
 
         JPanel firstLanguagePanel = UIFactory.createPanel(new BorderLayout());
@@ -158,16 +151,12 @@ public class LearningPanel extends JPanel{
 
         JPanel textFieldPanel = UIFactory.createPanel(new GridBagLayout());
         UIFactory.brighter(textFieldPanel);
-        // textFieldPanel.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0,
-        // UIConstants.PANEL_BORDER));
         textFieldPanel.add(this.userAnswer);
 
         if (this.controller.getDirection() == Direction.FIRST_TO_SECOND) {
             JPanel labelPanel = UIFactory.createPanel(new GridLayout());
             labelPanel.add(UIFactory.createLabel(this.controller.getNextQuestion(), UIConstants.BIG_PROMT_FONT));
             UIFactory.brighter(labelPanel);
-            // labelPanel.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0,
-            // UIConstants.PANEL_BORDER));
             firstLanguagePanel.add(labelPanel);
             secondLanguagePanel.add(textFieldPanel);
             this.switchLanguageButton = UIFactory.createButton("Switch Language", "data/resources/pictures/arrow.png", 40,
@@ -177,8 +166,6 @@ public class LearningPanel extends JPanel{
             JPanel labelPanel = UIFactory.createPanel(new GridLayout());
             labelPanel.add(UIFactory.createLabel(this.controller.getNextQuestion(), UIConstants.BIG_PROMT_FONT));
             UIFactory.brighter(labelPanel);
-            // labelPanel.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0,
-            // UIConstants.PANEL_BORDER));
             secondLanguagePanel.add(labelPanel);
             this.switchLanguageButton = UIFactory.createButton("Switch Language", "data/resources/pictures/back.png", 40,
                     UIConstants.BACKGROUND, 100, 160, false, true, true, UIConstants.FONT);
@@ -192,13 +179,10 @@ public class LearningPanel extends JPanel{
         this.answerPanel.setMaximumSize(new Dimension(
                 Integer.MAX_VALUE, ANSWER_PANEL_HEIGHT));
         this.answerPanel.add(this.answerLabel);
-        // this.answerPanel.setBackground(getBackground());
-        // UIFactory.highlight(this.answerPanel);
         JPanel centerPanel = UIFactory.createPanel();
         centerPanel.add(Box.createVerticalStrut(60));
         centerPanel.add(mainPanel);
         centerPanel.add(this.answerPanel);
-        // UIFactory.brighter(centerPanel);
         return centerPanel;
     }
     

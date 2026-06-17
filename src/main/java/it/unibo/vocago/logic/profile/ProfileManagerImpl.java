@@ -42,6 +42,7 @@ public class ProfileManagerImpl implements ProfileManager{
         this.currentProfile = null;
     }
 
+    @Override
     public void createProfile(final String profileName, final String firstLanguage, final String secondLanguage) {
         final User profile = new Profile(profileName, firstLanguage, secondLanguage);
         this.userRepository.save(profile);
@@ -49,38 +50,44 @@ public class ProfileManagerImpl implements ProfileManager{
         try {
             this.progressRepository.createProgressFile(profile.getUserName());
         } catch (RuntimeException exception) {
-            // profile has been created but the progress could not be created, the program continue with no disruption.
             System.err.println("Could not create progress file for profile: " + profileName);
             exception.printStackTrace();
         }
         this.currentProfile = profile;
     }
 
+    @Override
     public boolean profileExists(final String profileName) {
         return this.userRepository.userExists(profileName);
     }
 
+    @Override
     public List<User> getExistingProfiles() {
         return this.userRepository.getExistingUsers();
     }
 
+    @Override
     public void chooseProfile(final User profile) {
         this.currentProfile = profile;
     }
 
+    @Override
     public User getCurrentProfile() {
         return this.currentProfile;
     }
 
+    @Override
     public boolean hasCurrentProfile() {
         return this.currentProfile != null;
     }
 
+    @Override
     public boolean vocabularyIsValid() {
         return hasCurrentProfile() && this.currentProfile.getVocabulary() != null
                 && this.currentProfile.getVocabulary().isValid();
     }
 
+    @Override
     public void saveVocabulary(final Vocabulary vocabulary) {
         if (!hasCurrentProfile() || vocabulary == null) {
             return;
@@ -95,6 +102,7 @@ public class ProfileManagerImpl implements ProfileManager{
         this.userRepository.save(this.currentProfile);
     }
 
+    @Override
     public boolean deleteCurrentProfile() {
         if (!hasCurrentProfile()) {
             return false;
@@ -115,6 +123,7 @@ public class ProfileManagerImpl implements ProfileManager{
         return true;
     }
 
+    @Override
     public Stats getDashboardStats() {
         if (!hasCurrentProfile()) {
             throw new IllegalStateException("No current profile selected.");
@@ -163,12 +172,14 @@ public class ProfileManagerImpl implements ProfileManager{
                 this.progressRepository.getTotalStudyTime(this.currentProfile.getUserName()));
     }
     
+    @Override
     public void resetStats() {
         if (hasCurrentProfile()) {
             this.progressRepository.saveStats(this.currentProfile.getUserName(), LocalDate.now(), 0, 0L);
         }
     }
 
+    @Override
     public void saveLearningProgress(final LearningSession session) {
         if (!hasCurrentProfile() || session == null) {
             return;
@@ -195,6 +206,7 @@ public class ProfileManagerImpl implements ProfileManager{
                         + (System.currentTimeMillis() - session.getTime()) / 1000);
     }
 
+    @Override
     public int getDailyGoal() {
         if (!hasCurrentProfile()) {
             throw new IllegalStateException("No current profile selected.");
@@ -202,6 +214,7 @@ public class ProfileManagerImpl implements ProfileManager{
         return this.progressRepository.getDailyGoal(this.currentProfile.getUserName());
     }
     
+    @Override
     public void saveProfileConfigurations(String newProfileName, final String firstLanguage,
             final String secondLanguage, int dailyGoal) {
         if (hasCurrentProfile()) {
@@ -226,6 +239,7 @@ public class ProfileManagerImpl implements ProfileManager{
         }
     }
 
+    @Override
     public void updateExpiredStreak() {
         if (!hasCurrentProfile()) {
             return;
