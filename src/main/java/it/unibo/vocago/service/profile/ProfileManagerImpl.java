@@ -1,14 +1,13 @@
-package it.unibo.vocago.logic.profile;
+package it.unibo.vocago.service.profile;
 
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import it.unibo.vocago.logic.learning.api.LearningSession;
-import it.unibo.vocago.logic.profile.api.ProfileManager;
 import it.unibo.vocago.model.progress.ProfileStats;
 import it.unibo.vocago.model.progress.api.Progress;
-import it.unibo.vocago.model.progress.api.Stats;
+import it.unibo.vocago.model.progress.api.Statistics;
 import it.unibo.vocago.model.types.DailyGoalSettings;
 import it.unibo.vocago.model.types.Direction;
 import it.unibo.vocago.model.types.MasteryLevel;
@@ -16,6 +15,7 @@ import it.unibo.vocago.model.user.Profile;
 import it.unibo.vocago.model.user.api.User;
 import it.unibo.vocago.model.vocabulary.api.Vocabulary;
 import it.unibo.vocago.model.vocabulary.api.VocabularyItem;
+import it.unibo.vocago.service.profile.api.ProfileManager;
 import it.unibo.vocago.storage.ProgressFileStorage;
 import it.unibo.vocago.storage.UserCsvStorage;
 import it.unibo.vocago.storage.api.ProgressRepository;
@@ -121,7 +121,7 @@ public class ProfileManagerImpl implements ProfileManager{
     }
 
     @Override
-    public Stats getDashboardStats() {
+    public Statistics getDashboardStats() {
         if (!hasCurrentProfile()) {
             throw new IllegalStateException("No current profile selected.");
         }
@@ -160,7 +160,7 @@ public class ProfileManagerImpl implements ProfileManager{
 
         return new ProfileStats(
                 countMasteryItems,
-                countCorrectAnswers,
+                countCorrectAnswers,//for future use
                 countWrongAnswers,
                 wordCount,
                 correctRatio,

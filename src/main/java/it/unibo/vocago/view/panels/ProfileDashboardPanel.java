@@ -12,7 +12,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import it.unibo.vocago.controller.api.Controller;
-import it.unibo.vocago.model.progress.api.Stats;
+import it.unibo.vocago.model.progress.api.Statistics;
 import it.unibo.vocago.view.util.UIConstants;
 import it.unibo.vocago.view.util.UIFactory;
 import java.awt.Image;
@@ -77,7 +77,7 @@ public class ProfileDashboardPanel extends JPanel{
                 statsPanel.setBorder(new EmptyBorder(15, 15, 15, 15));
                 UIFactory.brighter(statsPanel);
 
-                Stats dashboardStats = this.controller.getDashboardStats();
+                Statistics dashboardStats = this.controller.getDashboardStats();
                 statsPanel.add(statPanel("Mastered", dashboardStats.getMasteredItems() + " Words",
                                 "data/resources/pictures/star.png"));
                 statsPanel.add(statPanel("Accuracy", String.format("%.1f%%", dashboardStats.getAccuracyPercent()),

@@ -4,9 +4,9 @@ import java.time.LocalDate;
 
 import javax.swing.JOptionPane;
 
-import it.unibo.vocago.logic.profile.api.ProfileManager;
 import it.unibo.vocago.model.progress.ProfileStats;
-import it.unibo.vocago.model.progress.api.Stats;
+import it.unibo.vocago.model.progress.api.Statistics;
+import it.unibo.vocago.service.profile.api.ProfileManager;
 import it.unibo.vocago.view.api.AppView;
 
 public final class StatsCoordinator {
@@ -19,7 +19,7 @@ public final class StatsCoordinator {
         this.appView = appView;
     }
 
-    public Stats getDashboardStats() {
+    public Statistics getDashboardStats() {
         try {
             return this.profileManager.getDashboardStats();
         } catch (RuntimeException exception) {

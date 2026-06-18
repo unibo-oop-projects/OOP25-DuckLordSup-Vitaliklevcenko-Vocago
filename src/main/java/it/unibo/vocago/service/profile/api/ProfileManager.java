@@ -1,9 +1,9 @@
-package it.unibo.vocago.logic.profile.api;
+package it.unibo.vocago.service.profile.api;
 
 import java.util.List;
 
 import it.unibo.vocago.logic.learning.api.LearningSession;
-import it.unibo.vocago.model.progress.api.Stats;
+import it.unibo.vocago.model.progress.api.Statistics;
 import it.unibo.vocago.model.user.api.User;
 import it.unibo.vocago.model.vocabulary.api.Vocabulary;
 
@@ -27,7 +27,7 @@ public interface ProfileManager {
 
     boolean deleteCurrentProfile();
 
-    Stats getDashboardStats();
+    Statistics getDashboardStats();
 
     void resetStats();
 

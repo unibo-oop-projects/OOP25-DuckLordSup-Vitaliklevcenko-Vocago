@@ -6,12 +6,12 @@ import it.unibo.vocago.controller.coordinators.LearningCoordinator;
 import it.unibo.vocago.controller.coordinators.ProfileCoordinator;
 import it.unibo.vocago.controller.coordinators.StatsCoordinator;
 import it.unibo.vocago.controller.coordinators.VocabularyCoordinator;
-import it.unibo.vocago.logic.profile.ProfileManagerImpl;
-import it.unibo.vocago.logic.profile.api.ProfileManager;
-import it.unibo.vocago.model.progress.api.Stats;
+import it.unibo.vocago.model.progress.api.Statistics;
 import it.unibo.vocago.model.types.Direction;
 import it.unibo.vocago.model.user.api.User;
 import it.unibo.vocago.model.vocabulary.api.Vocabulary;
+import it.unibo.vocago.service.profile.ProfileManagerImpl;
+import it.unibo.vocago.service.profile.api.ProfileManager;
 import it.unibo.vocago.view.AppFrame;
 import it.unibo.vocago.view.api.AppView;
 
@@ -172,7 +172,7 @@ public class ControllerImpl implements Controller {
     }
 
     @Override
-    public Stats getDashboardStats() {
+    public Statistics getDashboardStats() {
         return this.statsCoordinator.getDashboardStats();
     }
     

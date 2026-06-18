@@ -2,9 +2,9 @@ package it.unibo.vocago.model.progress;
 
 import java.time.LocalDate;
 
-import it.unibo.vocago.model.progress.api.Stats;
+import it.unibo.vocago.model.progress.api.Statistics;
 
-public class ProfileStats implements Stats {
+public class ProfileStats implements Statistics {
     
     private final int masteredItems;
     private final int correctAnswers;
@@ -42,12 +42,12 @@ public class ProfileStats implements Stats {
     }
 
     @Override
-    public int getCorrectAnswers() {
+    public int getTotalCorrectAnswers() {
         return this.correctAnswers;
     }
 
     @Override
-    public int getWrongAnswers() {
+    public int getTotalWrongAnswers() {
         return this.wrongAnswers;
     }
 

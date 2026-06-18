@@ -2,13 +2,13 @@ package it.unibo.vocago.model.progress.api;
 
 import java.time.LocalDate;
 
-public interface Stats {
+public interface Statistics {
 
     int getMasteredItems();
 
-    int getCorrectAnswers();
+    int getTotalCorrectAnswers();
 
-    int getWrongAnswers();
+    int getTotalWrongAnswers();
 
     int getTotalWords();
 
