@@ -1,4 +1,4 @@
-package it.unibo.vocago.logic.learning;
+package it.unibo.vocago.service.learning;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -7,7 +7,6 @@ import java.util.Objects;
 import java.util.Queue;
 import java.util.Random;
 
-import it.unibo.vocago.logic.learning.api.LearningEngine;
 import it.unibo.vocago.model.learning.FlashCard;
 import it.unibo.vocago.model.learning.api.Question;
 import it.unibo.vocago.model.progress.api.Progress;
@@ -16,6 +15,7 @@ import it.unibo.vocago.model.types.MasteryLevel;
 import it.unibo.vocago.model.vocabulary.api.Vocabulary;
 import it.unibo.vocago.model.vocabulary.api.VocabularyItem;
 import it.unibo.vocago.model.vocabulary.api.Word;
+import it.unibo.vocago.service.learning.api.LearningEngine;
 
 public class LearningEngineImpl implements LearningEngine{
 

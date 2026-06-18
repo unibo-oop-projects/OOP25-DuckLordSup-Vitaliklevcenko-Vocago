@@ -4,7 +4,7 @@ package it.unibo.vocago.service.profile;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
-import it.unibo.vocago.logic.learning.api.LearningSession;
+
 import it.unibo.vocago.model.progress.ProfileStats;
 import it.unibo.vocago.model.progress.api.Progress;
 import it.unibo.vocago.model.progress.api.Statistics;
@@ -15,6 +15,7 @@ import it.unibo.vocago.model.user.Profile;
 import it.unibo.vocago.model.user.api.User;
 import it.unibo.vocago.model.vocabulary.api.Vocabulary;
 import it.unibo.vocago.model.vocabulary.api.VocabularyItem;
+import it.unibo.vocago.service.learning.api.LearningSession;
 import it.unibo.vocago.service.profile.api.ProfileManager;
 import it.unibo.vocago.storage.ProgressFileStorage;
 import it.unibo.vocago.storage.UserCsvStorage;

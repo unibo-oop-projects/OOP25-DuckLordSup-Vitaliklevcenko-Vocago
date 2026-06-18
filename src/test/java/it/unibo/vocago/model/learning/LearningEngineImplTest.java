@@ -12,13 +12,13 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import it.unibo.vocago.logic.learning.LearningEngineImpl;
 import it.unibo.vocago.model.learning.api.Question;
 import it.unibo.vocago.model.progress.WordProgress;
 import it.unibo.vocago.model.types.Direction;
 import it.unibo.vocago.model.types.MasteryLevel;
 import it.unibo.vocago.model.vocabulary.Dictionary;
 import it.unibo.vocago.model.vocabulary.DictionaryEntry;
+import it.unibo.vocago.service.learning.LearningEngineImpl;
 
 class LearningEngineImplTest {
 

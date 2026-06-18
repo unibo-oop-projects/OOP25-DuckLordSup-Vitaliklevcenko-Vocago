@@ -1,4 +1,4 @@
-package it.unibo.vocago.logic.learning.api;
+package it.unibo.vocago.service.learning.api;
 
 import it.unibo.vocago.model.types.Direction;
 

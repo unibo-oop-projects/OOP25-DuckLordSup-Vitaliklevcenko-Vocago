@@ -1,13 +1,13 @@
-package it.unibo.vocago.logic.learning;
+package it.unibo.vocago.service.learning;
 
 import java.util.List;
 
-import it.unibo.vocago.logic.learning.api.LearningEngine;
-import it.unibo.vocago.logic.learning.api.LearningSession;
 import it.unibo.vocago.model.learning.api.Question;
 import it.unibo.vocago.model.types.Direction;
 import it.unibo.vocago.model.vocabulary.api.Vocabulary;
 import it.unibo.vocago.model.vocabulary.api.Word;
+import it.unibo.vocago.service.learning.api.LearningEngine;
+import it.unibo.vocago.service.learning.api.LearningSession;
 
 public class LearningSessionImpl implements LearningSession {
 

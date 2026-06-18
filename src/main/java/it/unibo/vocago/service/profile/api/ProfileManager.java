@@ -2,10 +2,10 @@ package it.unibo.vocago.service.profile.api;
 
 import java.util.List;
 
-import it.unibo.vocago.logic.learning.api.LearningSession;
 import it.unibo.vocago.model.progress.api.Statistics;
 import it.unibo.vocago.model.user.api.User;
 import it.unibo.vocago.model.vocabulary.api.Vocabulary;
+import it.unibo.vocago.service.learning.api.LearningSession;
 
 public interface ProfileManager {
 
