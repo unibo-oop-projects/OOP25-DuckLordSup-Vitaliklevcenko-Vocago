@@ -12,7 +12,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import it.unibo.vocago.controller.api.Controller;
-import it.unibo.vocago.model.progress.api.Statistics;
+import it.unibo.vocago.model.statistics.api.Statistics;
 import it.unibo.vocago.view.util.UIConstants;
 import it.unibo.vocago.view.util.UIFactory;
 import java.awt.Image;
@@ -23,7 +23,7 @@ public class ProfileDashboardPanel extends JPanel{
         private final JButton switchProfileButton;
         private final JButton startButton;
         private final JButton editVocabularyButton;
-        private final JButton resetStatsButton;
+        private final JButton resetStatisticsButton;
         private final JButton configureProfileButton;
 
         public ProfileDashboardPanel(final Controller controller) {
@@ -33,8 +33,8 @@ public class ProfileDashboardPanel extends JPanel{
                                 40, UIConstants.BLUE, 70, 500, true, true, true, UIConstants.PROMPT_FONT);
                 this.startButton = UIFactory.createButton("START LEARNING", "data/resources/pictures/start.png",
                                 70, UIConstants.GREEN, 140, 500, true, true, true, UIConstants.TITLE_FONT);
-                this.resetStatsButton = UIFactory.createButton("Reset Stats", "data/resources/pictures/reset.png",
-                                20, UIConstants.RED, 30, 160, true, true, true, UIConstants.FONT);
+                this.resetStatisticsButton = UIFactory.createButton("Reset Statistics", "data/resources/pictures/reset.png",
+                                20, UIConstants.RED, 30, 180, true, true, true, UIConstants.FONT);
                 this.configureProfileButton = UIFactory.createButton("Settings",
                                 "data/resources/pictures/settings.png",
                                 30, UIConstants.AMBER, 50, 230, true, true, true, UIConstants.FONT);
@@ -70,23 +70,25 @@ public class ProfileDashboardPanel extends JPanel{
 
                 leftPanel.add(Box.createVerticalStrut(40));
 
-                leftPanel.add(UIFactory.createLabel("YOUR STATS", UIConstants.TITLE_FONT));
+                leftPanel.add(UIFactory.createLabel("YOUR STATISTICS", UIConstants.TITLE_FONT));
 
-                JPanel statsPanel = UIFactory.createPanel(new GridLayout(2, 2, 15, 15));
-                statsPanel.setMaximumSize(new Dimension(500, 250));
-                statsPanel.setBorder(new EmptyBorder(15, 15, 15, 15));
-                UIFactory.brighter(statsPanel);
+                JPanel statisticsPanel = UIFactory.createPanel(new GridLayout(2, 2, 15, 15));
+                statisticsPanel.setMaximumSize(new Dimension(500, 250));
+                statisticsPanel.setBorder(new EmptyBorder(15, 15, 15, 15));
+                UIFactory.brighter(statisticsPanel);
 
-                Statistics dashboardStats = this.controller.getDashboardStats();
-                statsPanel.add(statPanel("Mastered", dashboardStats.getMasteredItems() + " Words",
+                Statistics dashboardStatistics = this.controller.getDashboardStatistics();
+                statisticsPanel.add(createStatisticPanel("Mastered", dashboardStatistics.getMasteredItems() + " Words",
                                 "data/resources/pictures/star.png"));
-                statsPanel.add(statPanel("Accuracy", String.format("%.1f%%", dashboardStats.getAccuracyPercent()),
+                statisticsPanel.add(createStatisticPanel("Accuracy",
+                                String.format("%.1f%%", dashboardStatistics.getAccuracyPercent()),
                                 "data/resources/pictures/graph.png"));
-                statsPanel.add(statPanel("Streak", dashboardStats.getCurrentStreak() + " Days",
+                statisticsPanel.add(createStatisticPanel("Streak", dashboardStatistics.getCurrentStreak() + " Days",
                                 "data/resources/pictures/streak.png"));
-                statsPanel.add(statPanel("Time Study", formatStudyTime(dashboardStats.getTotalStudyTime()),
+                statisticsPanel.add(createStatisticPanel("Time Study",
+                                formatStudyTime(dashboardStatistics.getTotalStudyTime()),
                                 "data/resources/pictures/clock.png"));
-                leftPanel.add(statsPanel);
+                leftPanel.add(statisticsPanel);
 
                 leftPanel.add(Box.createVerticalStrut(10));
                 leftPanel.add(UIFactory.createLabel("Account Management", UIConstants.TITLE_FONT));
@@ -100,15 +102,15 @@ public class ProfileDashboardPanel extends JPanel{
                 managementPanel.add(this.configureProfileButton);
                 leftPanel.add(managementPanel);
                 leftPanel.add(Box.createVerticalStrut(20));
-                leftPanel.add(this.resetStatsButton);
+                leftPanel.add(this.resetStatisticsButton);
                 leftPanel.add(Box.createVerticalStrut(20));
                 UIFactory.highlight(leftPanel);
                 return leftPanel;
         }
 
-        public JPanel statPanel(String title, String text, String iconPath) {
-                JPanel stat = UIFactory.createPanel(new FlowLayout(FlowLayout.LEFT, 25, 20));
-                UIFactory.brighter(stat);
+        private JPanel createStatisticPanel(String title, String text, String iconPath) {
+                JPanel statisticPanel = UIFactory.createPanel(new FlowLayout(FlowLayout.LEFT, 25, 20));
+                UIFactory.brighter(statisticPanel);
                 ImageIcon icon = UIFactory.loadIcon(iconPath);
                 Image scaledImage = icon.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
 
@@ -120,12 +122,12 @@ public class ProfileDashboardPanel extends JPanel{
                 UIFactory.brighter(textPanel);
                 textPanel.add(UIFactory.createLabel(title, UIConstants.FONT));
                 textPanel.add(UIFactory.createLabel(text, UIConstants.FONT));
-                stat.add(iconLabel);
-                stat.add(textPanel);
+                statisticPanel.add(iconLabel);
+                statisticPanel.add(textPanel);
 
-                UIFactory.brighter(stat);
+                UIFactory.brighter(statisticPanel);
                 // UIFactory.brightPanel(textPanel);
-                return stat;
+                return statisticPanel;
         }
 
         private JPanel rightPanel() {
@@ -152,7 +154,7 @@ public class ProfileDashboardPanel extends JPanel{
         private void ButtonActionRegister() {
                 this.editVocabularyButton.addActionListener(e -> this.controller.showVocabularyEditorPanel());
                 this.startButton.addActionListener(e -> this.controller.showLearningPanel());
-                this.resetStatsButton.addActionListener(e -> this.controller.resetStats());
+                this.resetStatisticsButton.addActionListener(e -> this.controller.resetStatistics());
                 this.switchProfileButton.addActionListener(e -> this.controller.showStartPanel());
                 this.configureProfileButton.addActionListener(e -> this.controller.showConfigureProfilePanel());
         }

@@ -8,9 +8,9 @@ import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.List;
 import it.unibo.vocago.model.types.DailyGoalSettings;
-import it.unibo.vocago.storage.api.ProgressRepository;
+import it.unibo.vocago.storage.api.StatisticsRepository;
 
-public class ProgressFileStorage implements ProgressRepository {
+public class StatisticsFileStorage implements StatisticsRepository {
 
     private static final Path USERS_DIRECTORY = Path.of("data", "users");
     private static final int LAST_STUDY_DATE_INDEX = 0;
@@ -19,28 +19,28 @@ public class ProgressFileStorage implements ProgressRepository {
     private static final int DAILY_GOAL_INDEX = 3;
 
     @Override
-    public void createProgressFile(final String userName) {
+    public void createStatisticsFile(final String userName) {
         try {
             Files.createDirectories(USERS_DIRECTORY);
             final Path file = fileFor(userName);
             if (!Files.exists(file)) {
-                saveStats(userName, LocalDate.now(), 0, 0L, DailyGoalSettings.DEFAULT);
+                saveStatistics(userName, LocalDate.now(), 0, 0L, DailyGoalSettings.DEFAULT);
             }
         } catch (IOException exception) {
-            throw new UncheckedIOException("Could not create progress file for user: " + userName, exception);
+            throw new UncheckedIOException("Could not create statistics file for user: " + userName, exception);
         }
     }
 
     @Override
-    public void saveStats(
+    public void saveStatistics(
             final String userName,
             final LocalDate lastStudyDate,
             final int currentStreak,
             final long totalStudyTime) {
-        saveStats(userName, lastStudyDate, currentStreak, totalStudyTime, dailyGoalOrDefault(userName));
+        saveStatistics(userName, lastStudyDate, currentStreak, totalStudyTime, dailyGoalOrDefault(userName));
     }
 
-    private void saveStats(
+    private void saveStatistics(
             final String userName,
             final LocalDate lastStudyDate,
             int currentStreak,
@@ -62,36 +62,36 @@ public class ProgressFileStorage implements ProgressRepository {
                     Long.toString(totalStudyTime),
                     Integer.toString(DailyGoalSettings.normalize(dailyGoal))), StandardCharsets.UTF_8);
         } catch (IOException exception) {
-            throw new UncheckedIOException("Could not save progress for user: " + userName, exception);
+            throw new UncheckedIOException("Could not save statistics for user: " + userName, exception);
         }
     }
 
     @Override
     public LocalDate getLastStudyDate(final String userName) {
-        return LocalDate.parse(readProgressLines(userName).get(LAST_STUDY_DATE_INDEX));
+        return LocalDate.parse(readStatisticsLines(userName).get(LAST_STUDY_DATE_INDEX));
     }
 
     @Override
     public int getCurrentStreak(final String userName) {
-        return Integer.parseInt(readProgressLines(userName).get(CURRENT_STREAK_INDEX));
+        return Integer.parseInt(readStatisticsLines(userName).get(CURRENT_STREAK_INDEX));
     }
 
     @Override
     public long getTotalStudyTime(final String userName) {
-        return Long.parseLong(readProgressLines(userName).get(TOTAL_STUDY_TIME_INDEX));
+        return Long.parseLong(readStatisticsLines(userName).get(TOTAL_STUDY_TIME_INDEX));
     }
 
     @Override
     public int getDailyGoal(String userName) {
-        return Integer.parseInt(readProgressLines(userName).get(DAILY_GOAL_INDEX));
+        return Integer.parseInt(readStatisticsLines(userName).get(DAILY_GOAL_INDEX));
     }
 
     @Override
-    public boolean deleteProgress(final String userName) {
+    public boolean deleteStatistics(final String userName) {
         try {
             return Files.deleteIfExists(fileFor(userName));
         } catch (IOException exception) {
-            throw new UncheckedIOException("Could not delete progress for user: " + userName, exception);
+            throw new UncheckedIOException("Could not delete statistics for user: " + userName, exception);
         }
     }
 
@@ -108,20 +108,20 @@ public class ProgressFileStorage implements ProgressRepository {
             if (!currentProfileName.equals(targetProfileName)) {
                 Files.move(fileFor(currentProfileName), fileFor(targetProfileName));
             }
-            saveStats(targetProfileName, lastStudyDate, currentStreak, totalStudyTime, dailyGoal);
+            saveStatistics(targetProfileName, lastStudyDate, currentStreak, totalStudyTime, dailyGoal);
         } catch (IOException exception) {
-            throw new UncheckedIOException("Could not save progress configuration for profile: " + currentProfileName,
+            throw new UncheckedIOException("Could not save statistics configuration for profile: " + currentProfileName,
                     exception);
         }
     }
 
-    private List<String> readProgressLines(final String userName) {
-        createProgressFile(userName);
+    private List<String> readStatisticsLines(final String userName) {
+        createStatisticsFile(userName);
         try {
 
             final List<String> lines = Files.readAllLines(fileFor(userName), StandardCharsets.UTF_8);
             if (lines.size() != 4) {
-                resetProgressFile(userName, LocalDate.now(), 0, 0L, DailyGoalSettings.DEFAULT);
+                resetStatisticsFile(userName, LocalDate.now(), 0, 0L, DailyGoalSettings.DEFAULT);
                 return Files.readAllLines(fileFor(userName), StandardCharsets.UTF_8);
             }
 
@@ -151,26 +151,26 @@ public class ProgressFileStorage implements ProgressRepository {
             } catch (RuntimeException exception) {
                 dailyGoal = DailyGoalSettings.DEFAULT;
             }
-            saveStats(userName, lastStudyDate, currentStreak, totalStudyTime, dailyGoal);
+            saveStatistics(userName, lastStudyDate, currentStreak, totalStudyTime, dailyGoal);
             return Files.readAllLines(fileFor(userName), StandardCharsets.UTF_8);
             
         } catch (IOException exception) {
-            throw new UncheckedIOException("Could not load progress for user: " + userName, exception);
+            throw new UncheckedIOException("Could not load statistics for user: " + userName, exception);
         }
     }
 
-    private void resetProgressFile(final String userName, final LocalDate lastStudyDate,
+    private void resetStatisticsFile(final String userName, final LocalDate lastStudyDate,
             int currentStreak, long totalStudyTime, int dailyGoal) {
         try{
             Files.deleteIfExists(fileFor(userName));
-            saveStats(userName, LocalDate.now(), 0, 0L, DailyGoalSettings.DEFAULT);
+            saveStatistics(userName, LocalDate.now(), 0, 0L, DailyGoalSettings.DEFAULT);
         } catch (IOException exception) {
-            throw new UncheckedIOException("Could not reset progress for user: " + userName, exception);
+            throw new UncheckedIOException("Could not reset statistics for user: " + userName, exception);
         }
     }
 
     private static Path fileFor(final String userName) {
-        return USERS_DIRECTORY.resolve(userName.trim() + ".progress");
+        return USERS_DIRECTORY.resolve(userName.trim() + ".statistics");
     }
 
     private int dailyGoalOrDefault(final String userName) {

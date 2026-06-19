@@ -4,9 +4,9 @@ import java.util.List;
 import it.unibo.vocago.controller.api.Controller;
 import it.unibo.vocago.controller.coordinators.LearningCoordinator;
 import it.unibo.vocago.controller.coordinators.ProfileCoordinator;
-import it.unibo.vocago.controller.coordinators.StatsCoordinator;
+import it.unibo.vocago.controller.coordinators.StatisticsCoordinator;
 import it.unibo.vocago.controller.coordinators.VocabularyCoordinator;
-import it.unibo.vocago.model.progress.api.Statistics;
+import it.unibo.vocago.model.statistics.api.Statistics;
 import it.unibo.vocago.model.types.Direction;
 import it.unibo.vocago.model.user.api.User;
 import it.unibo.vocago.model.vocabulary.api.Vocabulary;
@@ -21,7 +21,7 @@ public class ControllerImpl implements Controller {
     private final ProfileManager profileManager;
     private final LearningCoordinator learningCoordinator;
     private final ProfileCoordinator profileCoordinator;
-    private final StatsCoordinator statsCoordinator;
+    private final StatisticsCoordinator statisticsCoordinator;
     private final VocabularyCoordinator vocabularyCoordinator;
 
     public ControllerImpl() {
@@ -29,7 +29,7 @@ public class ControllerImpl implements Controller {
         this.profileManager = new ProfileManagerImpl();
         this.learningCoordinator = new LearningCoordinator(this.profileManager, this.appView);
         this.profileCoordinator = new ProfileCoordinator(this.profileManager, this.appView);
-        this.statsCoordinator = new StatsCoordinator(this.profileManager, this.appView);
+        this.statisticsCoordinator = new StatisticsCoordinator(this.profileManager, this.appView);
         this.vocabularyCoordinator = new VocabularyCoordinator(this.profileManager, this.appView);
         showStartPanel();
     }
@@ -172,13 +172,13 @@ public class ControllerImpl implements Controller {
     }
 
     @Override
-    public Statistics getDashboardStats() {
-        return this.statsCoordinator.getDashboardStats();
+    public Statistics getDashboardStatistics() {
+        return this.statisticsCoordinator.getDashboardStatistics();
     }
     
     @Override
-    public void resetStats() {
-        if (this.statsCoordinator.resetStats()) {
+    public void resetStatistics() {
+        if (this.statisticsCoordinator.resetStatistics()) {
             showProfileDashboardPanel();
         }
     }

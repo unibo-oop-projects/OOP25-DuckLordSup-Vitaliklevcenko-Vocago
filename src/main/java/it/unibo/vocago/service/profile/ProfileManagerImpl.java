@@ -5,9 +5,9 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
-import it.unibo.vocago.model.progress.ProfileStats;
 import it.unibo.vocago.model.progress.api.Progress;
-import it.unibo.vocago.model.progress.api.Statistics;
+import it.unibo.vocago.model.statistics.ProfileStatistics;
+import it.unibo.vocago.model.statistics.api.Statistics;
 import it.unibo.vocago.model.types.DailyGoalSettings;
 import it.unibo.vocago.model.types.Direction;
 import it.unibo.vocago.model.types.MasteryLevel;
@@ -17,26 +17,26 @@ import it.unibo.vocago.model.vocabulary.api.Vocabulary;
 import it.unibo.vocago.model.vocabulary.api.VocabularyItem;
 import it.unibo.vocago.service.learning.api.LearningSession;
 import it.unibo.vocago.service.profile.api.ProfileManager;
-import it.unibo.vocago.storage.ProgressFileStorage;
+import it.unibo.vocago.storage.StatisticsFileStorage;
 import it.unibo.vocago.storage.UserCsvStorage;
-import it.unibo.vocago.storage.api.ProgressRepository;
+import it.unibo.vocago.storage.api.StatisticsRepository;
 import it.unibo.vocago.storage.api.UserRepository;
 
 public class ProfileManagerImpl implements ProfileManager{
 
     private final UserRepository userRepository;
-    private final ProgressRepository progressRepository;
+    private final StatisticsRepository statisticsRepository;
     private User currentProfile;
 
     public ProfileManagerImpl() {
-        this(new UserCsvStorage(), new ProgressFileStorage());
+        this(new UserCsvStorage(), new StatisticsFileStorage());
     }
 
     public ProfileManagerImpl(
         final UserRepository userRepository,
-        final ProgressRepository progressRepository) {
+        final StatisticsRepository statisticsRepository) {
         this.userRepository = Objects.requireNonNull(userRepository);
-        this.progressRepository = Objects.requireNonNull(progressRepository);
+        this.statisticsRepository = Objects.requireNonNull(statisticsRepository);
         this.currentProfile = null;
     }
 
@@ -46,9 +46,9 @@ public class ProfileManagerImpl implements ProfileManager{
         this.userRepository.save(profile);
 
         try {
-            this.progressRepository.createProgressFile(profile.getUserName());
+            this.statisticsRepository.createStatisticsFile(profile.getUserName());
         } catch (RuntimeException exception) {
-            System.err.println("Could not create progress file for profile: " + profileName);
+            System.err.println("Could not create statistics file for profile: " + profileName);
             exception.printStackTrace();
         }
         this.currentProfile = profile;
@@ -112,30 +112,30 @@ public class ProfileManagerImpl implements ProfileManager{
         this.currentProfile = null;
 
         try {
-            this.progressRepository.deleteProgress(profileName);
+            this.statisticsRepository.deleteStatistics(profileName);
         } catch (RuntimeException exception) {
-            // The profile was deleted; leftover progress should not block deletion.
-            System.err.println("Could not delete progress file for profile: " + profileName);
+            // The profile was deleted; leftover statistics should not block deletion.
+            System.err.println("Could not delete statistics file for profile: " + profileName);
             exception.printStackTrace();
         }
         return true;
     }
 
     @Override
-    public Statistics getDashboardStats() {
+    public Statistics getDashboardStatistics() {
         if (!hasCurrentProfile()) {
             throw new IllegalStateException("No current profile selected.");
         }
         if (!vocabularyIsValid()) {
-            return new ProfileStats(
+            return new ProfileStatistics(
                     0,
                     0,
                     0,
                     0,
                     0,
-                    this.progressRepository.getLastStudyDate(this.currentProfile.getUserName()),
-                    this.progressRepository.getCurrentStreak(this.currentProfile.getUserName()),
-                    this.progressRepository.getTotalStudyTime(this.currentProfile.getUserName()));
+                    this.statisticsRepository.getLastStudyDate(this.currentProfile.getUserName()),
+                    this.statisticsRepository.getCurrentStreak(this.currentProfile.getUserName()),
+                    this.statisticsRepository.getTotalStudyTime(this.currentProfile.getUserName()));
         }
 
         final Vocabulary vocabulary = this.currentProfile.getVocabulary();
@@ -159,33 +159,33 @@ public class ProfileManagerImpl implements ProfileManager{
             correctRatio = (countCorrectAnswers * 100.0) / (countWrongAnswers + countCorrectAnswers);
         }
 
-        return new ProfileStats(
+        return new ProfileStatistics(
                 countMasteryItems,
                 countCorrectAnswers,//for future use
                 countWrongAnswers,
                 wordCount,
                 correctRatio,
-                this.progressRepository.getLastStudyDate(this.currentProfile.getUserName()),
-                this.progressRepository.getCurrentStreak(this.currentProfile.getUserName()),
-                this.progressRepository.getTotalStudyTime(this.currentProfile.getUserName()));
+                this.statisticsRepository.getLastStudyDate(this.currentProfile.getUserName()),
+                this.statisticsRepository.getCurrentStreak(this.currentProfile.getUserName()),
+                this.statisticsRepository.getTotalStudyTime(this.currentProfile.getUserName()));
     }
     
     @Override
-    public void resetStats() {
+    public void resetStatistics() {
         if (hasCurrentProfile()) {
-            this.progressRepository.saveStats(this.currentProfile.getUserName(), LocalDate.now(), 0, 0L);
+            this.statisticsRepository.saveStatistics(this.currentProfile.getUserName(), LocalDate.now(), 0, 0L);
         }
     }
 
     @Override
-    public void saveLearningProgress(final LearningSession session) {
+    public void saveLearningStatistics(final LearningSession session) {
         if (!hasCurrentProfile() || session == null) {
             return;
         }
         final String profileName = this.currentProfile.getUserName();
         final LocalDate today = LocalDate.now();
-        final LocalDate lastStudyDate = this.progressRepository.getLastStudyDate(profileName);
-        int streak = this.progressRepository.getCurrentStreak(profileName);
+        final LocalDate lastStudyDate = this.statisticsRepository.getLastStudyDate(profileName);
+        int streak = this.statisticsRepository.getCurrentStreak(profileName);
 
         if (today.equals(lastStudyDate)) {
             streak = Math.max(streak, 1);
@@ -196,11 +196,11 @@ public class ProfileManagerImpl implements ProfileManager{
             streak = 0;
         }
 
-        this.progressRepository.saveStats(
+        this.statisticsRepository.saveStatistics(
                 profileName,
                 today,
                 streak,
-                this.progressRepository.getTotalStudyTime(profileName)
+                this.statisticsRepository.getTotalStudyTime(profileName)
                         + (System.currentTimeMillis() - session.getTime()) / 1000);
     }
 
@@ -209,7 +209,7 @@ public class ProfileManagerImpl implements ProfileManager{
         if (!hasCurrentProfile()) {
             throw new IllegalStateException("No current profile selected.");
         }
-        return this.progressRepository.getDailyGoal(this.currentProfile.getUserName());
+        return this.statisticsRepository.getDailyGoal(this.currentProfile.getUserName());
     }
     
     @Override
@@ -221,7 +221,7 @@ public class ProfileManagerImpl implements ProfileManager{
                     ? originalProfileName
                     : newProfileName.trim();
             dailyGoal = DailyGoalSettings.normalize(dailyGoal);
-            this.progressRepository.saveProfileConfigurations(originalProfileName, targetProfileName, dailyGoal);
+            this.statisticsRepository.saveProfileConfigurations(originalProfileName, targetProfileName, dailyGoal);
             final User updatedUser = new Profile(
                     targetProfileName,
                     this.currentProfile.getVocabulary(),
@@ -242,14 +242,14 @@ public class ProfileManagerImpl implements ProfileManager{
         }
         final String profileName = this.currentProfile.getUserName();
         final LocalDate today = LocalDate.now();
-        final LocalDate lastStudyDate = this.progressRepository.getLastStudyDate(profileName);
-        final int currentStreak = this.progressRepository.getCurrentStreak(profileName);
+        final LocalDate lastStudyDate = this.statisticsRepository.getLastStudyDate(profileName);
+        final int currentStreak = this.statisticsRepository.getCurrentStreak(profileName);
         if (currentStreak > 0 && !lastStudyDate.equals(today) && !lastStudyDate.equals(today.minusDays(1))) {
-            this.progressRepository.saveStats(
+            this.statisticsRepository.saveStatistics(
                     profileName,
                     lastStudyDate,
                     0,
-                    this.progressRepository.getTotalStudyTime(profileName));
+                    this.statisticsRepository.getTotalStudyTime(profileName));
         }
     }
 }

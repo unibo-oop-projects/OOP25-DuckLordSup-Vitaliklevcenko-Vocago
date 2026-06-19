@@ -2,7 +2,7 @@ package it.unibo.vocago.service.profile.api;
 
 import java.util.List;
 
-import it.unibo.vocago.model.progress.api.Statistics;
+import it.unibo.vocago.model.statistics.api.Statistics;
 import it.unibo.vocago.model.user.api.User;
 import it.unibo.vocago.model.vocabulary.api.Vocabulary;
 import it.unibo.vocago.service.learning.api.LearningSession;
@@ -27,11 +27,11 @@ public interface ProfileManager {
 
     boolean deleteCurrentProfile();
 
-    Statistics getDashboardStats();
+    Statistics getDashboardStatistics();
 
-    void resetStats();
+    void resetStatistics();
 
-    void saveLearningProgress(LearningSession session);
+    void saveLearningStatistics(LearningSession session);
 
     void updateExpiredStreak();
 

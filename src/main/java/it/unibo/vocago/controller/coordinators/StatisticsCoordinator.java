@@ -4,27 +4,27 @@ import java.time.LocalDate;
 
 import javax.swing.JOptionPane;
 
-import it.unibo.vocago.model.progress.ProfileStats;
-import it.unibo.vocago.model.progress.api.Statistics;
+import it.unibo.vocago.model.statistics.ProfileStatistics;
+import it.unibo.vocago.model.statistics.api.Statistics;
 import it.unibo.vocago.service.profile.api.ProfileManager;
 import it.unibo.vocago.view.api.AppView;
 
-public final class StatsCoordinator {
+public final class StatisticsCoordinator {
 
     private final ProfileManager profileManager;
     private final AppView appView;
 
-    public StatsCoordinator(final ProfileManager profileManager, final AppView appView) {
+    public StatisticsCoordinator(final ProfileManager profileManager, final AppView appView) {
         this.profileManager = profileManager;
         this.appView = appView;
     }
 
-    public Statistics getDashboardStats() {
+    public Statistics getDashboardStatistics() {
         try {
-            return this.profileManager.getDashboardStats();
+            return this.profileManager.getDashboardStatistics();
         } catch (RuntimeException exception) {
-            this.appView.showError("Stats Error", "Your Stats has been corrupted");
-            return new ProfileStats(
+            this.appView.showError("Statistics Error", "Your statistics have been corrupted");
+            return new ProfileStatistics(
                     0,
                     0,
                     0,
@@ -36,20 +36,20 @@ public final class StatsCoordinator {
         }
     }
 
-    public boolean resetStats() {
+    public boolean resetStatistics() {
         final int answer = this.appView.askConfirmationWithCancel(
-                "Reset Stats",
-                "Are you sure? your streak and study time will be reset");
+                "Reset Statistics",
+                "Are you sure? Your streak and study time will be reset");
         if (answer != JOptionPane.YES_OPTION) {
             return false;
         }
 
         try {
-            this.profileManager.resetStats();
-            this.appView.showInfo("Stats Reset", "Your Stats has been reset");
+            this.profileManager.resetStatistics();
+            this.appView.showInfo("Statistics Reset", "Your statistics have been reset");
             return true;
         } catch (RuntimeException exception) {
-            this.appView.showError("Stats Error", "Failed to reset your Stats, try again!");
+            this.appView.showError("Statistics Error", "Failed to reset your statistics, try again!");
             return false;
         }
     }

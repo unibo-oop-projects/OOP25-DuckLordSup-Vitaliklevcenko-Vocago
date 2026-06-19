@@ -1,4 +1,4 @@
-package it.unibo.vocago.model.progress.api;
+package it.unibo.vocago.model.statistics.api;
 
 import java.time.LocalDate;
 

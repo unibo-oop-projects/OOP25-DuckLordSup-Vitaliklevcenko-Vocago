@@ -1,10 +1,10 @@
-package it.unibo.vocago.model.progress;
+package it.unibo.vocago.model.statistics;
 
 import java.time.LocalDate;
 
-import it.unibo.vocago.model.progress.api.Statistics;
+import it.unibo.vocago.model.statistics.api.Statistics;
 
-public class ProfileStats implements Statistics {
+public class ProfileStatistics implements Statistics {
     
     private final int masteredItems;
     private final int correctAnswers;
@@ -15,7 +15,7 @@ public class ProfileStats implements Statistics {
     private final int currentStreak;
     private final long totalStudyTime;
     
-    public ProfileStats(
+    public ProfileStatistics(
         
             final int masteredItems, 
             final int correctAnswers, 

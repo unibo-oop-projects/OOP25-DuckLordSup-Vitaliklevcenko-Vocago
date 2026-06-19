@@ -2,7 +2,7 @@ package it.unibo.vocago.controller.api;
 
 import java.util.List;
 
-import it.unibo.vocago.model.progress.api.Statistics;
+import it.unibo.vocago.model.statistics.api.Statistics;
 import it.unibo.vocago.model.types.Direction;
 import it.unibo.vocago.model.user.api.User;
 import it.unibo.vocago.model.vocabulary.api.Vocabulary;
@@ -45,7 +45,7 @@ public interface Controller {
 
     void deleteProfile();
 
-    void resetStats();
+    void resetStatistics();
 
     boolean vocabularyIsValid();
 
@@ -55,7 +55,7 @@ public interface Controller {
 
     User getCurrentProfile();
 
-    Statistics getDashboardStats();
+    Statistics getDashboardStatistics();
 
     int getDailyGoal();
 

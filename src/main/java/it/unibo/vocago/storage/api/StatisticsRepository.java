@@ -2,11 +2,11 @@ package it.unibo.vocago.storage.api;
 
 import java.time.LocalDate;
 
-public interface ProgressRepository {
+public interface StatisticsRepository {
 
-    void createProgressFile(String userName);
+    void createStatisticsFile(String userName);
 
-    void saveStats(String userName, LocalDate lastStudyDate, int currentStreak, long totalStudyTime);
+    void saveStatistics(String userName, LocalDate lastStudyDate, int currentStreak, long totalStudyTime);
 
     LocalDate getLastStudyDate(String userName);
 
@@ -14,7 +14,7 @@ public interface ProgressRepository {
 
     long getTotalStudyTime(String userName);
 
-    boolean deleteProgress(String userName);
+    boolean deleteStatistics(String userName);
 
     int getDailyGoal(String userName);
 
