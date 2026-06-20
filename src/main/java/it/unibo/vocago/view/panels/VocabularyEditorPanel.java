@@ -8,6 +8,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
@@ -226,16 +227,16 @@ public class VocabularyEditorPanel extends JPanel{
     }
 
     private void findWordInTable() {
-        final String searchText = this.searchTextField.getText().trim().toLowerCase();
+        final String searchText = this.searchTextField.getText().trim().toLowerCase(Locale.ROOT);
         if (searchText.isEmpty()) {
             return;
         }
 
         for (int row = 0; row < this.table.getRowCount(); row++) {
             final String firstColumn = cellToText(
-                    this.table.getValueAt(row, FIRST_WORDS_COLUMN)).toLowerCase();
+                    this.table.getValueAt(row, FIRST_WORDS_COLUMN)).toLowerCase(Locale.ROOT);
             final String secondColumn = cellToText(
-                    this.table.getValueAt(row, SECOND_WORDS_COLUMN)).toLowerCase();
+                    this.table.getValueAt(row, SECOND_WORDS_COLUMN)).toLowerCase(Locale.ROOT);
 
             if (firstColumn.contains(searchText) || secondColumn.contains(searchText)) {
                 this.table.setRowSelectionInterval(row, row);
