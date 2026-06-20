@@ -14,7 +14,7 @@ import it.unibo.vocago.model.user.api.User;
 import it.unibo.vocago.view.util.UIConstants;
 import it.unibo.vocago.view.util.UIFactory;
 
-public class StartPanel extends JPanel{
+public final class StartPanel extends JPanel{
 
     private static final long serialVersionUID = 1L;
     private static final int MAX_USERS = 4;

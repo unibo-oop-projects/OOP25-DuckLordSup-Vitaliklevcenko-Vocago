@@ -14,7 +14,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import javax.swing.*;
 
-public class LearningPanel extends JPanel{
+public final class LearningPanel extends JPanel{
 
     private static final long serialVersionUID = 1L;
     private static final int HEADER_HEIGHT = 60;

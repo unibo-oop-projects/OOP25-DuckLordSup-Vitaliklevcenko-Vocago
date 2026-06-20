@@ -18,7 +18,7 @@ import it.unibo.vocago.view.panels.StartPanel;
 import it.unibo.vocago.view.panels.VocabularyEditorPanel;
 import it.unibo.vocago.view.util.UIFactory;
 
-public class AppFrame extends JFrame implements AppView {
+public final class AppFrame extends JFrame implements AppView {
 
     private static final long serialVersionUID = 1L;
     private static final Dimension SMALL_WINDOW = new Dimension(800, 600);

@@ -18,7 +18,7 @@ import it.unibo.vocago.view.util.UIConstants;
 import it.unibo.vocago.view.util.UIFactory;
 import java.awt.Image;
 
-public class ProfileDashboardPanel extends JPanel{
+public final class ProfileDashboardPanel extends JPanel{
 
         private static final long serialVersionUID = 1L;
         private final Controller controller;

@@ -34,7 +34,7 @@ import it.unibo.vocago.model.vocabulary.api.Word;
 import it.unibo.vocago.view.util.UIConstants;
 import it.unibo.vocago.view.util.UIFactory;
 
-public class VocabularyEditorPanel extends JPanel{
+public final class VocabularyEditorPanel extends JPanel{
 
     private static final long serialVersionUID = 1L;
     private static final int FIRST_WORDS_COLUMN = 0;

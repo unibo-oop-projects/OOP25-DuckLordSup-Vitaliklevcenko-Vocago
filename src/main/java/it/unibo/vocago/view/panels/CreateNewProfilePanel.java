@@ -14,7 +14,7 @@ import it.unibo.vocago.controller.api.Controller;
 import it.unibo.vocago.view.util.UIConstants;
 import it.unibo.vocago.view.util.UIFactory;
 
-public class CreateNewProfilePanel extends JPanel{
+public final class CreateNewProfilePanel extends JPanel{
 
     private static final long serialVersionUID = 1L;
     private final Controller controller;

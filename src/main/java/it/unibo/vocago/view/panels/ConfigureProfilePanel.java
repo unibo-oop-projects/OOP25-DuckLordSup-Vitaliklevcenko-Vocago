@@ -24,7 +24,7 @@ import it.unibo.vocago.model.types.DailyGoalSettings;
 import it.unibo.vocago.view.util.UIConstants;
 import it.unibo.vocago.view.util.UIFactory;
 
-public class ConfigureProfilePanel extends JPanel{
+public final class ConfigureProfilePanel extends JPanel{
 
     private static final long serialVersionUID = 1L;
     private static final String[] LANGUAGES = {
