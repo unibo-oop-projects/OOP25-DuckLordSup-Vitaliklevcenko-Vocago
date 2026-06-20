@@ -69,7 +69,7 @@ public class ConfigureProfilePanel extends JPanel{
         buttonActionRegister();
     }
 
-    public void buildLayout() {
+    private void buildLayout() {
         setLayout(new BorderLayout());
         add(headerPanel(), BorderLayout.NORTH);
 

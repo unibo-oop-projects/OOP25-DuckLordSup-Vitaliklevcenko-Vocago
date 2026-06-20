@@ -44,7 +44,7 @@ public class ProfileDashboardPanel extends JPanel{
                 ButtonActionRegister();
         }
 
-        public void buildLayout() {
+        private void buildLayout() {
 
                 setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 

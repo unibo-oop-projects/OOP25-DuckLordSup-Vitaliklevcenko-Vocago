@@ -77,7 +77,7 @@ public class VocabularyEditorPanel extends JPanel{
         actionRegister();
     }
 
-    public void buildLayout() {
+    private void buildLayout() {
         setLayout(new BorderLayout());
         add(buildUpperPanel(), BorderLayout.NORTH);
         add(buildTableScrollPane(), BorderLayout.CENTER);

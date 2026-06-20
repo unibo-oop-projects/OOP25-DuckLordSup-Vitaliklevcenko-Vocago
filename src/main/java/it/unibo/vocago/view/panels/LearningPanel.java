@@ -99,7 +99,7 @@ public class LearningPanel extends JPanel{
         SwingUtilities.invokeLater(() -> this.userAnswer.requestFocusInWindow());
     }
     
-    public void buildLayout() {
+    private void buildLayout() {
         setLayout(new BorderLayout());
 
         add(createHeaderPanel(), BorderLayout.NORTH);
@@ -198,7 +198,7 @@ public class LearningPanel extends JPanel{
         return buttonsPanel;
     }
     
-    public void actionRegister() {
+    private void actionRegister() {
         this.goBackButton.addActionListener(e -> this.controller.showProfileDashboardPanel());
         this.userAnswer.addActionListener(e -> checkAnswer());
         this.revealAnswerButton.addActionListener(e -> {

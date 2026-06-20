@@ -30,7 +30,7 @@ public class StartPanel extends JPanel{
         buildLayout();
     }
     
-    public void buildLayout() {
+    private void buildLayout() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         UIFactory.stylePanel(this);
 

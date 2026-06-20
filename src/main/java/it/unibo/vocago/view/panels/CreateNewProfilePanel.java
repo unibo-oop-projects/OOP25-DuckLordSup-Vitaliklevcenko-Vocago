@@ -47,7 +47,7 @@ public class CreateNewProfilePanel extends JPanel{
         this.goBackButton.addActionListener(e -> this.controller.showStartPanel());
     }
 
-    public void buildLayout() {
+    private void buildLayout() {
         setLayout(new BorderLayout());
         JLabel titleLabel = UIFactory.createLabel("Create New Profile", UIConstants.TITLE_FONT);
         JPanel titlePanel = UIFactory.createPanel(new FlowLayout(FlowLayout.CENTER, 0, 40));
