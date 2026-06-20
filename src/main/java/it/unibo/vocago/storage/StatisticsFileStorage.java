@@ -6,6 +6,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import it.unibo.vocago.model.types.DailyGoalSettings;
 import it.unibo.vocago.storage.api.StatisticsRepository;
@@ -128,23 +129,23 @@ public class StatisticsFileStorage implements StatisticsRepository {
 
             try {
                 lastStudyDate = LocalDate.parse(lines.get(LAST_STUDY_DATE_INDEX));
-            } catch (RuntimeException exception) {
+            } catch (DateTimeParseException exception) {
                 lastStudyDate = LocalDate.now();
             }
             try {
                 currentStreak = Integer.parseInt(lines.get(CURRENT_STREAK_INDEX));
-            } catch (RuntimeException exception) {
+            } catch (NumberFormatException exception) {
                 currentStreak = 0;
             }
             try {
                 totalStudyTime = Long.parseLong(lines.get(TOTAL_STUDY_TIME_INDEX));
-            } catch (RuntimeException exception) {
+            } catch (NumberFormatException exception) {
                 totalStudyTime = 0L;
             }
             try {
                 dailyGoal = Integer.parseInt(lines.get(DAILY_GOAL_INDEX));
                 dailyGoal = DailyGoalSettings.normalize(dailyGoal);
-            } catch (RuntimeException exception) {
+            } catch (NumberFormatException exception) {
                 dailyGoal = DailyGoalSettings.DEFAULT;
             }
             saveStatistics(userName, lastStudyDate, currentStreak, totalStudyTime, dailyGoal);
@@ -171,7 +172,7 @@ public class StatisticsFileStorage implements StatisticsRepository {
     private int dailyGoalOrDefault(final String userName) {
         try {
             return getDailyGoal(userName);
-        } catch (RuntimeException exception) {
+        } catch (UncheckedIOException | NumberFormatException | IndexOutOfBoundsException exception) {
             return DailyGoalSettings.DEFAULT;
         }
     }
