@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.vocago.controller.api.Controller;
 import it.unibo.vocago.model.types.DailyGoalSettings;
 import it.unibo.vocago.view.util.UIConstants;
@@ -41,6 +42,7 @@ public class ConfigureProfilePanel extends JPanel{
     private final JSlider dailyGoalSlider;
     private final JLabel dailyGoalValueLabel;
 
+    @SuppressFBWarnings(value = "EI2", justification = "The panel intentionally shares the app controller.")
     public ConfigureProfilePanel(final Controller controller) {
         this.controller = controller;
         UIFactory.stylePanel(this);

@@ -19,6 +19,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.vocago.controller.api.Controller;
 import it.unibo.vocago.model.progress.WordProgress;
 import it.unibo.vocago.model.progress.api.Progress;
@@ -57,6 +58,7 @@ public class VocabularyEditorPanel extends JPanel{
     private final JButton findButton;
     private final Controller controller;
 
+    @SuppressFBWarnings(value = "EI2", justification = "The panel intentionally shares the app controller.")
     public VocabularyEditorPanel(final Controller controller) {
         this.controller = controller;
         this.model = new DefaultTableModel();

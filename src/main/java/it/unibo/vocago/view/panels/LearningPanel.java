@@ -1,5 +1,6 @@
 package it.unibo.vocago.view.panels;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.vocago.controller.api.Controller;
 import it.unibo.vocago.model.types.Direction;
 import it.unibo.vocago.view.util.UIConstants;
@@ -32,6 +33,7 @@ public class LearningPanel extends JPanel{
     private Timer timer;
     private long startTime;
 
+    @SuppressFBWarnings(value = "EI2", justification = "The panel intentionally shares the app controller.")
     public LearningPanel(final Controller controller) {
 
         

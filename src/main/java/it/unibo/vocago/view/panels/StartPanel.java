@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import java.awt.BorderLayout;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.vocago.controller.api.Controller;
 import it.unibo.vocago.model.user.api.User;
 import it.unibo.vocago.view.util.UIConstants;
@@ -25,6 +26,7 @@ public class StartPanel extends JPanel{
     };
     final private Controller controller;
     
+    @SuppressFBWarnings(value = "EI2", justification = "The panel intentionally shares the app controller.")
     public StartPanel(final Controller controller) {
         this.controller = controller;
         buildLayout();

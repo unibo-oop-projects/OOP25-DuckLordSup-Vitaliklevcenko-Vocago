@@ -7,6 +7,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.vocago.controller.api.Controller;
 import it.unibo.vocago.view.api.AppView;
 import it.unibo.vocago.view.panels.ConfigureProfilePanel;
@@ -33,6 +34,7 @@ public class AppFrame extends JFrame implements AppView {
     private CreateNewProfilePanel createNewProfilePanel;
     private ConfigureProfilePanel configureProfilePanel;
 
+    @SuppressFBWarnings(value = "EI2", justification = "The view intentionally shares the app controller.")
     public AppFrame(final Controller controller) {
 
         this.controller = controller;

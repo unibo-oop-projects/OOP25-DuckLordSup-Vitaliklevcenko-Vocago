@@ -11,6 +11,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.vocago.controller.api.Controller;
 import it.unibo.vocago.model.statistics.api.Statistics;
 import it.unibo.vocago.view.util.UIConstants;
@@ -26,6 +27,7 @@ public class ProfileDashboardPanel extends JPanel{
         private final JButton resetStatisticsButton;
         private final JButton configureProfileButton;
 
+        @SuppressFBWarnings(value = "EI2", justification = "The panel intentionally shares the app controller.")
         public ProfileDashboardPanel(final Controller controller) {
                 this.controller = controller;
                 this.editVocabularyButton = UIFactory.createButton("Edit Vocabulary",

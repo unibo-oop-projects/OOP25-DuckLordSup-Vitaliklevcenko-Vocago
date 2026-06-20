@@ -9,7 +9,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.vocago.controller.api.Controller;
 import it.unibo.vocago.view.util.UIConstants;
 import it.unibo.vocago.view.util.UIFactory;
@@ -23,6 +23,7 @@ public class CreateNewProfilePanel extends JPanel{
     private final JComboBox<String> secondLanguageComboBox;
     private final JButton goBackButton;
 
+    @SuppressFBWarnings(value = "EI2", justification = "The panel intentionally shares the app controller.")
     public CreateNewProfilePanel(final Controller controller) {
 
         this.controller = controller;
