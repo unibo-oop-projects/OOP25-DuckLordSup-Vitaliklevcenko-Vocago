@@ -1,6 +1,7 @@
 package it.unibo.vocago.service.profile.api;
 
 import java.util.List;
+import java.util.Optional;
 
 import it.unibo.vocago.model.statistics.api.Statistics;
 import it.unibo.vocago.model.user.api.User;
@@ -16,8 +17,6 @@ public interface ProfileManager {
     List<User> getExistingProfiles();
 
     void chooseProfile(User profile);
-
-    User getCurrentProfile();
 
     boolean hasCurrentProfile();
 
@@ -39,4 +38,6 @@ public interface ProfileManager {
 
     void saveProfileConfigurations(String profileName, final String firstLanguage,
             final String secondLanguage, final int dailyGoal);
+
+    Optional<User> getCurrentProfile();
 }

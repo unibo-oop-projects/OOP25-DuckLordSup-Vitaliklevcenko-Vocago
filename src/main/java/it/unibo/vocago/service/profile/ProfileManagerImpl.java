@@ -4,6 +4,8 @@ package it.unibo.vocago.service.profile;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
+
 import it.unibo.vocago.model.progress.api.Progress;
 import it.unibo.vocago.model.statistics.ProfileStatistics;
 import it.unibo.vocago.model.statistics.api.Statistics;
@@ -69,8 +71,8 @@ public class ProfileManagerImpl implements ProfileManager{
     }
 
     @Override
-    public User getCurrentProfile() {
-        return this.currentProfile;
+    public Optional<User> getCurrentProfile() {
+        return Optional.ofNullable(this.currentProfile);
     }
 
     @Override
