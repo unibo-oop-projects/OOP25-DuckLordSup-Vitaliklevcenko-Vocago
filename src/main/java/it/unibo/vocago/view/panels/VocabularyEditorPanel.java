@@ -34,17 +34,17 @@ import it.unibo.vocago.view.util.UIFactory;
 
 public class VocabularyEditorPanel extends JPanel{
     
-    private final int FIRST_WORDS_COLUMN = 0;
-    private final int SECOND_WORDS_COLUMN = 1;
-    private final int MEMORIZATION_COLUMN = 2;
-    private final int RECOGNITION_COLUMN = 3;
-    private final int FIRST_PROGRESS_COLUMN = 4;
-    private final int SECOND_PROGRESS_COLUMN = 5;
-    private final int MASTERY_COLUMN_WIDTH = 160;
-    private final int HEADER_HEIGHT = 60;
-    private final int FOOTER_HEIGHT = 60;
-    private final int ZERO = 0;
-    private final int WORD_COLUMN_WIDTH = 280;
+    private static final int FIRST_WORDS_COLUMN = 0;
+    private static final int SECOND_WORDS_COLUMN = 1;
+    private static final int MEMORIZATION_COLUMN = 2;
+    private static final int RECOGNITION_COLUMN = 3;
+    private static final int FIRST_PROGRESS_COLUMN = 4;
+    private static final int SECOND_PROGRESS_COLUMN = 5;
+    private static final int MASTERY_COLUMN_WIDTH = 160;
+    private static final int HEADER_HEIGHT = 60;
+    private static final int FOOTER_HEIGHT = 60;
+    private static final int ZERO = 0;
+    private static final int WORD_COLUMN_WIDTH = 280;
 
     private final DefaultTableModel model;
     private final JTable table;
