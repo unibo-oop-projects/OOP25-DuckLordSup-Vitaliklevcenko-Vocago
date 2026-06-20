@@ -41,7 +41,7 @@ public class ProfileDashboardPanel extends JPanel{
                 this.switchProfileButton = UIFactory.createButton("Switch Profile", "data/resources/pictures/profile.png",
                                 25, UIConstants.TEAL, 50, 230, true, true, true, UIConstants.FONT);
                 buildLayout();
-                ButtonActionRegister();
+                buttonActionRegister();
         }
 
         private void buildLayout() {
@@ -151,7 +151,7 @@ public class ProfileDashboardPanel extends JPanel{
                 return String.format("%02d:%02d", hours, minutes);
         }
 
-        private void ButtonActionRegister() {
+        private void buttonActionRegister() {
                 this.editVocabularyButton.addActionListener(e -> this.controller.showVocabularyEditorPanel());
                 this.startButton.addActionListener(e -> this.controller.showLearningPanel());
                 this.resetStatisticsButton.addActionListener(e -> this.controller.resetStatistics());
