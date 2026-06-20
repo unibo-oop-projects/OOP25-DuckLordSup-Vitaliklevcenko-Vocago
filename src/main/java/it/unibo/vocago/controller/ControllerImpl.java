@@ -155,7 +155,8 @@ public class ControllerImpl implements Controller {
 
     @Override
     public User getCurrentProfile() {
-        return this.profileCoordinator.getCurrentProfile();
+        return this.profileManager.getCurrentProfile()
+                .orElseThrow(() -> new IllegalStateException("No current profile selected."));
     }
 
     @Override
@@ -202,4 +203,6 @@ public class ControllerImpl implements Controller {
     private AppView view() {
         return this.appView;
     }
+
+    
 }

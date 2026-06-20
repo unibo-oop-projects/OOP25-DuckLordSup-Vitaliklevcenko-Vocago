@@ -71,10 +71,6 @@ public final class ProfileCoordinator {
         this.profileManager.chooseProfile(profile);
     }
 
-    public User getCurrentProfile() {
-        return this.profileManager.getCurrentProfile();
-    }
-
     public boolean hasCurrentProfile() {
         return this.profileManager.hasCurrentProfile();
     }
@@ -116,5 +112,10 @@ public final class ProfileCoordinator {
 
     public void updateExpiredStreak() {
         this.profileManager.updateExpiredStreak();
+    }
+
+    private User getCurrentProfile() {
+        return this.profileManager.getCurrentProfile()
+                .orElseThrow(() -> new IllegalStateException("No current profile selected."));
     }
 }
