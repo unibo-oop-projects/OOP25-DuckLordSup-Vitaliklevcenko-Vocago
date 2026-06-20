@@ -44,8 +44,8 @@ public class LearningSessionImpl implements LearningSession {
     }
 
     @Override
-    public boolean evaluateAnswer(String answer) {
-        boolean correctAnswer = this.learningEngine.checkAnswer(this.question, answer);
+    public boolean evaluateAnswer(final String answer) {
+        final boolean correctAnswer = this.learningEngine.checkAnswer(this.question, answer);
         if (this.currentQuestionEvaluated == false) {
             updateProgress(correctAnswer);
             this.currentQuestionEvaluated = true;
@@ -99,9 +99,9 @@ public class LearningSessionImpl implements LearningSession {
     }
 
     private String toString(final List<Word> words) {
-    StringBuilder text = new StringBuilder();
+    final StringBuilder text = new StringBuilder();
 
-        for (Word word : words) {
+        for (final Word word : words) {
             if (text.length() > 0) {
                 text.append(", ");
             }

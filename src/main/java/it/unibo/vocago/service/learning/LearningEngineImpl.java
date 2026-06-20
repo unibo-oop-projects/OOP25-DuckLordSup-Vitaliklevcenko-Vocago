@@ -34,8 +34,8 @@ public class LearningEngineImpl implements LearningEngine{
             return false;
         }
 
-        String userAns = userAnswer.trim();
-        for (Word answer : question.getCorrectAnswer()) {
+        final String userAns = userAnswer.trim();
+        for (final Word answer : question.getCorrectAnswer()) {
             if (answer.getWord().trim().equalsIgnoreCase(userAns)) {
                 return true;
             }
@@ -83,7 +83,7 @@ public class LearningEngineImpl implements LearningEngine{
         }
 
         final List<VocabularyItem> newItems = new ArrayList<>();
-        for (VocabularyItem item : candidates) {
+        for (final VocabularyItem item : candidates) {
             if (item.getProgress(direction).getMasteryLevel() == MasteryLevel.NEW) {
                 newItems.add(item);
             }
@@ -103,7 +103,7 @@ public class LearningEngineImpl implements LearningEngine{
             final int correctAnswers = progress.getCorrectAnswers();
             final int wrongAnswers = progress.getWrongAnswers();
 
-            double weight = Math.min(0.99,correctAnswers * progress.getMasteryLevel().getMultiplier()
+            final double weight = Math.min(0.99,correctAnswers * progress.getMasteryLevel().getMultiplier()
                     / (correctAnswers + wrongAnswers + 1));
 
             if (weight < lowestWeight) {

@@ -157,7 +157,7 @@ public class ProfileManagerImpl implements ProfileManager{
         int wordCount = 0;
         double correctRatio = 0;
 
-        for (VocabularyItem item : vocabulary.getItems()) {
+        for (final VocabularyItem item : vocabulary.getItems()) {
             wordCount++;
             final Progress wordProgress = item.getProgress(Direction.FIRST_TO_SECOND);
             if (wordProgress.getMasteryLevel() == MasteryLevel.MASTER) {
@@ -222,7 +222,7 @@ public class ProfileManagerImpl implements ProfileManager{
     }
     
     @Override
-    public void saveProfileConfigurations(String newProfileName, final String firstLanguage,
+    public void saveProfileConfigurations(final String newProfileName, final String firstLanguage,
             final String secondLanguage, int dailyGoal) {
         if (hasCurrentProfile()) {
             final String originalProfileName = this.currentProfile.getUserName();
