@@ -48,13 +48,18 @@ public class LearningEngineImpl implements LearningEngine{
         Objects.requireNonNull(direction, "direction must not be null");
         Objects.requireNonNull(vocabulary, "vocabulary must not be null");
 
-        trimSeenItems(validCandidates(vocabulary));
+        trimSeenItems(vocabulary);
         return selectNextQuestion(validCandidates(vocabulary), direction);
     }
     
-    private void trimSeenItems(final List<VocabularyItem> vocabulary) {
+    private void trimSeenItems(final Vocabulary vocabulary) {
         // already asked items can be removed after a while
-        final int maxRemembered = Math.min(20, vocabulary.size() / 2);
+        final int validItemCount = (int) vocabulary.getItems().stream()
+                .filter(VocabularyItem::isValid)
+                .count();
+
+        final int maxRemembered = Math.min(20, validItemCount / 2);
+
         while (this.lastItems.size() > maxRemembered) {
             this.lastItems.poll();
         }

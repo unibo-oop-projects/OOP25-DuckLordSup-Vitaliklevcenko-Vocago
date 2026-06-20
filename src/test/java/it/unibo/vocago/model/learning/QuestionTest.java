@@ -10,21 +10,21 @@ import org.junit.jupiter.api.Test;
 import it.unibo.vocago.model.types.Direction;
 import it.unibo.vocago.model.vocabulary.DictionaryEntry;
 
-class FlashCardTest {
+class QuestionTest {
 
     @Test
     void firstToSecondUsesFirstWordsAsPromptAndSecondWordsAsAnswer() {
         final DictionaryEntry item = entry("house", "casa");
-        QuestionImpl flashCard = new QuestionImpl(item, Direction.FIRST_TO_SECOND);
+        QuestionImpl Question = new QuestionImpl(item, Direction.FIRST_TO_SECOND);
 
-        assertSame(item, flashCard.getItem());
-        assertEquals(Direction.FIRST_TO_SECOND, flashCard.getDirection());
-        assertEquals("house", (flashCard.getQuestion().get(0)).getWord());
-        assertEquals("casa", (flashCard.getCorrectAnswer().get(0)).getWord());
+        assertSame(item, Question.getItem());
+        assertEquals(Direction.FIRST_TO_SECOND, Question.getDirection());
+        assertEquals("house", (Question.getQuestion().get(0)).getWord());
+        assertEquals("casa", (Question.getCorrectAnswer().get(0)).getWord());
 
-        flashCard = new QuestionImpl(item, Direction.SECOND_TO_FIRST);
-        assertEquals("casa", (flashCard.getQuestion().get(0)).getWord());
-        assertEquals("house", (flashCard.getCorrectAnswer().get(0)).getWord());
+        Question = new QuestionImpl(item, Direction.SECOND_TO_FIRST);
+        assertEquals("casa", (Question.getQuestion().get(0)).getWord());
+        assertEquals("house", (Question.getCorrectAnswer().get(0)).getWord());
     }
 
 
