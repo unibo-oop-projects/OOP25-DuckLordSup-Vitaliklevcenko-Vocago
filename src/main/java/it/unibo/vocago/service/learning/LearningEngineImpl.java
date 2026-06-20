@@ -73,6 +73,7 @@ public class LearningEngineImpl implements LearningEngine{
     }
 
     // can add selectNextQuestionByMastery
+    // based on the sm2 algorithm
     private Question selectNextQuestion(final List<VocabularyItem> candidates, final Direction direction) {
         Objects.requireNonNull(direction, "direction must not be null");
         Objects.requireNonNull(candidates, "candidates must not be null");
