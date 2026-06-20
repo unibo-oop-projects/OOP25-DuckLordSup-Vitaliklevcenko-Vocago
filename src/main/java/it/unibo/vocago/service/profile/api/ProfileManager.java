@@ -1,8 +1,6 @@
 package it.unibo.vocago.service.profile.api;
 
 import java.util.List;
-import java.util.Optional;
-
 import it.unibo.vocago.model.statistics.api.Statistics;
 import it.unibo.vocago.model.user.api.User;
 import it.unibo.vocago.model.vocabulary.api.Vocabulary;

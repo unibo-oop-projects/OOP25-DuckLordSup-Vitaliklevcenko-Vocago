@@ -1,7 +1,6 @@
 package it.unibo.vocago.controller.coordinators;
 
 import it.unibo.vocago.model.types.Direction;
-import it.unibo.vocago.model.user.api.User;
 import it.unibo.vocago.service.learning.LearningSessionImpl;
 import it.unibo.vocago.service.learning.api.LearningSession;
 import it.unibo.vocago.service.profile.api.ProfileManager;
