@@ -36,7 +36,7 @@ public class Profile implements User {
     }
 
     @Override
-    @SuppressFBWarnings(value = "EI", justification = "The profile intentionally exposes its mutable vocabulary.")
+    @SuppressFBWarnings(value = "EI", justification = "The profile intentionally exposes its mutable vocabulary, needs the live vocabulary and not a copy.")
     public Vocabulary getVocabulary() {
         return this.vocabulary;
     }
