@@ -16,6 +16,7 @@ import javax.swing.*;
 
 public class LearningPanel extends JPanel{
 
+    private static final long serialVersionUID = 1L;
     private static final int HEADER_HEIGHT = 60;
     private static final int ANSWER_PANEL_HEIGHT = 120;
     private static final int BUTTON_PANEL_HEIGHT = 50;

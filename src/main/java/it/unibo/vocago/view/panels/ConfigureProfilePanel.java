@@ -26,6 +26,7 @@ import it.unibo.vocago.view.util.UIFactory;
 
 public class ConfigureProfilePanel extends JPanel{
 
+    private static final long serialVersionUID = 1L;
     private static final String[] LANGUAGES = {
             "English", "Italian", "German", "French", "Spanish",
             "Portuguese", "Dutch", "Polish", "Japanese", "Chinese"

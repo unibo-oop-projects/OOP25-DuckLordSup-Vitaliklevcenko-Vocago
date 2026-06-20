@@ -15,7 +15,8 @@ import it.unibo.vocago.view.util.UIConstants;
 import it.unibo.vocago.view.util.UIFactory;
 
 public class CreateNewProfilePanel extends JPanel{
-    
+
+    private static final long serialVersionUID = 1L;
     private final Controller controller;
     private final JButton createNewProfileButton;
     private final JTextField usernameTextField;

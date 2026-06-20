@@ -20,6 +20,7 @@ import it.unibo.vocago.view.util.UIFactory;
 
 public class AppFrame extends JFrame implements AppView {
 
+    private static final long serialVersionUID = 1L;
     private static final Dimension SMALL_WINDOW = new Dimension(800, 600);
     private static final Dimension DASHBOARD_WINDOW = new Dimension(1280, 720);
 

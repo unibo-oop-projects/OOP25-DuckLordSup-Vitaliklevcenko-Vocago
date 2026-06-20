@@ -20,6 +20,7 @@ import java.awt.Image;
 
 public class ProfileDashboardPanel extends JPanel{
 
+        private static final long serialVersionUID = 1L;
         private final Controller controller;
         private final JButton switchProfileButton;
         private final JButton startButton;

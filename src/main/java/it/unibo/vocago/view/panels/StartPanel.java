@@ -16,6 +16,7 @@ import it.unibo.vocago.view.util.UIFactory;
 
 public class StartPanel extends JPanel{
 
+    private static final long serialVersionUID = 1L;
     private static final int MAX_USERS = 4;
     private static final String ADD_ICON = "data/resources/pictures/plus.png";
     private static final String[] PROFILE_ICONS = {
