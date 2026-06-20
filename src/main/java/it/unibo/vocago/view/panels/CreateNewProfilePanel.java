@@ -69,11 +69,11 @@ public final class CreateNewProfilePanel extends JPanel{
         languagePanel.add(Box.createVerticalStrut(20));
         languagePanel.add(UIFactory.createLabel("choose a language you want to study", UIConstants.FONT));
         languagePanel.add(Box.createVerticalStrut(10));
-        languagePanel.add(this.firstLanguageComboBox);
+        languagePanel.add(this.secondLanguageComboBox);
         languagePanel.add(Box.createVerticalStrut(20));
         languagePanel.add(UIFactory.createLabel("choose a language you already know", UIConstants.FONT));
         languagePanel.add(Box.createVerticalStrut(10));
-        languagePanel.add(this.secondLanguageComboBox);
+        languagePanel.add(this.firstLanguageComboBox);
         languagePanel.add(Box.createVerticalStrut(20));
 
         contentPanel.add(languagePanel);

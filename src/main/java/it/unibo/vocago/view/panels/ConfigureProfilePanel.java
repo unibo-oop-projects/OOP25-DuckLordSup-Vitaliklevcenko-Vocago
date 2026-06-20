@@ -119,8 +119,8 @@ public final class ConfigureProfilePanel extends JPanel{
         languageRow.setBackground(panel.getBackground());
         languageRow.add(UIFactory.createLabel("Language you study:", UIConstants.FONT));
         languageRow.add(UIFactory.createLabel("Language you already know:", UIConstants.FONT));
-        languageRow.add(this.firstLanguageComboBox);
         languageRow.add(this.secondLanguageComboBox);
+        languageRow.add(this.firstLanguageComboBox);
         panel.add(languageRow);
         return panel;
     }
