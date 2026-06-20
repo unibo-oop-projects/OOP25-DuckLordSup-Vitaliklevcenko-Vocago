@@ -144,7 +144,7 @@ public class UserCsvStorage implements UserRepository {
 
         for (final Word word : words) {
             if (text.length() > 0) {
-                text.append(",");
+                text.append(',');
             }
             text.append(word.getWord());
         }
@@ -193,7 +193,7 @@ public class UserCsvStorage implements UserRepository {
 
         for (int i = 0; i < values.length; i++) {
             if (i > 0) {
-                line.append(",");
+                line.append(',');
             }
             line.append(escapeCsv(values[i]));
         }

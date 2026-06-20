@@ -56,7 +56,7 @@ public class DictionaryEntry implements VocabularyItem {
     
     @Override
     public Boolean isValid() {
-        return (hasNonBlankWord(getFirstLanguageWords()) && hasNonBlankWord(getSecondLanguageWords()));
+        return hasNonBlankWord(getFirstLanguageWords()) && hasNonBlankWord(getSecondLanguageWords());
     }
     
     private boolean hasNonBlankWord(final List<Word> words) {

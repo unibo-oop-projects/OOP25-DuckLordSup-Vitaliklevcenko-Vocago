@@ -168,7 +168,7 @@ public class ProfileManagerImpl implements ProfileManager{
         }
 
         if (countWrongAnswers > 0 || countCorrectAnswers > 0) {
-            correctRatio = (countCorrectAnswers * 100.0) / (countWrongAnswers + countCorrectAnswers);
+            correctRatio = countCorrectAnswers * 100.0 / (countWrongAnswers + countCorrectAnswers);
         }
 
         return new ProfileStatistics(
@@ -223,14 +223,16 @@ public class ProfileManagerImpl implements ProfileManager{
     
     @Override
     public void saveProfileConfigurations(final String newProfileName, final String firstLanguage,
-            final String secondLanguage, int dailyGoal) {
+            final String secondLanguage, final int dailyGoal) {
         if (hasCurrentProfile()) {
             final String originalProfileName = this.currentProfile.getUserName();
-            final String targetProfileName = newProfileName == null || newProfileName.trim().isBlank()
+            final String targetProfileName = newProfileName == null || newProfileName.isBlank()
                     ? originalProfileName
                     : newProfileName.trim();
-            dailyGoal = DailyGoalSettings.normalize(dailyGoal);
-            this.statisticsRepository.saveProfileConfigurations(originalProfileName, targetProfileName, dailyGoal);
+            this.statisticsRepository.saveProfileConfigurations(
+                    originalProfileName,
+                    targetProfileName,
+                    DailyGoalSettings.normalize(dailyGoal));
             final User updatedUser = new Profile(
                     targetProfileName,
                     this.currentProfile.getVocabulary(),

@@ -31,7 +31,7 @@ public final class ProfileCoordinator {
     }
 
     public boolean createProfile(final String profileName, final String firstLanguage, final String secondLanguage) {
-        if (profileName == null || profileName.trim().isBlank()) {
+        if (profileName == null || profileName.isBlank()) {
             this.appView.showWarning(
                     "Profile Name Invalid",
                     "Please enter a valid profile name.");
@@ -85,21 +85,26 @@ public final class ProfileCoordinator {
         }
     }
 
-    public boolean saveProfileConfigurations(String profileName, final String firstLanguage,
+    public boolean saveProfileConfigurations(final String profileName, final String firstLanguage,
             final String secondLanguage, final int dailyGoal) {
         try {
             final String originalProfileName = this.profileManager.getCurrentProfile().getUserName();
-            profileName = (profileName == null || profileName.trim().isBlank())
+            final String normalizedProfileName = (profileName == null || profileName.isBlank())
                     ? originalProfileName
                     : profileName.trim();
 
-            if (this.profileManager.profileExists(profileName) && !profileName.equals(originalProfileName)) {
+            if (this.profileManager.profileExists(normalizedProfileName)
+                    && !normalizedProfileName.equals(originalProfileName)) {
                 this.appView.showError(
                         "Profile Name Invalid",
                         "This profile already exists!");
                 return false;
             }
-            this.profileManager.saveProfileConfigurations(profileName, firstLanguage, secondLanguage, dailyGoal);
+            this.profileManager.saveProfileConfigurations(
+                    normalizedProfileName,
+                    firstLanguage,
+                    secondLanguage,
+                    dailyGoal);
             this.appView.showInfo(
                     "Profile saved",
                     "Profile configuration has been saved successfully!");

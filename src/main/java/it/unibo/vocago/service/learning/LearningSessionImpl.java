@@ -46,7 +46,7 @@ public class LearningSessionImpl implements LearningSession {
     @Override
     public boolean evaluateAnswer(final String answer) {
         final boolean correctAnswer = this.learningEngine.checkAnswer(this.question, answer);
-        if (this.currentQuestionEvaluated == false) {
+        if (!this.currentQuestionEvaluated) {
             updateProgress(correctAnswer);
             this.currentQuestionEvaluated = true;
             if (correctAnswer) {

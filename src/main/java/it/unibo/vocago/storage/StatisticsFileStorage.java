@@ -43,23 +43,19 @@ public class StatisticsFileStorage implements StatisticsRepository {
     private void saveStatistics(
             final String userName,
             final LocalDate lastStudyDate,
-            int currentStreak,
-            long totalStudyTime,
+            final int currentStreak,
+            final long totalStudyTime,
             final int dailyGoal) {
 
-        if (currentStreak < 0) {
-            currentStreak = 0;
-        }
-        if (totalStudyTime < 0) {
-            totalStudyTime = 0L;
-        }
+        final int normalizedCurrentStreak = Math.max(currentStreak, 0);
+        final long normalizedTotalStudyTime = Math.max(totalStudyTime, 0L);
 
         try {
             Files.createDirectories(USERS_DIRECTORY);
             Files.write(fileFor(userName), List.of(
                     lastStudyDate.toString(),
-                    Integer.toString(currentStreak),
-                    Long.toString(totalStudyTime),
+                    Integer.toString(normalizedCurrentStreak),
+                    Long.toString(normalizedTotalStudyTime),
                     Integer.toString(DailyGoalSettings.normalize(dailyGoal))), StandardCharsets.UTF_8);
         } catch (IOException exception) {
             throw new UncheckedIOException("Could not save statistics for user: " + userName, exception);
