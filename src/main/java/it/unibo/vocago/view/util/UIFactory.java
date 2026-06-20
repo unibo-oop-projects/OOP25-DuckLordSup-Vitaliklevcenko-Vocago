@@ -260,18 +260,18 @@ public final class UIFactory {
             public Component getTableCellRendererComponent(
                     final JTable table, final Object value, final boolean isSelected, final boolean hasFocus,
                     final int row, final int column) {
-                final Component cell = super.getTableCellRendererComponent(
+                        final Component cell = super.getTableCellRendererComponent(
                         table, value, isSelected, hasFocus, row, column);
 
-                if (isSelected) {
-                    cell.setBackground(UIConstants.TABLE_SELECTION);
-                    cell.setForeground(UIConstants.DARK_TEXT_COLOR);
-                } else {
-                    cell.setBackground(row % 2 == 0 ? UIConstants.TABLE_ROW_EVEN : UIConstants.TABLE_ROW_ODD);
-                    cell.setForeground(UIConstants.TEXT_COLOR);
-                }
+                        if (isSelected) {
+                            cell.setBackground(UIConstants.TABLE_SELECTION);
+                            cell.setForeground(UIConstants.DARK_TEXT_COLOR);
+                        } else {
+                            cell.setBackground(row % 2 == 0 ? UIConstants.TABLE_ROW_EVEN : UIConstants.TABLE_ROW_ODD);
+                            cell.setForeground(UIConstants.TEXT_COLOR);
+                        }
 
-                return cell;
+                        return cell;
             }
         });
 

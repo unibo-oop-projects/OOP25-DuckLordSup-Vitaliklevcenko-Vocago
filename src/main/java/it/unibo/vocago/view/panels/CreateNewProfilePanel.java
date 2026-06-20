@@ -63,20 +63,20 @@ public final class CreateNewProfilePanel extends JPanel{
         this.firstLanguageComboBox.setMaximumSize(comboSize);
         this.secondLanguageComboBox.setMaximumSize(comboSize);
 
-        final JPanel LanguagePanel = UIFactory.createPanel();
-        UIFactory.brighter(LanguagePanel);
+        final JPanel languagePanel = UIFactory.createPanel();
+        UIFactory.brighter(languagePanel);
 
-        LanguagePanel.add(Box.createVerticalStrut(20));
-        LanguagePanel.add(UIFactory.createLabel("choose a language you want to study", UIConstants.FONT));
-        LanguagePanel.add(Box.createVerticalStrut(10));
-        LanguagePanel.add(this.firstLanguageComboBox);
-        LanguagePanel.add(Box.createVerticalStrut(20));
-        LanguagePanel.add(UIFactory.createLabel("choose a language you already know", UIConstants.FONT));
-        LanguagePanel.add(Box.createVerticalStrut(10));
-        LanguagePanel.add(this.secondLanguageComboBox);
-        LanguagePanel.add(Box.createVerticalStrut(20));
+        languagePanel.add(Box.createVerticalStrut(20));
+        languagePanel.add(UIFactory.createLabel("choose a language you want to study", UIConstants.FONT));
+        languagePanel.add(Box.createVerticalStrut(10));
+        languagePanel.add(this.firstLanguageComboBox);
+        languagePanel.add(Box.createVerticalStrut(20));
+        languagePanel.add(UIFactory.createLabel("choose a language you already know", UIConstants.FONT));
+        languagePanel.add(Box.createVerticalStrut(10));
+        languagePanel.add(this.secondLanguageComboBox);
+        languagePanel.add(Box.createVerticalStrut(20));
 
-        contentPanel.add(LanguagePanel);
+        contentPanel.add(languagePanel);
         contentPanel.add(Box.createVerticalStrut(10));
 
         final JPanel usernamePanel = UIFactory.createPanel(new FlowLayout(FlowLayout.CENTER, 12, 40));
@@ -87,7 +87,7 @@ public final class CreateNewProfilePanel extends JPanel{
         contentPanel.add(usernamePanel);
         add(contentPanel, BorderLayout.CENTER);
 
-        if (this.controller.getExistingProfiles().size() > 0) {
+        if (!this.controller.getExistingProfiles().isEmpty()) {
             final JPanel bottomPanel = UIFactory.createPanel(new FlowLayout(FlowLayout.LEFT, 20, 20));
             bottomPanel.add(this.goBackButton);
             add(bottomPanel, BorderLayout.SOUTH);
@@ -96,7 +96,7 @@ public final class CreateNewProfilePanel extends JPanel{
 
     private void buttonActionRegister() {
         this.controller.createProfile(
-                (String) this.usernameTextField.getText(),
+                this.usernameTextField.getText(),
                 (String) this.firstLanguageComboBox.getSelectedItem(),
                 (String) this.secondLanguageComboBox.getSelectedItem());
     }

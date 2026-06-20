@@ -150,7 +150,7 @@ public final class ProfileDashboardPanel extends JPanel{
 
         private String formatStudyTime(final long totalStudyTime) {
                 final long hours = totalStudyTime / 3600;
-                final long minutes = (totalStudyTime % 3600) / 60;
+                final long minutes = totalStudyTime % 3600 / 60;
                 return String.format("%02d:%02d", hours, minutes);
         }
 

@@ -99,7 +99,7 @@ public final class LearningPanel extends JPanel{
         buildLayout();
         actionRegister();
         startTimer();
-        SwingUtilities.invokeLater(() -> this.userAnswer.requestFocusInWindow());
+        SwingUtilities.invokeLater(this.userAnswer::requestFocusInWindow);
     }
     
     private void buildLayout() {

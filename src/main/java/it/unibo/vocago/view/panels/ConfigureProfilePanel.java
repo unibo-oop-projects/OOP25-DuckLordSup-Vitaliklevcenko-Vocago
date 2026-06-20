@@ -2,7 +2,6 @@ package it.unibo.vocago.view.panels;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -168,7 +167,7 @@ public final class ConfigureProfilePanel extends JPanel{
     private JPanel createPanel(final String title, final int height) {
         final JPanel panel = UIFactory.createPanel();
         UIFactory.brighter(panel);
-        panel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panel.setAlignmentX(CENTER_ALIGNMENT);
         panel.setPreferredSize(new Dimension(PANEL_WIDTH, height));
         panel.setMaximumSize(new Dimension(PANEL_WIDTH, height));
         panel.setBorder(BorderFactory.createCompoundBorder(

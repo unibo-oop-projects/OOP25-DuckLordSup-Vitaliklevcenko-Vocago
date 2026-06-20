@@ -42,7 +42,7 @@ public final class AppFrame extends JFrame implements AppView {
         this.cardLayout = new CardLayout();
         this.mainPanel = UIFactory.createPanel(this.cardLayout);
 
-        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         this.setTitle("Vocago");
         this.setSize(800, 600);
         this.setLocationRelativeTo(null);
