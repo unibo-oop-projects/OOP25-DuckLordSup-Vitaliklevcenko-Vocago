@@ -1,5 +1,6 @@
 package it.unibo.vocago.controller.coordinators;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.vocago.model.types.Direction;
 import it.unibo.vocago.service.learning.LearningSessionImpl;
 import it.unibo.vocago.service.learning.api.LearningSession;
@@ -13,6 +14,7 @@ public final class LearningCoordinator {
     private LearningSession learningSession;
     private boolean dailyGoalNotified;
 
+    @SuppressFBWarnings(value = "EI2", justification = "The coordinator intentionally shares the profile manager.")
     public LearningCoordinator(final ProfileManager profileManager, final AppView appView) {
         this.profileManager = profileManager;
         this.appView = appView;

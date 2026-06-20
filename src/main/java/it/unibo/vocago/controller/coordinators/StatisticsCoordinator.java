@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import javax.swing.JOptionPane;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.vocago.model.statistics.ProfileStatistics;
 import it.unibo.vocago.model.statistics.api.Statistics;
 import it.unibo.vocago.service.profile.api.ProfileManager;
@@ -14,6 +15,7 @@ public final class StatisticsCoordinator {
     private final ProfileManager profileManager;
     private final AppView appView;
 
+    @SuppressFBWarnings(value = "EI2", justification = "The coordinator intentionally shares the profile manager.")
     public StatisticsCoordinator(final ProfileManager profileManager, final AppView appView) {
         this.profileManager = profileManager;
         this.appView = appView;
