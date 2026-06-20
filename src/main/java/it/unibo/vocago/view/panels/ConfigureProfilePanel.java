@@ -55,8 +55,8 @@ public class ConfigureProfilePanel extends JPanel{
         this.usernameTextField = UIFactory.createTextField();
         this.firstLanguageComboBox = UIFactory.createComboBox(LANGUAGES);
         this.secondLanguageComboBox = UIFactory.createComboBox(LANGUAGES);
-        ((JLabel) this.firstLanguageComboBox.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
-        ((JLabel) this.secondLanguageComboBox.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
+        centerRenderer(this.firstLanguageComboBox);
+        centerRenderer(this.secondLanguageComboBox);
         this.firstLanguageComboBox.setSelectedItem(this.controller.getCurrentProfile().getFirstLanguage());
         this.secondLanguageComboBox.setSelectedItem(this.controller.getCurrentProfile().getSecondLanguage());
         this.dailyGoalSlider = new JSlider(
@@ -67,6 +67,12 @@ public class ConfigureProfilePanel extends JPanel{
 
         buildLayout();
         buttonActionRegister();
+    }
+
+    private static void centerRenderer(final JComboBox<?> comboBox) {
+        if (comboBox.getRenderer() instanceof JLabel label) {
+            label.setHorizontalAlignment(SwingConstants.CENTER);
+        }
     }
 
     private void buildLayout() {
