@@ -1,6 +1,7 @@
 package it.unibo.vocago.service.profile;
 
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
@@ -23,6 +24,8 @@ import it.unibo.vocago.storage.api.StatisticsRepository;
 import it.unibo.vocago.storage.api.UserRepository;
 
 public class ProfileManagerImpl implements ProfileManager{
+
+    private static final Logger LOGGER = Logger.getLogger(ProfileManagerImpl.class.getName());
 
     private final UserRepository userRepository;
     private final StatisticsRepository statisticsRepository;
@@ -48,8 +51,11 @@ public class ProfileManagerImpl implements ProfileManager{
         try {
             this.statisticsRepository.createStatisticsFile(profile.getUserName());
         } catch (RuntimeException exception) {
-            System.err.println("Could not create statistics file for profile: " + profileName);
-            exception.printStackTrace();
+            //can continue with the default values
+            LOGGER.log(
+                    Level.WARNING,
+                    "Could not create statistics file for profile: " + profileName,
+                    exception);
         }
         this.currentProfile = profile;
     }
@@ -118,8 +124,10 @@ public class ProfileManagerImpl implements ProfileManager{
             this.statisticsRepository.deleteStatistics(profileName);
         } catch (RuntimeException exception) {
             // The profile was deleted; leftover statistics should not block deletion.
-            System.err.println("Could not delete statistics file for profile: " + profileName);
-            exception.printStackTrace();
+            LOGGER.log(
+                    Level.WARNING,
+                    "Could not delete statistics file for profile: " + profileName,
+                    exception);
         }
         return true;
     }

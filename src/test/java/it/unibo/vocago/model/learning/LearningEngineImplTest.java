@@ -2,16 +2,13 @@ package it.unibo.vocago.model.learning;
 
 import static it.unibo.vocago.TestTools.entry;
 import static it.unibo.vocago.TestTools.word;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
-
 import org.junit.jupiter.api.Test;
-
 import it.unibo.vocago.model.learning.api.Question;
 import it.unibo.vocago.model.progress.WordProgress;
 import it.unibo.vocago.model.types.Direction;

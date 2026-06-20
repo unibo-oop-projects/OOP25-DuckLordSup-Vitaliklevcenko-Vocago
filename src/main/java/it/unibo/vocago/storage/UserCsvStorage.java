@@ -1,6 +1,8 @@
 package it.unibo.vocago.storage;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.io.UncheckedIOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -24,7 +26,7 @@ public class UserCsvStorage implements UserRepository {
 
     private static final Path USERS_DIRECTORY = Path.of("data", "users");
     private static final String WORD_SEPARATOR = ",";
-
+    private static final Logger LOGGER = Logger.getLogger(UserCsvStorage.class.getName());
     @Override
     public void save(final User user) {
         try {
@@ -72,8 +74,10 @@ public class UserCsvStorage implements UserRepository {
                     try {
                         users.add(loadUser(file));
                     } catch (RuntimeException | IOException exception) {
-                        System.err.println("Skipping corrupted profile file: " + file);
-                        exception.printStackTrace();
+                        LOGGER.log(
+                                Level.WARNING,
+                                "Skipping corrupted profile file: " + file,
+                                exception);
                     }
                 }
             }

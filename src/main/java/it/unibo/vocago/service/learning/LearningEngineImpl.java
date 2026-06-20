@@ -61,13 +61,10 @@ public class LearningEngineImpl implements LearningEngine{
     }
 
     private List<VocabularyItem> validCandidates(final Vocabulary vocabulary) {
-        final List<VocabularyItem> validCandidates = new ArrayList<>();
-        for (VocabularyItem item : vocabulary.getItems()) {
-            if (item.isValid() && !this.lastItems.contains(item)) {
-                validCandidates.add(item);
-            }
-        }
-        return validCandidates;
+        return vocabulary.getItems().stream()
+                .filter(VocabularyItem::isValid)
+                .filter(item -> !this.lastItems.contains(item))
+                .toList();
     }
 
     // can add selectNextQuestionByMastery
