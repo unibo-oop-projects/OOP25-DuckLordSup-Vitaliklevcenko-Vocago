@@ -117,7 +117,7 @@ public class StatisticsFileStorage implements StatisticsRepository {
 
             final List<String> lines = Files.readAllLines(fileFor(userName), StandardCharsets.UTF_8);
             if (lines.size() != 4) {
-                resetStatisticsFile(userName, LocalDate.now(), 0, 0L, DailyGoalSettings.DEFAULT);
+                resetStatisticsFile(userName);
                 return Files.readAllLines(fileFor(userName), StandardCharsets.UTF_8);
             }
 
@@ -155,8 +155,7 @@ public class StatisticsFileStorage implements StatisticsRepository {
         }
     }
 
-    private void resetStatisticsFile(final String userName, final LocalDate lastStudyDate,
-            int currentStreak, long totalStudyTime, int dailyGoal) {
+    private void resetStatisticsFile(final String userName) {
         try{
             Files.deleteIfExists(fileFor(userName));
             saveStatistics(userName, LocalDate.now(), 0, 0L, DailyGoalSettings.DEFAULT);
