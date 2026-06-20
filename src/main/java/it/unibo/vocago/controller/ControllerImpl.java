@@ -32,18 +32,22 @@ public class ControllerImpl implements Controller {
         this.profileCoordinator = new ProfileCoordinator(this.profileManager, this.appView);
         this.statisticsCoordinator = new StatisticsCoordinator(this.profileManager, this.appView);
         this.vocabularyCoordinator = new VocabularyCoordinator(this.profileManager, this.appView);
-        showStartPanel();
+        init();
     }
 
-    @Override
-    public void showStartPanel() {
-        if (getExistingProfiles().isEmpty()) {
+    private void init() {
+        if (this.profileCoordinator.getExistingProfiles().isEmpty()) {
             view().showCreateNewProfilePanel();
         } else {
             view().showStartPanel();
         }
     }
-
+    
+    @Override
+    public void showStartPanel() {
+        init();
+    }
+    
     @Override
     public void showCreateNewProfilePanel() {
         view().showCreateNewProfilePanel();
