@@ -38,7 +38,7 @@ class LearningEngineImplTest {
     }
 
     @Test
-    void getNextQuestionPrioritizesNewItems() {
+    void nextQuestionPrioritizesNewItems() {
         final DictionaryEntry learnedItem = new DictionaryEntry(
                 List.of(word("dog")),
                 List.of(word("cane")),

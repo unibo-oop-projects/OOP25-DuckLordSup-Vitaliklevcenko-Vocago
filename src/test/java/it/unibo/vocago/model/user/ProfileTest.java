@@ -11,30 +11,33 @@ import it.unibo.vocago.model.vocabulary.Dictionary;
 
 class ProfileTest {
 
+    private static final String ITALIAN = "Italian";
+    private static final String ENGLISH = "English";
+
     @Test
     void defaultConstructorTrimsNameAndCreatesEmptyVocabulary() {
-        final Profile profile = new Profile("  Nick  ", "Italian", "English");
+        final Profile profile = new Profile("  Nick  ", ITALIAN, ENGLISH);
 
         assertEquals("Nick", profile.getUserName());
-        assertEquals("Italian", profile.getFirstLanguage());
-        assertEquals("English", profile.getSecondLanguage());
+        assertEquals(ITALIAN, profile.getFirstLanguage());
+        assertEquals(ENGLISH, profile.getSecondLanguage());
         assertTrue(profile.getVocabulary().isEmpty());
     }
 
     @Test
     void constructorStoresProvidedVocabularyAndLanguages() {
         final Dictionary dictionary = new Dictionary();
-        final Profile profile = new Profile("Nick", dictionary, "Italian", "English");
+        final Profile profile = new Profile("Nick", dictionary, ITALIAN, ENGLISH);
 
         assertSame(dictionary, profile.getVocabulary());
-        assertEquals("Italian", profile.getFirstLanguage());
-        assertEquals("English", profile.getSecondLanguage());
+        assertEquals(ITALIAN, profile.getFirstLanguage());
+        assertEquals(ENGLISH, profile.getSecondLanguage());
     }
 
     @Test
     void constructorRejectsInvalidArguments() {
-        assertThrows(IllegalArgumentException.class, () -> new Profile(null, "Italian", "English"));
-        assertThrows(IllegalArgumentException.class, () -> new Profile(" ", "Italian", "English"));
-        assertThrows(NullPointerException.class, () -> new Profile("Nick", null, "Italian", "English"));
+        assertThrows(IllegalArgumentException.class, () -> new Profile(null, ITALIAN, ENGLISH));
+        assertThrows(IllegalArgumentException.class, () -> new Profile(" ", ITALIAN, ENGLISH));
+        assertThrows(NullPointerException.class, () -> new Profile("Nick", null, ITALIAN, ENGLISH));
     }
 }
