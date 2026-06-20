@@ -13,12 +13,13 @@ class ProfileTest {
 
     private static final String ITALIAN = "Italian";
     private static final String ENGLISH = "English";
+    private static final String USER_NAME = "Nick";
 
     @Test
     void defaultConstructorTrimsNameAndCreatesEmptyVocabulary() {
         final Profile profile = new Profile("  Nick  ", ITALIAN, ENGLISH);
 
-        assertEquals("Nick", profile.getUserName());
+        assertEquals(USER_NAME, profile.getUserName());
         assertEquals(ITALIAN, profile.getFirstLanguage());
         assertEquals(ENGLISH, profile.getSecondLanguage());
         assertTrue(profile.getVocabulary().isEmpty());
@@ -27,7 +28,7 @@ class ProfileTest {
     @Test
     void constructorStoresProvidedVocabularyAndLanguages() {
         final Dictionary dictionary = new Dictionary();
-        final Profile profile = new Profile("Nick", dictionary, ITALIAN, ENGLISH);
+        final Profile profile = new Profile(USER_NAME, dictionary, ITALIAN, ENGLISH);
 
         assertSame(dictionary, profile.getVocabulary());
         assertEquals(ITALIAN, profile.getFirstLanguage());
@@ -38,6 +39,6 @@ class ProfileTest {
     void constructorRejectsInvalidArguments() {
         assertThrows(IllegalArgumentException.class, () -> new Profile(null, ITALIAN, ENGLISH));
         assertThrows(IllegalArgumentException.class, () -> new Profile(" ", ITALIAN, ENGLISH));
-        assertThrows(NullPointerException.class, () -> new Profile("Nick", null, ITALIAN, ENGLISH));
+        assertThrows(NullPointerException.class, () -> new Profile(USER_NAME, null, ITALIAN, ENGLISH));
     }
 }

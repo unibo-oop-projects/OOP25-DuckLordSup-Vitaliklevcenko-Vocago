@@ -15,7 +15,6 @@ import static it.unibo.vocago.TestTools.word;
 
 class DictionaryTest {
 
-
     @Test
     void rejectsNullItems() {
         final List<VocabularyItem> itemsWithNull = new ArrayList<>();
@@ -23,7 +22,7 @@ class DictionaryTest {
         assertThrows(NullPointerException.class, () -> new Dictionary(null));
         assertThrows(IllegalArgumentException.class, () -> new Dictionary(itemsWithNull));
     }
-    
+
     @Test
     void vocabularyIsValidRequiresAtLeastOneCompleteItem() {
         final Dictionary dictionary = new Dictionary();

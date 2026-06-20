@@ -9,6 +9,8 @@ import it.unibo.vocago.model.types.MasteryLevel;
 
 class WordProgressTest {
 
+    private static final int MASTER_THRESHOLD = 5;
+
     @Test
     void constructorRejectsInvalidState() {
         assertThrows(NullPointerException.class, () -> new WordProgress(null));
@@ -34,7 +36,7 @@ class WordProgressTest {
         assertEquals(MasteryLevel.GOOD, progress.getMasteryLevel());
 
         progress.registerCorrectAnswer();
-        assertEquals(5, progress.getCorrectAnswers());
+        assertEquals(MASTER_THRESHOLD, progress.getCorrectAnswers());
         assertEquals(MasteryLevel.MASTER, progress.getMasteryLevel());
     }
 

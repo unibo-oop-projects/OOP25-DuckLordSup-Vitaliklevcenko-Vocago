@@ -19,22 +19,23 @@ import it.unibo.vocago.service.learning.LearningEngineImpl;
 
 class LearningEngineImplTest {
 
-
+    private static final String HOUSE = "house";
+    private static final String CASA = "casa";
 
     @Test
     void isCorrectAnswerMatchesAnyTrimmedCaseInsensitiveAnswer() {
         final DictionaryEntry item = new DictionaryEntry(
-                List.of(word("house")),
-                List.of(word("casa"), word("abitazione")));
+                List.of(word(HOUSE)),
+                List.of(word(CASA), word("abitazione")));
         final Question question = new QuestionImpl(item, Direction.FIRST_TO_SECOND);
         final LearningEngineImpl engine = new LearningEngineImpl();
 
         assertTrue(engine.checkAnswer(question, " CASA "));
         assertTrue(engine.checkAnswer(question, "abitazione"));
-        assertFalse(engine.checkAnswer(question, "house"));
+        assertFalse(engine.checkAnswer(question, HOUSE));
         assertFalse(engine.checkAnswer(question, ""));
         assertFalse(engine.checkAnswer(question, null));
-        assertThrows(NullPointerException.class, () -> engine.checkAnswer(null, "casa"));
+        assertThrows(NullPointerException.class, () -> engine.checkAnswer(null, CASA));
     }
 
     @Test
@@ -57,8 +58,8 @@ class LearningEngineImplTest {
 
     @Test
     void nextQuestionSkipsVocabularyItemsMissingOneLanguage() {
-        final DictionaryEntry onlyFirstLanguage = entry("","house");
-        final DictionaryEntry onlySecondLanguage = entry("casa", "");
+        final DictionaryEntry onlyFirstLanguage = entry("", HOUSE);
+        final DictionaryEntry onlySecondLanguage = entry(CASA, "");
         final DictionaryEntry completeItem = entry("cat", "gatto");
         final Dictionary dictionary = new Dictionary(List.of(onlyFirstLanguage, onlySecondLanguage, completeItem));
 
