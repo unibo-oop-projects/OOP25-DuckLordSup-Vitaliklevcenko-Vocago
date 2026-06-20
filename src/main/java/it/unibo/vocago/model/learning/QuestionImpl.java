@@ -10,8 +10,8 @@ import it.unibo.vocago.model.vocabulary.api.Word;
 
 public class QuestionImpl implements Question {
 
-    final private VocabularyItem item;
-    final private Direction direction;
+    private final VocabularyItem item;
+    private final Direction direction;
 
     public QuestionImpl(final VocabularyItem item, final Direction direction) {
         this.item = Objects.requireNonNull(item, "item must not be null");

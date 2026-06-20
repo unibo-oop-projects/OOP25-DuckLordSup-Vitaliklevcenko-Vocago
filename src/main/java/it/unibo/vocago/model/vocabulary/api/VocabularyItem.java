@@ -11,7 +11,7 @@ public interface VocabularyItem {
 
     List<Word> getSecondLanguageWords();
 
-    Progress getProgress(final Direction direction);
+    Progress getProgress(Direction direction);
 
     Boolean isValid();
 }

@@ -36,8 +36,8 @@ public interface ProfileManager {
 
     int getDailyGoal();
 
-    void saveProfileConfigurations(String profileName, final String firstLanguage,
-            final String secondLanguage, final int dailyGoal);
+    void saveProfileConfigurations(String profileName, String firstLanguage,
+            String secondLanguage, int dailyGoal);
 
 
 }

@@ -18,5 +18,5 @@ public interface StatisticsRepository {
 
     int getDailyGoal(String userName);
 
-    void saveProfileConfigurations(String profileName, final String newProfileName, final int dailyGoal);
+    void saveProfileConfigurations(String profileName, String newProfileName, int dailyGoal);
 }

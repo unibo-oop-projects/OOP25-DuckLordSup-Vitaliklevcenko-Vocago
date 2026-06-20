@@ -6,7 +6,7 @@ import it.unibo.vocago.model.user.api.User;
 
 public interface UserRepository {
     
-    static final Path USERS_DIRECTORY = Path.of("data", "users");
+    Path USERS_DIRECTORY = Path.of("data", "users");
 
     void save(User user);
 
