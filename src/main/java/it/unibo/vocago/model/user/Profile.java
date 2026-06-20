@@ -2,6 +2,7 @@ package it.unibo.vocago.model.user;
 
 import java.util.Objects;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.vocago.model.user.api.User;
 import it.unibo.vocago.model.vocabulary.Dictionary;
 import it.unibo.vocago.model.vocabulary.api.Vocabulary;
@@ -35,6 +36,7 @@ public class Profile implements User {
     }
 
     @Override
+    @SuppressFBWarnings(value = "EI", justification = "The profile intentionally exposes its mutable vocabulary.")
     public Vocabulary getVocabulary() {
         return this.vocabulary;
     }

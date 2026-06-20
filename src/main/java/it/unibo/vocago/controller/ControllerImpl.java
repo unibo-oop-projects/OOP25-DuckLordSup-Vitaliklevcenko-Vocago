@@ -1,6 +1,7 @@
 package it.unibo.vocago.controller;
 
 import java.util.List;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.vocago.controller.api.Controller;
 import it.unibo.vocago.controller.coordinators.LearningCoordinator;
 import it.unibo.vocago.controller.coordinators.ProfileCoordinator;
@@ -191,6 +192,7 @@ public class ControllerImpl implements Controller {
     }
     
     @Override
+    @SuppressFBWarnings(value = "DM_EXIT", justification = "Closing the desktop app intentionally exits the JVM.")
     public void closeApp() {
         this.learningCoordinator.closeLearningSession();
         if (this.profileCoordinator.hasCurrentProfile() && getCurrentProfile().getVocabulary() != null) {

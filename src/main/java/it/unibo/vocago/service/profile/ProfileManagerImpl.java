@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.vocago.model.progress.api.Progress;
 import it.unibo.vocago.model.statistics.ProfileStatistics;
 import it.unibo.vocago.model.statistics.api.Statistics;
@@ -35,6 +36,7 @@ public class ProfileManagerImpl implements ProfileManager{
         this(new UserCsvStorage(), new StatisticsFileStorage());
     }
 
+    @SuppressFBWarnings(value = "EI2", justification = "The service intentionally shares its repositories.")
     public ProfileManagerImpl(
         final UserRepository userRepository,
         final StatisticsRepository statisticsRepository) {

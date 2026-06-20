@@ -61,7 +61,7 @@ public class LearningEngineImpl implements LearningEngine{
         final int maxRemembered = Math.min(20, validItemCount / 2);
 
         while (this.lastItems.size() > maxRemembered) {
-            this.lastItems.poll();
+            this.lastItems.remove();
         }
     }
 

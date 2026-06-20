@@ -3,6 +3,7 @@ package it.unibo.vocago.service.learning;
 import java.util.List;
 import java.util.Objects;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.vocago.model.learning.api.Question;
 import it.unibo.vocago.model.progress.api.Progress;
 import it.unibo.vocago.model.types.Direction;
@@ -25,6 +26,7 @@ public class LearningSessionImpl implements LearningSession {
         this(vocabulary, new LearningEngineImpl());
     }
 
+    @SuppressFBWarnings(value = "EI2", justification = "The session intentionally shares the profile vocabulary.")
     public LearningSessionImpl(final Vocabulary vocabulary, final LearningEngine learningEngine) {
         this.vocabulary = vocabulary;
         this.learningEngine = Objects.requireNonNull(learningEngine);
