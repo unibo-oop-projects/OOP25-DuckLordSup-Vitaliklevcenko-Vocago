@@ -16,7 +16,7 @@ public interface LearningSession {
 
     int getCorrectAnsweredQuestions();
 
-    long getTime();
+    long getStartTime();
 
     Direction getDirection();
 }

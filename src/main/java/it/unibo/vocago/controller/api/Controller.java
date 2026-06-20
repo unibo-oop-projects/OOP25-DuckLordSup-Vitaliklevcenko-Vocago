@@ -35,7 +35,7 @@ public interface Controller {
 
     long getLearningStartTime();
 
-    int getCurrentQuestionNumber();
+    int getCorrectAnsweredQuestions();
 
     List<User> getExistingProfiles();
 

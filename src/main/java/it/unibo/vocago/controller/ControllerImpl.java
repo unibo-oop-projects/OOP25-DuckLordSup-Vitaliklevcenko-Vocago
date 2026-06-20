@@ -106,8 +106,8 @@ public class ControllerImpl implements Controller {
     }
 
     @Override
-    public int getCurrentQuestionNumber() {
-        return this.learningCoordinator.getCurrentQuestionNumber();
+    public int getCorrectAnsweredQuestions() {
+        return this.learningCoordinator.getCorrectAnsweredQuestions();
     }
 
     // profile Manager getters and setters //

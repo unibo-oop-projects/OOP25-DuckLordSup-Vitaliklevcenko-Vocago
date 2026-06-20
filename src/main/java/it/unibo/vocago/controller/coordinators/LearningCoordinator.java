@@ -59,10 +59,10 @@ public final class LearningCoordinator {
     }
 
     public long getLearningStartTime() {
-        return getLearningSession().getTime();
+        return getLearningSession().getStartTime();
     }
 
-    public int getCurrentQuestionNumber() {
+    public int getCorrectAnsweredQuestions() {
         return getLearningSession().getCorrectAnsweredQuestions();
     }
 

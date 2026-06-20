@@ -4,7 +4,6 @@ package it.unibo.vocago.service.profile;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
-
 import it.unibo.vocago.model.progress.api.Progress;
 import it.unibo.vocago.model.statistics.ProfileStatistics;
 import it.unibo.vocago.model.statistics.api.Statistics;
@@ -201,7 +200,7 @@ public class ProfileManagerImpl implements ProfileManager{
                 today,
                 streak,
                 this.statisticsRepository.getTotalStudyTime(profileName)
-                        + (System.currentTimeMillis() - session.getTime()) / 1000);
+                        + (System.currentTimeMillis() - session.getStartTime()) / 1000);
     }
 
     @Override

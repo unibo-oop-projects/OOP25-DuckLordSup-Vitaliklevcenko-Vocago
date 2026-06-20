@@ -1,7 +1,6 @@
 package it.unibo.vocago.model.vocabulary;
 
 import java.util.Objects;
-
 import it.unibo.vocago.model.vocabulary.api.Word;
 
 public class WordEntry implements Word{

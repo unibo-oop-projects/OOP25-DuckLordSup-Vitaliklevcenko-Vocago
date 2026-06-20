@@ -116,9 +116,9 @@ public class LearningPanel extends JPanel{
         welcomPanel.add(leftPanel);
 
         int dailyGoal = this.controller.getDailyGoal();
-        if (dailyGoal > this.controller.getCurrentQuestionNumber()) {
+        if (dailyGoal > this.controller.getCorrectAnsweredQuestions()) {
             welcomPanel.add(UIFactory.createLabel(
-                    "WORD " + this.controller.getCurrentQuestionNumber() + " OUT OF " + dailyGoal,
+                    "WORD " + this.controller.getCorrectAnsweredQuestions() + " OUT OF " + dailyGoal,
                     UIConstants.TITLE_FONT), BorderLayout.CENTER);
         } else {
             welcomPanel.add(UIFactory.createLabel("GOOD JOB!", UIConstants.TITLE_FONT), BorderLayout.CENTER);

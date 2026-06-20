@@ -8,12 +8,12 @@ import it.unibo.vocago.model.types.Direction;
 import it.unibo.vocago.model.vocabulary.api.VocabularyItem;
 import it.unibo.vocago.model.vocabulary.api.Word;
 
-public class FlashCard implements Question {
+public class QuestionImpl implements Question {
 
     final private VocabularyItem item;
     final private Direction direction;
 
-    public FlashCard(final VocabularyItem item, final Direction direction) {
+    public QuestionImpl(final VocabularyItem item, final Direction direction) {
         this.item = Objects.requireNonNull(item, "item must not be null");
         this.direction = Objects.requireNonNull(direction, "direction must not be null");
     }

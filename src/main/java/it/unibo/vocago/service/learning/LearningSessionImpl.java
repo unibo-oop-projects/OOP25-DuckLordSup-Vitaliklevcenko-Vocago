@@ -1,8 +1,10 @@
 package it.unibo.vocago.service.learning;
 
 import java.util.List;
+import java.util.Objects;
 
 import it.unibo.vocago.model.learning.api.Question;
+import it.unibo.vocago.model.progress.api.Progress;
 import it.unibo.vocago.model.types.Direction;
 import it.unibo.vocago.model.vocabulary.api.Vocabulary;
 import it.unibo.vocago.model.vocabulary.api.Word;
@@ -20,10 +22,14 @@ public class LearningSessionImpl implements LearningSession {
     private int correctAnsweredQuestions;
 
     public LearningSessionImpl(final Vocabulary vocabulary) {
+        this(vocabulary, new LearningEngineImpl());
+    }
+
+    public LearningSessionImpl(final Vocabulary vocabulary, final LearningEngine learningEngine) {
         this.vocabulary = vocabulary;
-        this.learningEngine = new LearningEngineImpl();
+        this.learningEngine = Objects.requireNonNull(learningEngine);
         this.time = System.currentTimeMillis();
-        direction = Direction.FIRST_TO_SECOND;
+        this.direction = Direction.FIRST_TO_SECOND;
         this.currentQuestionEvaluated = false;
         this.correctAnsweredQuestions = 0;
     }
@@ -39,7 +45,7 @@ public class LearningSessionImpl implements LearningSession {
     public boolean evaluateAnswer(String answer) {
         boolean correctAnswer = this.learningEngine.checkAnswer(this.question, answer);
         if (this.currentQuestionEvaluated == false) {
-            this.learningEngine.progressUpdate(this.question, correctAnswer);
+            updateProgress(correctAnswer);
             this.currentQuestionEvaluated = true;
             if (correctAnswer) {
                 this.correctAnsweredQuestions++;
@@ -64,7 +70,7 @@ public class LearningSessionImpl implements LearningSession {
     }
 
     @Override
-    public long getTime() {
+    public long getStartTime() {
         return this.time;
     }
 
@@ -76,6 +82,18 @@ public class LearningSessionImpl implements LearningSession {
     @Override
     public boolean currentQuestionEvaluated() {
         return this.currentQuestionEvaluated;
+    }
+    
+    private void updateProgress(final boolean correct) {
+        final Progress progress = this.question
+                .getItem()
+                .getProgress(this.question.getDirection());
+
+        if (correct) {
+            progress.registerCorrectAnswer();
+        } else {
+            progress.registerWrongAnswer();
+        }
     }
 
     private String toString(final List<Word> words) {

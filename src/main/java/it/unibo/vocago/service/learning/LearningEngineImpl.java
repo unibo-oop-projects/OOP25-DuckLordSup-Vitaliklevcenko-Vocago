@@ -7,7 +7,7 @@ import java.util.Objects;
 import java.util.Queue;
 import java.util.Random;
 
-import it.unibo.vocago.model.learning.FlashCard;
+import it.unibo.vocago.model.learning.QuestionImpl;
 import it.unibo.vocago.model.learning.api.Question;
 import it.unibo.vocago.model.progress.api.Progress;
 import it.unibo.vocago.model.types.Direction;
@@ -42,16 +42,6 @@ public class LearningEngineImpl implements LearningEngine{
         }
         return false;
     }
-
-    @Override
-    public void progressUpdate(final Question question, final boolean correctAnswer) {
-    final Progress progress = question.getItem().getProgress(question.getDirection());
-    if (correctAnswer) {
-        progress.registerCorrectAnswer();
-    } else {
-        progress.registerWrongAnswer();
-    }
-}
 
     @Override
     public Question getNextQuestion(final Direction direction, final Vocabulary vocabulary) {
@@ -132,6 +122,6 @@ public class LearningEngineImpl implements LearningEngine{
 
     private Question createQuestion(final VocabularyItem item, final Direction direction) {
         this.lastItems.add(item);
-        return new FlashCard(item, direction);
+        return new QuestionImpl(item, direction);
     }
 }
