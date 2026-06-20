@@ -15,7 +15,7 @@ public class WordProgress implements Progress{
         this(MasteryLevel.NEW, 0, 0);
     }
 
-    public WordProgress(MasteryLevel masteryLevel) {
+    public WordProgress(final MasteryLevel masteryLevel) {
         this(masteryLevel, 0, 0);
     }
 

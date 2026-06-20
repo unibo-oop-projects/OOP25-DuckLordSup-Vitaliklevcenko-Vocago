@@ -54,7 +54,7 @@ public class Dictionary implements Vocabulary {
 
     @Override
     public Boolean isValid() {
-        for (VocabularyItem item : getItems()) {
+        for (final VocabularyItem item : getItems()) {
             if (item.isValid()) {
                 return true;
             }

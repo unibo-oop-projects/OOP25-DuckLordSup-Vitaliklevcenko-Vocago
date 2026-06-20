@@ -45,7 +45,7 @@ public class StatisticsFileStorage implements StatisticsRepository {
             final LocalDate lastStudyDate,
             int currentStreak,
             long totalStudyTime,
-            int dailyGoal) {
+            final int dailyGoal) {
 
         if (currentStreak < 0) {
             currentStreak = 0;
@@ -82,7 +82,7 @@ public class StatisticsFileStorage implements StatisticsRepository {
     }
 
     @Override
-    public int getDailyGoal(String userName) {
+    public int getDailyGoal(final String userName) {
         return Integer.parseInt(readStatisticsLines(userName).get(DAILY_GOAL_INDEX));
     }
 

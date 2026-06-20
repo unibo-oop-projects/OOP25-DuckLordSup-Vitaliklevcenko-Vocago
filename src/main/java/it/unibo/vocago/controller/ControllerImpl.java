@@ -169,7 +169,7 @@ public class ControllerImpl implements Controller {
     }
 
     @Override
-    public void saveProfileConfigurations(String profileName, final String firstLanguage,
+    public void saveProfileConfigurations(final String profileName, final String firstLanguage,
             final String secondLanguage, final int dailyGoal) {
         if (this.profileCoordinator.saveProfileConfigurations(profileName, firstLanguage, secondLanguage, dailyGoal)) {
             showProfileDashboardPanel();
