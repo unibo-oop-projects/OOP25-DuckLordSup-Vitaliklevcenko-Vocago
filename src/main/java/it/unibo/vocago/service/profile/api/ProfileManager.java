@@ -20,6 +20,8 @@ public interface ProfileManager {
 
     boolean hasCurrentProfile();
 
+    User getCurrentProfile();
+
     boolean vocabularyIsValid();
 
     void saveVocabulary(Vocabulary vocabulary);
@@ -39,5 +41,5 @@ public interface ProfileManager {
     void saveProfileConfigurations(String profileName, final String firstLanguage,
             final String secondLanguage, final int dailyGoal);
 
-    Optional<User> getCurrentProfile();
+
 }

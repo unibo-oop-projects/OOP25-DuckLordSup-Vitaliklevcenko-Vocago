@@ -86,7 +86,7 @@ public final class ProfileCoordinator {
     public boolean saveProfileConfigurations(String profileName, final String firstLanguage,
             final String secondLanguage, final int dailyGoal) {
         try {
-            final String originalProfileName = getCurrentProfile().getUserName();
+            final String originalProfileName = this.profileManager.getCurrentProfile().getUserName();
             profileName = (profileName == null || profileName.trim().isBlank())
                     ? originalProfileName
                     : profileName.trim();
@@ -113,9 +113,5 @@ public final class ProfileCoordinator {
     public void updateExpiredStreak() {
         this.profileManager.updateExpiredStreak();
     }
-
-    private User getCurrentProfile() {
-        return this.profileManager.getCurrentProfile()
-                .orElseThrow(() -> new IllegalStateException("No current profile selected."));
-    }
+    
 }

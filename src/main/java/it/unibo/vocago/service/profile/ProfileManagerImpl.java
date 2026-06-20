@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-
 import it.unibo.vocago.model.progress.api.Progress;
 import it.unibo.vocago.model.statistics.ProfileStatistics;
 import it.unibo.vocago.model.statistics.api.Statistics;
@@ -71,13 +70,14 @@ public class ProfileManagerImpl implements ProfileManager{
     }
 
     @Override
-    public Optional<User> getCurrentProfile() {
-        return Optional.ofNullable(this.currentProfile);
+    public User getCurrentProfile() {
+        return findCurrentProfile()
+                .orElseThrow(() -> new IllegalStateException("No current profile selected."));
     }
 
     @Override
     public boolean hasCurrentProfile() {
-        return this.currentProfile != null;
+        return findCurrentProfile().isPresent();
     }
 
     @Override
@@ -124,9 +124,8 @@ public class ProfileManagerImpl implements ProfileManager{
 
     @Override
     public Statistics getDashboardStatistics() {
-        if (!hasCurrentProfile()) {
-            throw new IllegalStateException("No current profile selected.");
-        }
+        final User profile = getCurrentProfile();
+        final String profileName = profile.getUserName();
         if (!vocabularyIsValid()) {
             return new ProfileStatistics(
                     0,
@@ -134,12 +133,12 @@ public class ProfileManagerImpl implements ProfileManager{
                     0,
                     0,
                     0,
-                    this.statisticsRepository.getLastStudyDate(this.currentProfile.getUserName()),
-                    this.statisticsRepository.getCurrentStreak(this.currentProfile.getUserName()),
-                    this.statisticsRepository.getTotalStudyTime(this.currentProfile.getUserName()));
+                    this.statisticsRepository.getLastStudyDate(profileName),
+                    this.statisticsRepository.getCurrentStreak(profileName),
+                    this.statisticsRepository.getTotalStudyTime(profileName));
         }
 
-        final Vocabulary vocabulary = this.currentProfile.getVocabulary();
+        final Vocabulary vocabulary = profile.getVocabulary();
         int countMasteryItems = 0;
         int countCorrectAnswers = 0;
         int countWrongAnswers = 0;
@@ -166,9 +165,9 @@ public class ProfileManagerImpl implements ProfileManager{
                 countWrongAnswers,
                 wordCount,
                 correctRatio,
-                this.statisticsRepository.getLastStudyDate(this.currentProfile.getUserName()),
-                this.statisticsRepository.getCurrentStreak(this.currentProfile.getUserName()),
-                this.statisticsRepository.getTotalStudyTime(this.currentProfile.getUserName()));
+                this.statisticsRepository.getLastStudyDate(profileName),
+                this.statisticsRepository.getCurrentStreak(profileName),
+                this.statisticsRepository.getTotalStudyTime(profileName));
     }
     
     @Override
@@ -207,10 +206,7 @@ public class ProfileManagerImpl implements ProfileManager{
 
     @Override
     public int getDailyGoal() {
-        if (!hasCurrentProfile()) {
-            throw new IllegalStateException("No current profile selected.");
-        }
-        return this.statisticsRepository.getDailyGoal(this.currentProfile.getUserName());
+        return this.statisticsRepository.getDailyGoal(getCurrentProfile().getUserName());
     }
     
     @Override
@@ -252,5 +248,9 @@ public class ProfileManagerImpl implements ProfileManager{
                     0,
                     this.statisticsRepository.getTotalStudyTime(profileName));
         }
+    }
+
+    private Optional<User> findCurrentProfile() {
+        return Optional.ofNullable(this.currentProfile);
     }
 }

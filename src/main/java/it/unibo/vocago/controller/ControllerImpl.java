@@ -155,8 +155,7 @@ public class ControllerImpl implements Controller {
 
     @Override
     public User getCurrentProfile() {
-        return this.profileManager.getCurrentProfile()
-                .orElseThrow(() -> new IllegalStateException("No current profile selected."));
+        return this.profileManager.getCurrentProfile();
     }
 
     @Override

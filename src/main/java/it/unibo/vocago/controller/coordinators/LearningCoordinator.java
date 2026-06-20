@@ -29,7 +29,7 @@ public final class LearningCoordinator {
                         "There are no valid words available, add more words to your vocabulary");
                 return;
             }
-            this.learningSession = new LearningSessionImpl(getCurrentProfile().getVocabulary());
+            this.learningSession = new LearningSessionImpl(this.profileManager.getCurrentProfile().getVocabulary());
             this.dailyGoalNotified = false;
         }
         this.appView.showLearningPanel();
@@ -75,8 +75,8 @@ public final class LearningCoordinator {
     public void closeLearningSession() {
         if (this.learningSession != null) {
             if (this.profileManager.hasCurrentProfile()
-                    && getCurrentProfile().getVocabulary() != null) {
-                this.profileManager.saveVocabulary(getCurrentProfile().getVocabulary());
+                    && this.profileManager.getCurrentProfile().getVocabulary() != null) {
+                this.profileManager.saveVocabulary(this.profileManager.getCurrentProfile().getVocabulary());
             }
             saveLearningStatistics();
             stopLearningSession();
@@ -104,11 +104,6 @@ public final class LearningCoordinator {
         return this.appView.askConfirmation(
                 "Daily Goal Achieved",
                 "You did it, good job! Do you want to continue to study?");
-    }
-
-    private User getCurrentProfile() {
-        return this.profileManager.getCurrentProfile()
-            .orElseThrow(() -> new IllegalStateException("No current profile selected."));
     }
 
     private LearningSession getLearningSession() {
