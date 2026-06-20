@@ -94,7 +94,11 @@ public class UserCsvStorage implements UserRepository {
         }
 
         final List<String> header = splitCsv(lines.get(0));
-        final String userName = file.getFileName().toString().replaceFirst("\\.csv$", "");
+        final Path fileName = file.getFileName();
+        if (fileName == null) {
+            throw new IOException("User file has no file name: " + file);
+        }
+        final String userName = fileName.toString().replaceFirst("\\.csv$", "");
         final Dictionary vocabulary = new Dictionary();
 
         for (int i = 1; i < lines.size(); i++) {
