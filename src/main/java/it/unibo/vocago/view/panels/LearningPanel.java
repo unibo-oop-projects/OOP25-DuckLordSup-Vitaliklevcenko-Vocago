@@ -26,12 +26,12 @@ public class LearningPanel extends JPanel{
     private final JButton revealAnswerButton;
     private final JButton goBackButton;
     private JButton switchLanguageButton;
-    private JLabel answerLabel;
-    private JTextField userAnswer;
-    private JPanel answerPanel;
-    private JLabel timerLabel;
+    private final JLabel answerLabel;
+    private final JTextField userAnswer;
+    private final JPanel answerPanel;
+    private final JLabel timerLabel;
     private Timer timer;
-    private long startTime;
+    private final long startTime;
 
     @SuppressFBWarnings(value = "EI2", justification = "The panel intentionally shares the app controller.")
     public LearningPanel(final Controller controller) {
@@ -110,14 +110,14 @@ public class LearningPanel extends JPanel{
     }
     
     private JPanel createHeaderPanel() {
-        JPanel welcomPanel = UIFactory.createPanel(new GridLayout());
+        final JPanel welcomPanel = UIFactory.createPanel(new GridLayout());
         welcomPanel.setPreferredSize(new Dimension(Integer.MAX_VALUE, HEADER_HEIGHT));
 
         final JPanel leftPanel = UIFactory.createPanel(new BorderLayout());
         leftPanel.add(this.goBackButton, BorderLayout.WEST);
         welcomPanel.add(leftPanel);
 
-        int dailyGoal = this.controller.getDailyGoal();
+        final int dailyGoal = this.controller.getDailyGoal();
         if (dailyGoal > this.controller.getCorrectAnsweredQuestions()) {
             welcomPanel.add(UIFactory.createLabel(
                     "WORD " + this.controller.getCorrectAnsweredQuestions() + " OUT OF " + dailyGoal,
@@ -133,15 +133,15 @@ public class LearningPanel extends JPanel{
     }
     
     private JPanel createMainPanel() {
-        JPanel mainPanel = UIFactory.createPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
+        final JPanel mainPanel = UIFactory.createPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
         mainPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, LANGUAGE_PANEL_HEIGHT));
 
-        JPanel firstLanguagePanel = UIFactory.createPanel(new BorderLayout());
+        final JPanel firstLanguagePanel = UIFactory.createPanel(new BorderLayout());
         firstLanguagePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, LANGUAGE_PANEL_HEIGHT));
         firstLanguagePanel.setPreferredSize(new Dimension(500, 200));
         UIFactory.highlight(firstLanguagePanel);
 
-        JPanel secondLanguagePanel = UIFactory.createPanel(new BorderLayout());
+        final JPanel secondLanguagePanel = UIFactory.createPanel(new BorderLayout());
         secondLanguagePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, LANGUAGE_PANEL_HEIGHT));
         secondLanguagePanel.setPreferredSize(new Dimension(500, 200));
         UIFactory.highlight(secondLanguagePanel);
@@ -151,12 +151,12 @@ public class LearningPanel extends JPanel{
         secondLanguagePanel.add(UIFactory.createLabel(this.controller.getCurrentProfile().getSecondLanguage(),
                 UIConstants.PROMPT_FONT), BorderLayout.NORTH);
 
-        JPanel textFieldPanel = UIFactory.createPanel(new GridBagLayout());
+        final JPanel textFieldPanel = UIFactory.createPanel(new GridBagLayout());
         UIFactory.brighter(textFieldPanel);
         textFieldPanel.add(this.userAnswer);
 
         if (this.controller.getDirection() == Direction.FIRST_TO_SECOND) {
-            JPanel labelPanel = UIFactory.createPanel(new GridLayout());
+            final JPanel labelPanel = UIFactory.createPanel(new GridLayout());
             labelPanel.add(UIFactory.createLabel(this.controller.getNextQuestion(), UIConstants.BIG_PROMT_FONT));
             UIFactory.brighter(labelPanel);
             firstLanguagePanel.add(labelPanel);
@@ -165,7 +165,7 @@ public class LearningPanel extends JPanel{
                     UIConstants.BACKGROUND, 100, 160, false, true, true, UIConstants.FONT);
         } else {
             firstLanguagePanel.add(textFieldPanel);
-            JPanel labelPanel = UIFactory.createPanel(new GridLayout());
+            final JPanel labelPanel = UIFactory.createPanel(new GridLayout());
             labelPanel.add(UIFactory.createLabel(this.controller.getNextQuestion(), UIConstants.BIG_PROMT_FONT));
             UIFactory.brighter(labelPanel);
             secondLanguagePanel.add(labelPanel);
@@ -181,7 +181,7 @@ public class LearningPanel extends JPanel{
         this.answerPanel.setMaximumSize(new Dimension(
                 Integer.MAX_VALUE, ANSWER_PANEL_HEIGHT));
         this.answerPanel.add(this.answerLabel);
-        JPanel centerPanel = UIFactory.createPanel();
+        final JPanel centerPanel = UIFactory.createPanel();
         centerPanel.add(Box.createVerticalStrut(60));
         centerPanel.add(mainPanel);
         centerPanel.add(this.answerPanel);
@@ -189,7 +189,7 @@ public class LearningPanel extends JPanel{
     }
     
     private JPanel createButtonsPanel() {
-        JPanel buttonsPanel = UIFactory.createPanel(new GridLayout());
+        final JPanel buttonsPanel = UIFactory.createPanel(new GridLayout());
         buttonsPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, BUTTON_PANEL_HEIGHT));
         buttonsPanel.setPreferredSize(new Dimension(Integer.MAX_VALUE, BUTTON_PANEL_HEIGHT));
         UIFactory.highlight(buttonsPanel);

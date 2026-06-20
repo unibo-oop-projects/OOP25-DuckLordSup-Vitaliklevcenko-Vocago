@@ -50,19 +50,19 @@ public class CreateNewProfilePanel extends JPanel{
 
     private void buildLayout() {
         setLayout(new BorderLayout());
-        JLabel titleLabel = UIFactory.createLabel("Create New Profile", UIConstants.TITLE_FONT);
-        JPanel titlePanel = UIFactory.createPanel(new FlowLayout(FlowLayout.CENTER, 0, 40));
+        final JLabel titleLabel = UIFactory.createLabel("Create New Profile", UIConstants.TITLE_FONT);
+        final JPanel titlePanel = UIFactory.createPanel(new FlowLayout(FlowLayout.CENTER, 0, 40));
         titlePanel.add(titleLabel);
         add(titlePanel, BorderLayout.NORTH);
 
-        JPanel contentPanel = UIFactory.createPanel();
+        final JPanel contentPanel = UIFactory.createPanel();
         contentPanel.add(Box.createVerticalStrut(10));
 
-        Dimension comboSize = new Dimension(220, 32);
+        final Dimension comboSize = new Dimension(220, 32);
         this.firstLanguageComboBox.setMaximumSize(comboSize);
         this.secondLanguageComboBox.setMaximumSize(comboSize);
 
-        JPanel LanguagePanel = UIFactory.createPanel();
+        final JPanel LanguagePanel = UIFactory.createPanel();
         UIFactory.brighter(LanguagePanel);
 
         LanguagePanel.add(Box.createVerticalStrut(20));
@@ -78,7 +78,7 @@ public class CreateNewProfilePanel extends JPanel{
         contentPanel.add(LanguagePanel);
         contentPanel.add(Box.createVerticalStrut(10));
 
-        JPanel usernamePanel = UIFactory.createPanel(new FlowLayout(FlowLayout.CENTER, 12, 40));
+        final JPanel usernamePanel = UIFactory.createPanel(new FlowLayout(FlowLayout.CENTER, 12, 40));
         usernamePanel.add(UIFactory.createLabel("nickname:", UIConstants.FONT));
         usernamePanel.add(this.usernameTextField);
         usernamePanel.add(this.createNewProfileButton);
@@ -87,7 +87,7 @@ public class CreateNewProfilePanel extends JPanel{
         add(contentPanel, BorderLayout.CENTER);
 
         if (this.controller.getExistingProfiles().size() > 0) {
-            JPanel bottomPanel = UIFactory.createPanel(new FlowLayout(FlowLayout.LEFT, 20, 20));
+            final JPanel bottomPanel = UIFactory.createPanel(new FlowLayout(FlowLayout.LEFT, 20, 20));
             bottomPanel.add(this.goBackButton);
             add(bottomPanel, BorderLayout.SOUTH);
         }

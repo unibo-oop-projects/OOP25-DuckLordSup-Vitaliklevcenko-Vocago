@@ -50,7 +50,7 @@ public class ProfileDashboardPanel extends JPanel{
 
                 setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-                JPanel titlePanel = UIFactory.createPanel(new BorderLayout());
+                final JPanel titlePanel = UIFactory.createPanel(new BorderLayout());
                 titlePanel.add(UIFactory.createLabel(
                                 "WELCOME BACK, " + this.controller.getCurrentProfile().getUserName() + "!",
                                 UIConstants.TITLE_FONT));
@@ -58,7 +58,7 @@ public class ProfileDashboardPanel extends JPanel{
                 titlePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 130));
                 add(titlePanel);
 
-                JPanel centerPanel = UIFactory.createPanel(new GridLayout(1, 2));
+                final JPanel centerPanel = UIFactory.createPanel(new GridLayout(1, 2));
                 centerPanel.add(leftPanel());
                 centerPanel.add(rightPanel());
                 add(centerPanel);
@@ -67,19 +67,19 @@ public class ProfileDashboardPanel extends JPanel{
 
         private JPanel leftPanel() {
 
-                JPanel leftPanel = UIFactory.createPanel();
+                final JPanel leftPanel = UIFactory.createPanel();
                 UIFactory.brighter(leftPanel);
 
                 leftPanel.add(Box.createVerticalStrut(40));
 
                 leftPanel.add(UIFactory.createLabel("YOUR STATISTICS", UIConstants.TITLE_FONT));
 
-                JPanel statisticsPanel = UIFactory.createPanel(new GridLayout(2, 2, 15, 15));
+                final JPanel statisticsPanel = UIFactory.createPanel(new GridLayout(2, 2, 15, 15));
                 statisticsPanel.setMaximumSize(new Dimension(500, 250));
                 statisticsPanel.setBorder(new EmptyBorder(15, 15, 15, 15));
                 UIFactory.brighter(statisticsPanel);
 
-                Statistics dashboardStatistics = this.controller.getDashboardStatistics();
+                final Statistics dashboardStatistics = this.controller.getDashboardStatistics();
                 statisticsPanel.add(createStatisticPanel("Mastered", dashboardStatistics.getMasteredItems() + " Words",
                                 "data/resources/pictures/star.png"));
                 statisticsPanel.add(createStatisticPanel("Accuracy",
@@ -96,7 +96,7 @@ public class ProfileDashboardPanel extends JPanel{
                 leftPanel.add(UIFactory.createLabel("Account Management", UIConstants.TITLE_FONT));
                 leftPanel.add(Box.createVerticalStrut(10));
 
-                JPanel managementPanel = UIFactory.createPanel(new FlowLayout(FlowLayout.CENTER, 15, 10));
+                final JPanel managementPanel = UIFactory.createPanel(new FlowLayout(FlowLayout.CENTER, 15, 10));
                 UIFactory.brighter(managementPanel);
                 managementPanel.setMaximumSize(new Dimension(500, 70));
                 managementPanel.setPreferredSize(new Dimension(500, 70));
@@ -110,16 +110,16 @@ public class ProfileDashboardPanel extends JPanel{
                 return leftPanel;
         }
 
-        private JPanel createStatisticPanel(String title, String text, String iconPath) {
-                JPanel statisticPanel = UIFactory.createPanel(new FlowLayout(FlowLayout.LEFT, 25, 20));
+        private JPanel createStatisticPanel(final String title, final String text, final String iconPath) {
+                final JPanel statisticPanel = UIFactory.createPanel(new FlowLayout(FlowLayout.LEFT, 25, 20));
                 UIFactory.brighter(statisticPanel);
-                ImageIcon icon = UIFactory.loadIcon(iconPath);
-                Image scaledImage = icon.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+                final ImageIcon icon = UIFactory.loadIcon(iconPath);
+                final Image scaledImage = icon.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
 
-                JLabel iconLabel = UIFactory.createLabel("", UIConstants.PROMPT_FONT);
+                final JLabel iconLabel = UIFactory.createLabel("", UIConstants.PROMPT_FONT);
                 iconLabel.setIcon(new ImageIcon(scaledImage));
 
-                JPanel textPanel = UIFactory.createPanel();
+                final JPanel textPanel = UIFactory.createPanel();
                 UIFactory.brighter(textPanel);
                 UIFactory.brighter(textPanel);
                 textPanel.add(UIFactory.createLabel(title, UIConstants.FONT));
@@ -133,7 +133,7 @@ public class ProfileDashboardPanel extends JPanel{
         }
 
         private JPanel rightPanel() {
-                JPanel rightPanel = UIFactory.createPanel();
+                final JPanel rightPanel = UIFactory.createPanel();
                 rightPanel.add(Box.createVerticalStrut(110));
                 rightPanel.add(this.startButton);
                 rightPanel.add(Box.createVerticalStrut(90));
