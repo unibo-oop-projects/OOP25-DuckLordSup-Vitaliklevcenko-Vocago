@@ -15,16 +15,16 @@ import it.unibo.vocago.view.util.UIFactory;
 
 public class StartPanel extends JPanel{
 
-    private final int MAX_USERS = 4;
+    private static final int MAX_USERS = 4;
     private static final String ADD_ICON = "data/resources/pictures/plus.png";
-    final private Controller controller;
     private static final String[] PROFILE_ICONS = {
             "data/resources/pictures/bunny.png",
             "data/resources/pictures/owl.png",
             "data/resources/pictures/fox.png",
             "data/resources/pictures/bear.png"
     };
-
+    final private Controller controller;
+    
     public StartPanel(final Controller controller) {
         this.controller = controller;
         buildLayout();
