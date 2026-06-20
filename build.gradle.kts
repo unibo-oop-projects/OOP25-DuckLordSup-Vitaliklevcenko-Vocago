@@ -32,6 +32,9 @@ tasks.test {
 }
 
 tasks.shadowJar {
+    from("data/resources") {
+        into("data/resources")
+    }
     manifest {
         attributes["Main-Class"] = application.mainClass.get()
     }
