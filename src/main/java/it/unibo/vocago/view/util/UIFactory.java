@@ -43,7 +43,8 @@ public final class UIFactory {
 
     public static JButton createButton(final String text, final String iconPath,
             final int iconSize, final Color backGround, final int height, final int width,
-            boolean addListener, boolean addIconHighlight, boolean addFontHighlight, final Font font) {
+            final boolean addListener, final boolean addIconHighlight, final boolean addFontHighlight,
+            final Font font) {
 
         final JButton button = new JButton(text);
         button.setFocusPainted(false);
@@ -56,15 +57,15 @@ public final class UIFactory {
         button.setBorder(BorderFactory.createLineBorder(UIConstants.BUTTON_BORDER));
 
         if (iconPath != null && !iconPath.isBlank()) {
-            ImageIcon icon = loadIcon(iconPath);
-            Image scaledImage = icon.getImage().getScaledInstance(iconSize, iconSize, Image.SCALE_SMOOTH);
+            final ImageIcon icon = loadIcon(iconPath);
+            final Image scaledImage = icon.getImage().getScaledInstance(iconSize, iconSize, Image.SCALE_SMOOTH);
             button.setIcon(new ImageIcon(scaledImage));
             button.setHorizontalAlignment(SwingConstants.CENTER);
             button.setIconTextGap(5);
         }
 
         if (height > 0 && width > 0) {
-            Dimension dimension = new Dimension(width, height);
+            final Dimension dimension = new Dimension(width, height);
             button.setMinimumSize(dimension);
             button.setMaximumSize(dimension);
             button.setPreferredSize(dimension);
@@ -99,7 +100,7 @@ public final class UIFactory {
     }
 
     public static void buttonListener(final JButton button) {
-        MouseAdapter hoverListener = new MouseAdapter() {
+        final MouseAdapter hoverListener = new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
                 button.setBackground(button.getBackground().brighter());
@@ -119,8 +120,8 @@ public final class UIFactory {
             return;
         }
 
-        int width = button.getIcon().getIconWidth();
-        int height = button.getIcon().getIconHeight();
+        final int width = button.getIcon().getIconWidth();
+        final int height = button.getIcon().getIconHeight();
         if (width <= 0 || height <= 0) {
             return;
         }
@@ -128,22 +129,22 @@ public final class UIFactory {
         button.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                Image scaledImage = icon.getImage().getScaledInstance(
+                final Image scaledImage = icon.getImage().getScaledInstance(
                         (int) (width * SCALE), (int) (height * SCALE), Image.SCALE_SMOOTH);
                 button.setIcon(new ImageIcon(scaledImage));
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                Image scaledImage = icon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+                final Image scaledImage = icon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
                 button.setIcon(new ImageIcon(scaledImage));
             }
         });
     }
 
     public static void highlightFont(final JButton button) {
-        Font normalFont = button.getFont();
-        Font hoverFont = normalFont.deriveFont((float) (normalFont.getSize() * SCALE));
+        final Font normalFont = button.getFont();
+        final Font hoverFont = normalFont.deriveFont((float) (normalFont.getSize() * SCALE));
         button.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -197,7 +198,7 @@ public final class UIFactory {
     }
 
     public static JPanel createPanel() {
-        JPanel panel = createPanel(new FlowLayout());
+        final JPanel panel = createPanel(new FlowLayout());
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         stylePanel(panel);
         return panel;
@@ -216,7 +217,7 @@ public final class UIFactory {
         component.setBorder(BorderFactory.createLineBorder(UIConstants.PANEL_BORDER));
     }
 
-    public static <T> JComboBox<T> createComboBox(T[] items) {
+    public static <T> JComboBox<T> createComboBox(final T[] items) {
         final JComboBox<T> comboBox = new JComboBox<>(items);
         comboBox.setFont(UIConstants.FONT);
         comboBox.setBackground(UIConstants.COMBOBOX_BACKGROUND);
@@ -257,7 +258,8 @@ public final class UIFactory {
         table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(
-                    JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                    final JTable table, final Object value, final boolean isSelected, final boolean hasFocus,
+                    final int row, final int column) {
                 final Component cell = super.getTableCellRendererComponent(
                         table, value, isSelected, hasFocus, row, column);
 
@@ -343,7 +345,7 @@ public final class UIFactory {
         });
     }
 
-    public static String toHex(Color color) {
+    public static String toHex(final Color color) {
         return String.format("#%02x%02x%02x",
                 color.getRed(),
                 color.getGreen(),
