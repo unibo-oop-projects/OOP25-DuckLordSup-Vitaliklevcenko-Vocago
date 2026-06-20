@@ -82,8 +82,10 @@ public class ProfileManagerImpl implements ProfileManager{
 
     @Override
     public boolean vocabularyIsValid() {
-        return hasCurrentProfile() && this.currentProfile.getVocabulary() != null
-                && this.currentProfile.getVocabulary().isValid();
+        return findCurrentProfile()
+                .map(User::getVocabulary)
+                .filter(Vocabulary::isValid)
+                .isPresent();
     }
 
     @Override
