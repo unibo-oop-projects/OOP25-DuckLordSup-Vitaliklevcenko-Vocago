@@ -40,6 +40,13 @@ public final class UIFactory {
     private static final int TABLE_HEADER_HEIGHT = 36;
     private static final int TEXT_SIZE = 14;
     private static final int CELL_BORDER_THICKNESS = 2;
+    private static final int ICON_TEXT_GAP = 5;
+    private static final int SCROLL_UNIT_INCREMENT = 16;
+    private static final int SCROLL_THUMB_INSET = 2;
+    private static final int SCROLL_THUMB_ARC_SIZE = 10;
+
+    private UIFactory() {
+    }
 
     public static JButton createButton(final String text, final String iconPath,
             final int iconSize, final Color backGround, final int height, final int width,
@@ -61,7 +68,7 @@ public final class UIFactory {
             final Image scaledImage = icon.getImage().getScaledInstance(iconSize, iconSize, Image.SCALE_SMOOTH);
             button.setIcon(new ImageIcon(scaledImage));
             button.setHorizontalAlignment(SwingConstants.CENTER);
-            button.setIconTextGap(5);
+            button.setIconTextGap(ICON_TEXT_GAP);
         }
 
         if (height > 0 && width > 0) {
@@ -84,6 +91,11 @@ public final class UIFactory {
         }
 
         return button;
+    }
+
+    public static JButton createButton(final String text) {
+        return createButton(text, "", 1, UIConstants.BUTTON_BACKGROUND,
+                ZERO, ZERO, true, false, false, UIConstants.FONT);
     }
 
     public static ImageIcon loadIcon(final String iconPath) {
@@ -156,11 +168,6 @@ public final class UIFactory {
                 button.setFont(normalFont);
             }
         });
-    }
-
-    public static JButton createButton(final String text) {
-        return createButton(text, "", 1, UIConstants.BUTTON_BACKGROUND,
-                ZERO, ZERO, true, false, false, UIConstants.FONT);
     }
 
     public static JLabel createLabel(final String text, final Font font) {
@@ -293,7 +300,7 @@ public final class UIFactory {
 
     public static void styleScrollBar(final JScrollBar scrollBar) {
         scrollBar.setBackground(UIConstants.SCROLLBAR_TRACK);
-        scrollBar.setUnitIncrement(16);
+        scrollBar.setUnitIncrement(SCROLL_UNIT_INCREMENT);
         scrollBar.setUI(new BasicScrollBarUI() {
             @Override
             protected void configureScrollBarColors() {
@@ -334,12 +341,12 @@ public final class UIFactory {
                 final Graphics2D g2 = (Graphics2D) g.create();
                 g2.setColor(isThumbRollover() ? UIConstants.SCROLLBAR_THUMB_HOVER : UIConstants.SCROLLBAR_THUMB);
                 g2.fillRoundRect(
-                        thumbBounds.x + 2,
-                        thumbBounds.y + 2,
-                        thumbBounds.width - 4,
-                        thumbBounds.height - 4,
-                        10,
-                        10);
+                        thumbBounds.x + SCROLL_THUMB_INSET,
+                        thumbBounds.y + SCROLL_THUMB_INSET,
+                        thumbBounds.width - SCROLL_THUMB_INSET * 2,
+                        thumbBounds.height - SCROLL_THUMB_INSET * 2,
+                        SCROLL_THUMB_ARC_SIZE,
+                        SCROLL_THUMB_ARC_SIZE);
                 g2.dispose();
             }
         });
@@ -350,9 +357,6 @@ public final class UIFactory {
                 color.getRed(),
                 color.getGreen(),
                 color.getBlue());
-    }
-
-    private UIFactory() {
     }
 
 }

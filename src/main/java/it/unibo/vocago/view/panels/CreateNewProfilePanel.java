@@ -17,6 +17,12 @@ import it.unibo.vocago.view.util.UIFactory;
 public final class CreateNewProfilePanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
+    private static final int TITLE_VERTICAL_GAP = 40;
+    private static final int USERNAME_HORIZONTAL_GAP = 12;
+    private static final int USERNAME_VERTICAL_GAP = 40;
+    private static final int COMBOBOX_HEIGHT = 32;
+    private static final int COMBOBOX_WIDTH = 220;
+    private static final int ZERO_GAP = 0;
     private final transient Controller controller;
     private final JButton createNewProfileButton;
     private final JTextField usernameTextField;
@@ -30,7 +36,9 @@ public final class CreateNewProfilePanel extends JPanel {
         this.controller = controller;
         UIFactory.stylePanel(this);
         this.createNewProfileButton = UIFactory.createButton("Create");
-        this.goBackButton = UIFactory.createButton("", "data/resources/pictures/back.png", 60, UIConstants.BACKGROUND, 60, 70,
+        this.goBackButton = UIFactory.createButton("", "data/resources/pictures/back.png",
+                UIConstants.BACK_BUTTON_ICON_SIZE, UIConstants.BACKGROUND,
+                UIConstants.BACK_BUTTON_HEIGHT, UIConstants.BACK_BUTTON_WIDTH,
                 true, true, true, UIConstants.FONT);
         this.usernameTextField = UIFactory.createTextField();
         this.firstLanguageComboBox = UIFactory.createComboBox(new String[] {
@@ -52,34 +60,36 @@ public final class CreateNewProfilePanel extends JPanel {
     private void buildLayout() {
         setLayout(new BorderLayout());
         final JLabel titleLabel = UIFactory.createLabel("Create New Profile", UIConstants.TITLE_FONT);
-        final JPanel titlePanel = UIFactory.createPanel(new FlowLayout(FlowLayout.CENTER, 0, 40));
+        final JPanel titlePanel = UIFactory.createPanel(new FlowLayout(FlowLayout.CENTER, 
+                ZERO_GAP, TITLE_VERTICAL_GAP));
         titlePanel.add(titleLabel);
         add(titlePanel, BorderLayout.NORTH);
 
         final JPanel contentPanel = UIFactory.createPanel();
-        contentPanel.add(Box.createVerticalStrut(10));
+        contentPanel.add(Box.createVerticalStrut(UIConstants.SPACING_SMALL));
 
-        final Dimension comboSize = new Dimension(220, 32);
+        final Dimension comboSize = new Dimension(COMBOBOX_WIDTH, COMBOBOX_HEIGHT);
         this.firstLanguageComboBox.setMaximumSize(comboSize);
         this.secondLanguageComboBox.setMaximumSize(comboSize);
 
         final JPanel languagePanel = UIFactory.createPanel();
         UIFactory.brighter(languagePanel);
 
-        languagePanel.add(Box.createVerticalStrut(20));
+        languagePanel.add(Box.createVerticalStrut(UIConstants.SPACING_LARGE));
         languagePanel.add(UIFactory.createLabel("choose a language you want to study", UIConstants.FONT));
-        languagePanel.add(Box.createVerticalStrut(10));
+        languagePanel.add(Box.createVerticalStrut(UIConstants.SPACING_SMALL));
         languagePanel.add(this.secondLanguageComboBox);
-        languagePanel.add(Box.createVerticalStrut(20));
+        languagePanel.add(Box.createVerticalStrut(UIConstants.SPACING_LARGE));
         languagePanel.add(UIFactory.createLabel("choose a language you already know", UIConstants.FONT));
-        languagePanel.add(Box.createVerticalStrut(10));
+        languagePanel.add(Box.createVerticalStrut(UIConstants.SPACING_SMALL));
         languagePanel.add(this.firstLanguageComboBox);
-        languagePanel.add(Box.createVerticalStrut(20));
+        languagePanel.add(Box.createVerticalStrut(UIConstants.SPACING_LARGE));
 
         contentPanel.add(languagePanel);
-        contentPanel.add(Box.createVerticalStrut(10));
+        contentPanel.add(Box.createVerticalStrut(UIConstants.SPACING_SMALL));
 
-        final JPanel usernamePanel = UIFactory.createPanel(new FlowLayout(FlowLayout.CENTER, 12, 40));
+        final JPanel usernamePanel = UIFactory.createPanel(new FlowLayout(
+                FlowLayout.CENTER, USERNAME_HORIZONTAL_GAP, USERNAME_VERTICAL_GAP));
         usernamePanel.add(UIFactory.createLabel("nickname:", UIConstants.FONT));
         usernamePanel.add(this.usernameTextField);
         usernamePanel.add(this.createNewProfileButton);
@@ -88,7 +98,8 @@ public final class CreateNewProfilePanel extends JPanel {
         add(contentPanel, BorderLayout.CENTER);
 
         if (!this.controller.getExistingProfiles().isEmpty()) {
-            final JPanel bottomPanel = UIFactory.createPanel(new FlowLayout(FlowLayout.LEFT, 20, 20));
+            final JPanel bottomPanel = UIFactory.createPanel(new FlowLayout(
+                    FlowLayout.LEFT, UIConstants.SPACING_LARGE, UIConstants.SPACING_LARGE));
             bottomPanel.add(this.goBackButton);
             add(bottomPanel, BorderLayout.SOUTH);
         }

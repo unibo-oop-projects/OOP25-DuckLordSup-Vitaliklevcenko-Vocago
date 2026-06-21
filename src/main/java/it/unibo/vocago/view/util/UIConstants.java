@@ -5,7 +5,12 @@ import java.awt.Font;
 
 public final class UIConstants {
 
-    private static final String FONT_NAME = "Roboto";
+    public static final int BACK_BUTTON_ICON_SIZE = 60;
+    public static final int BACK_BUTTON_WIDTH = 70;
+    public static final int BACK_BUTTON_HEIGHT = 60;
+    public static final int SPACING_SMALL = 10;
+    public static final int SPACING_MEDIUM = 15;
+    public static final int SPACING_LARGE = 20;
 
     // dark grey theme
     public static final Color BACKGROUND = new Color(50, 50, 50);
@@ -45,11 +50,13 @@ public final class UIConstants {
     public static final Color TABLE_ROW_EVEN = new Color(65, 65, 65);
     public static final Color TABLE_ROW_ODD = new Color(75, 75, 75);
 
-    public static final Font TITLE_FONT = new Font(FONT_NAME, Font.BOLD, 32);
-    public static final Font PROMPT_FONT = new Font(FONT_NAME, Font.BOLD, 24);
-    public static final Font FONT = new Font(FONT_NAME, Font.PLAIN, 18);
-    public static final Font TABLE_HEADER_FONT = new Font(FONT_NAME, Font.BOLD, 22);
-    public static final Font BIG_PROMT_FONT = new Font(FONT_NAME, Font.PLAIN, 46);
+    public static final Font TITLE_FONT = new Font(UIConstants.FONT_NAME, Font.BOLD, 32);
+    public static final Font PROMPT_FONT = new Font(UIConstants.FONT_NAME, Font.BOLD, 24);
+    public static final Font FONT = new Font(UIConstants.FONT_NAME, Font.PLAIN, 18);
+    public static final Font TABLE_HEADER_FONT = new Font(UIConstants.FONT_NAME, Font.BOLD, 22);
+    public static final Font BIG_PROMT_FONT = new Font(UIConstants.FONT_NAME, Font.PLAIN, 46);
+
+    private static final String FONT_NAME = "Roboto";
 
     private UIConstants() {
     }

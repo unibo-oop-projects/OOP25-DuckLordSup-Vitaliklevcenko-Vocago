@@ -44,7 +44,7 @@ public final class AppFrame extends JFrame implements AppView {
 
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         this.setTitle("Vocago");
-        this.setSize(800, 600);
+        this.setSize(SMALL_WINDOW);
         this.setLocationRelativeTo(null);
         final ImageIcon icon = UIFactory.loadIcon("data/resources/pictures/wizard.png");
         this.setIconImage(icon.getImage());

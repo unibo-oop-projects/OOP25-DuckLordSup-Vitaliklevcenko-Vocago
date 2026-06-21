@@ -28,6 +28,18 @@ public final class LearningPanel extends JPanel {
     private static final int ANSWER_PANEL_HEIGHT = 120;
     private static final int BUTTON_PANEL_HEIGHT = 50;
     private static final int LANGUAGE_PANEL_HEIGHT = 260;
+    private static final int SWITCH_LANGUAGE_ICON_SIZE = 40;
+    private static final int SWITCH_LANGUAGE_BUTTON_WIDTH = 160;
+    private static final int LEARNING_ACTION_BUTTON_HEIGHT = 100;
+    private static final int ACTION_BUTTON_WIDTH = 150;
+    private static final int LEARNING_BACK_BUTTON_HEIGHT = 180;
+    private static final int LANGUAGE_CARD_WIDTH = 500;
+    private static final int LANGUAGE_CARD_HEIGHT = 200;
+    private static final int CONTENT_GAP = 5;
+    private static final int MAIN_PANEL_TOP_SPACING = 60;
+    private static final int TIMER_PANEL_GAP = 12;
+    private static final int TIMER_DELAY_MILLISECONDS = 1000;
+    private static final int SECONDS_PER_MINUTE = 60;
 
     private final transient Controller controller;
     private final JLabel answerLabel;
@@ -40,7 +52,7 @@ public final class LearningPanel extends JPanel {
     private final JButton goBackButton;
     private JButton switchLanguageButton;
     private Timer timer;
-    
+
     @SuppressFBWarnings(value = "EI2", justification = "The panel intentionally shares the app controller.")
     public LearningPanel(final Controller controller) {
 
@@ -56,10 +68,10 @@ public final class LearningPanel extends JPanel {
         this.switchLanguageButton = UIFactory.createButton(
                 "SWITCH LANGUAGE",
                 "data/resources/pictures/arrow.png",
-                40,
+                SWITCH_LANGUAGE_ICON_SIZE,
                 UIConstants.BACKGROUND,
-                100,
-                160,
+                LEARNING_ACTION_BUTTON_HEIGHT,
+                SWITCH_LANGUAGE_BUTTON_WIDTH,
                 false,
                 true,
                 true,
@@ -70,8 +82,8 @@ public final class LearningPanel extends JPanel {
                 "",
                 0,
                 UIConstants.BUTTON_BACKGROUND,
-                100,
-                150,
+                LEARNING_ACTION_BUTTON_HEIGHT,
+                ACTION_BUTTON_WIDTH,
                 true,
                 false,
                 true,
@@ -82,8 +94,8 @@ public final class LearningPanel extends JPanel {
                 "",
                 0,
                 UIConstants.BUTTON_BACKGROUND,
-                100,
-                150,
+                LEARNING_ACTION_BUTTON_HEIGHT,
+                ACTION_BUTTON_WIDTH,
                 true,
                 false,
                 true,
@@ -92,10 +104,10 @@ public final class LearningPanel extends JPanel {
         this.goBackButton = UIFactory.createButton(
                 "",
                 "data/resources/pictures/back.png",
-                60,
+                UIConstants.BACK_BUTTON_ICON_SIZE,
                 UIConstants.BACKGROUND,
-                180,
-                70,
+                LEARNING_BACK_BUTTON_HEIGHT,
+                UIConstants.BACK_BUTTON_WIDTH,
                 false,
                 true,
                 true,
@@ -132,24 +144,25 @@ public final class LearningPanel extends JPanel {
             welcomPanel.add(UIFactory.createLabel("GOOD JOB!", UIConstants.TITLE_FONT), BorderLayout.CENTER);
         }
 
-        final JPanel rightPanel = UIFactory.createPanel(new FlowLayout(FlowLayout.RIGHT, 12, 12));
+        final JPanel rightPanel = UIFactory.createPanel(
+                new FlowLayout(FlowLayout.RIGHT, TIMER_PANEL_GAP, TIMER_PANEL_GAP));
         rightPanel.add(this.timerLabel);
         welcomPanel.add(rightPanel, BorderLayout.EAST);
         return welcomPanel;
     }
 
     private JPanel createMainPanel() {
-        final JPanel mainPanel = UIFactory.createPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
+        final JPanel mainPanel = UIFactory.createPanel(new FlowLayout(FlowLayout.CENTER, CONTENT_GAP, CONTENT_GAP));
         mainPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, LANGUAGE_PANEL_HEIGHT));
 
         final JPanel firstLanguagePanel = UIFactory.createPanel(new BorderLayout());
         firstLanguagePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, LANGUAGE_PANEL_HEIGHT));
-        firstLanguagePanel.setPreferredSize(new Dimension(500, 200));
+        firstLanguagePanel.setPreferredSize(new Dimension(LANGUAGE_CARD_WIDTH, LANGUAGE_CARD_HEIGHT));
         UIFactory.highlight(firstLanguagePanel);
 
         final JPanel secondLanguagePanel = UIFactory.createPanel(new BorderLayout());
         secondLanguagePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, LANGUAGE_PANEL_HEIGHT));
-        secondLanguagePanel.setPreferredSize(new Dimension(500, 200));
+        secondLanguagePanel.setPreferredSize(new Dimension(LANGUAGE_CARD_WIDTH, LANGUAGE_CARD_HEIGHT));
         UIFactory.highlight(secondLanguagePanel);
 
         firstLanguagePanel.add(UIFactory.createLabel(this.controller.getCurrentProfile().getFirstLanguage(),
@@ -167,16 +180,18 @@ public final class LearningPanel extends JPanel {
             UIFactory.brighter(labelPanel);
             firstLanguagePanel.add(labelPanel);
             secondLanguagePanel.add(textFieldPanel);
-            this.switchLanguageButton = UIFactory.createButton("Switch Language", "data/resources/pictures/arrow.png", 40,
-                    UIConstants.BACKGROUND, 100, 160, false, true, true, UIConstants.FONT);
+            this.switchLanguageButton = UIFactory.createButton("Switch Language", "data/resources/pictures/arrow.png",
+                    SWITCH_LANGUAGE_ICON_SIZE, UIConstants.BACKGROUND, LEARNING_ACTION_BUTTON_HEIGHT,
+                    SWITCH_LANGUAGE_BUTTON_WIDTH, false, true, true, UIConstants.FONT);
         } else {
             firstLanguagePanel.add(textFieldPanel);
             final JPanel labelPanel = UIFactory.createPanel(new GridLayout());
             labelPanel.add(UIFactory.createLabel(this.controller.getNextQuestion(), UIConstants.BIG_PROMT_FONT));
             UIFactory.brighter(labelPanel);
             secondLanguagePanel.add(labelPanel);
-            this.switchLanguageButton = UIFactory.createButton("Switch Language", "data/resources/pictures/back.png", 40,
-                    UIConstants.BACKGROUND, 100, 160, false, true, true, UIConstants.FONT);
+            this.switchLanguageButton = UIFactory.createButton("Switch Language", "data/resources/pictures/back.png",
+                    SWITCH_LANGUAGE_ICON_SIZE, UIConstants.BACKGROUND, LEARNING_ACTION_BUTTON_HEIGHT,
+                    SWITCH_LANGUAGE_BUTTON_WIDTH, false, true, true, UIConstants.FONT);
         }
         this.switchLanguageButton.setHorizontalTextPosition(SwingConstants.CENTER);
         this.switchLanguageButton.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -188,7 +203,7 @@ public final class LearningPanel extends JPanel {
                 Integer.MAX_VALUE, ANSWER_PANEL_HEIGHT));
         this.answerPanel.add(this.answerLabel);
         final JPanel centerPanel = UIFactory.createPanel();
-        centerPanel.add(Box.createVerticalStrut(60));
+        centerPanel.add(Box.createVerticalStrut(MAIN_PANEL_TOP_SPACING));
         centerPanel.add(mainPanel);
         centerPanel.add(this.answerPanel);
         return centerPanel;
@@ -245,14 +260,14 @@ public final class LearningPanel extends JPanel {
 
     private void startTimer() {
         updateTimer();
-        this.timer = new Timer(1000, e -> updateTimer());
+        this.timer = new Timer(TIMER_DELAY_MILLISECONDS, e -> updateTimer());
         this.timer.start();
     }
 
     private void updateTimer() {
-        final long elapsedSeconds = (System.currentTimeMillis() - this.startTime) / 1000;
-        final long minutes = elapsedSeconds / 60;
-        final long seconds = elapsedSeconds % 60;
+        final long elapsedSeconds = (System.currentTimeMillis() - this.startTime) / TIMER_DELAY_MILLISECONDS;
+        final long minutes = elapsedSeconds / SECONDS_PER_MINUTE;
+        final long seconds = elapsedSeconds % SECONDS_PER_MINUTE;
         this.timerLabel.setText(String.format("%02d:%02d", minutes, seconds));
     }
 

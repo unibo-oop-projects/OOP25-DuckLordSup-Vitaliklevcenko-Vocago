@@ -26,6 +26,20 @@ public class UserCsvStorage implements UserRepository {
 
     private static final Path USERS_DIRECTORY = Path.of("data", "users");
     private static final String WORD_SEPARATOR = ",";
+    private static final String QUOTE = "\"";
+    private static final String ESCAPED_QUOTE = "\"\"";
+    private static final int HEADER_LINE_INDEX = 0;
+    private static final int HEADER_FIRST_LANGUAGE_INDEX = 0;
+    private static final int HEADER_SECOND_LANGUAGE_INDEX = 1;
+    private static final int FIRST_VOCABULARY_DATA_LINE_INDEX = 1;
+    private static final int FIRST_WORDS_COLUMN_INDEX = 0;
+    private static final int SECOND_WORDS_COLUMN_INDEX = 1;
+    private static final int FIRST_PROGRESS_COLUMN_INDEX = 2;
+    private static final int SECOND_PROGRESS_COLUMN_INDEX = 3;
+    private static final int MINIMUM_VOCABULARY_COLUMN_COUNT = 2;
+    private static final int PROGRESS_MASTERY_INDEX = 0;
+    private static final int PROGRESS_CORRECT_ANSWERS_INDEX = 1;
+    private static final int PROGRESS_WRONG_ANSWERS_INDEX = 2;
     private static final Logger LOGGER = Logger.getLogger(UserCsvStorage.class.getName());
 
     @Override
@@ -95,7 +109,7 @@ public class UserCsvStorage implements UserRepository {
             throw new IOException("Empty user file: " + file);
         }
 
-        final List<String> header = splitCsv(lines.get(0));
+        final List<String> header = splitCsv(lines.get(HEADER_LINE_INDEX));
         final Path fileName = file.getFileName();
         if (fileName == null) {
             throw new IOException("User file has no file name: " + file);
@@ -103,13 +117,17 @@ public class UserCsvStorage implements UserRepository {
         final String userName = fileName.toString().replaceFirst("\\.csv$", "");
         final Dictionary vocabulary = new Dictionary();
 
-        for (int i = 1; i < lines.size(); i++) {
+        for (int i = FIRST_VOCABULARY_DATA_LINE_INDEX; i < lines.size(); i++) {
             if (!lines.get(i).isBlank()) {
                 vocabulary.addItem(fromCsvLine(lines.get(i)));
             }
         }
 
-        return new Profile(userName, vocabulary, header.get(0), header.get(1));
+        return new Profile(
+                userName,
+                vocabulary,
+                header.get(HEADER_FIRST_LANGUAGE_INDEX),
+                header.get(HEADER_SECOND_LANGUAGE_INDEX));
     }
 
     private boolean isCsvFile(final Path file) {
@@ -130,15 +148,15 @@ public class UserCsvStorage implements UserRepository {
 
     private static VocabularyItem fromCsvLine(final String line) {
         final List<String> values = splitCsv(line);
-        if (values.size() < 2) {
+        if (values.size() < MINIMUM_VOCABULARY_COLUMN_COUNT) {
             throw new IllegalArgumentException("Vocabulary row must contain at least two columns.");
         }
 
         return new DictionaryEntry(
-                splitWords(values.get(0)),
-                splitWords(values.get(1)),
-                progressAt(values, 2),
-                progressAt(values, 3));
+                splitWords(values.get(FIRST_WORDS_COLUMN_INDEX)),
+                splitWords(values.get(SECOND_WORDS_COLUMN_INDEX)),
+                progressAt(values, FIRST_PROGRESS_COLUMN_INDEX),
+                progressAt(values, SECOND_PROGRESS_COLUMN_INDEX));
     }
 
     private static String joinWords(final List<Word> words) {
@@ -185,9 +203,9 @@ public class UserCsvStorage implements UserRepository {
     private static Progress parseProgress(final String text) {
         final String[] parts = text.split(":");
         return new WordProgress(
-                MasteryLevel.valueOf(parts[0]),
-                Integer.parseInt(parts[1]),
-                Integer.parseInt(parts[2]));
+                MasteryLevel.valueOf(parts[PROGRESS_MASTERY_INDEX]),
+                Integer.parseInt(parts[PROGRESS_CORRECT_ANSWERS_INDEX]),
+                Integer.parseInt(parts[PROGRESS_WRONG_ANSWERS_INDEX]));
     }
 
     private static String csvLine(final String... values) {
@@ -204,7 +222,7 @@ public class UserCsvStorage implements UserRepository {
     }
 
     private static String escapeCsv(final String value) {
-        return "\"" + value.replace("\"", "\"\"") + "\"";
+        return QUOTE + value.replace(QUOTE, ESCAPED_QUOTE) + QUOTE;
     }
 
     private static List<String> splitCsv(final String line) {

@@ -31,7 +31,24 @@ public final class ConfigureProfilePanel extends JPanel {
             "Portuguese", "Dutch", "Polish", "Japanese", "Chinese",
     };
     private static final int PANEL_WIDTH = 660;
-    private static final int BUTTON_WIDTH = 70;
+    private static final int ACTION_BUTTON_HEIGHT = 42;
+    private static final int SAVE_BUTTON_WIDTH = 450;
+    private static final int DELETE_ICON_SIZE = 20;
+    private static final int DELETE_BUTTON_WIDTH = 200;
+    private static final int HEADER_HEIGHT = 90;
+    private static final int ACCOUNT_PANEL_HEIGHT = 100;
+    private static final int LANGUAGE_PANEL_HEIGHT = 130;
+    private static final int DAILY_GOAL_PANEL_HEIGHT = 135;
+    private static final int CONTENT_BOTTOM_PADDING = 18;
+    private static final int ACTION_SECTION_SPACING = 12;
+    private static final int ACCOUNT_ROW_HEIGHT = 30;
+    private static final int ACCOUNT_ROW_VERTICAL_GAP = 5;
+    private static final int LANGUAGE_COLUMN_GAP = 24;
+    private static final int ZERO_PADDING = 0;
+    private static final int GOAL_SLIDER_TOP_GAP = 8;
+    private static final int SLIDER_TICK_SPACING = 5;
+    private static final int ICON_SIZE = 1;
+    private static final int GRID_SIZE = 2;
     private final transient Controller controller;
     private final JButton saveChangesButton;
     private final JButton deleteProfileButton;
@@ -46,13 +63,17 @@ public final class ConfigureProfilePanel extends JPanel {
     public ConfigureProfilePanel(final Controller controller) {
         this.controller = controller;
         UIFactory.stylePanel(this);
-        this.saveChangesButton = UIFactory.createButton("Save Changes", "", 1,
-                UIConstants.BLUE, 42, 450, true, false, true, UIConstants.FONT);
+        this.saveChangesButton = UIFactory.createButton("Save Changes", "", 
+                ICON_SIZE,
+                UIConstants.BLUE, ACTION_BUTTON_HEIGHT, SAVE_BUTTON_WIDTH,
+                true, false, true, UIConstants.FONT);
         this.deleteProfileButton = UIFactory.createButton("Delete Profile", "data/resources/pictures/bin.png",
-                20, UIConstants.RED, 42, 200, true, true, true, UIConstants.FONT);
-        this.goBackButton = UIFactory.createButton("", "data/resources/pictures/back.png", 60, UIConstants.BACKGROUND,
-                60,
-                BUTTON_WIDTH,
+                DELETE_ICON_SIZE, UIConstants.RED, ACTION_BUTTON_HEIGHT, DELETE_BUTTON_WIDTH,
+                true, true, true, UIConstants.FONT);
+        this.goBackButton = UIFactory.createButton("", "data/resources/pictures/back.png",
+                UIConstants.BACK_BUTTON_ICON_SIZE, UIConstants.BACKGROUND,
+                UIConstants.BACK_BUTTON_HEIGHT,
+                UIConstants.BACK_BUTTON_WIDTH,
                 false, true, true, UIConstants.FONT);
         this.usernameTextField = UIFactory.createTextField();
         this.firstLanguageComboBox = UIFactory.createComboBox(LANGUAGES);
@@ -82,31 +103,32 @@ public final class ConfigureProfilePanel extends JPanel {
         add(headerPanel(), BorderLayout.NORTH);
 
         final JPanel contentPanel = UIFactory.createPanel();
-        contentPanel.setBorder(new EmptyBorder(0, 0, 18, 0));
+        contentPanel.setBorder(new EmptyBorder(ZERO_PADDING, ZERO_PADDING, CONTENT_BOTTOM_PADDING, ZERO_PADDING));
         contentPanel.add(accountDetailsPanel());
-        contentPanel.add(Box.createVerticalStrut(10));
+        contentPanel.add(Box.createVerticalStrut(UIConstants.SPACING_SMALL));
         contentPanel.add(languagePreferencesPanel());
-        contentPanel.add(Box.createVerticalStrut(10));
+        contentPanel.add(Box.createVerticalStrut(UIConstants.SPACING_SMALL));
         contentPanel.add(dailyGoalPanel());
-        contentPanel.add(Box.createVerticalStrut(12));
+        contentPanel.add(Box.createVerticalStrut(ACTION_SECTION_SPACING));
         contentPanel.add(actionButtonsPanel());
         add(contentPanel, BorderLayout.CENTER);
     }
 
     private JPanel headerPanel() {
         final JPanel headerPanel = UIFactory.createPanel(new BorderLayout());
-        headerPanel.setPreferredSize(new Dimension(Integer.MAX_VALUE, 90));
+        headerPanel.setPreferredSize(new Dimension(Integer.MAX_VALUE, HEADER_HEIGHT));
         headerPanel.add(this.goBackButton, BorderLayout.WEST);
         headerPanel.add(UIFactory.createLabel("Configure Profile", UIConstants.TITLE_FONT), BorderLayout.CENTER);
-        headerPanel.add(Box.createHorizontalStrut(BUTTON_WIDTH), BorderLayout.EAST);
+        headerPanel.add(Box.createHorizontalStrut(UIConstants.BACK_BUTTON_WIDTH), BorderLayout.EAST);
         return headerPanel;
     }
 
     private JPanel accountDetailsPanel() {
-        final JPanel panel = createPanel("ACCOUNT DETAILS", 100);
-        final JPanel nicknameRow = UIFactory.createPanel(new BorderLayout(10, 5));
+        final JPanel panel = createPanel("ACCOUNT DETAILS", ACCOUNT_PANEL_HEIGHT);
+        final JPanel nicknameRow = UIFactory.createPanel(
+                new BorderLayout(UIConstants.SPACING_SMALL, ACCOUNT_ROW_VERTICAL_GAP));
         nicknameRow.setBackground(panel.getBackground());
-        nicknameRow.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
+        nicknameRow.setMaximumSize(new Dimension(Integer.MAX_VALUE, ACCOUNT_ROW_HEIGHT));
         nicknameRow.add(UIFactory.createLabel("Nickname:", UIConstants.FONT), BorderLayout.WEST);
         nicknameRow.add(this.usernameTextField, BorderLayout.CENTER);
         panel.add(nicknameRow);
@@ -114,8 +136,9 @@ public final class ConfigureProfilePanel extends JPanel {
     }
 
     private JPanel languagePreferencesPanel() {
-        final JPanel panel = createPanel("LANGUAGE PREFERENCES", 130);
-        final JPanel languageRow = UIFactory.createPanel(new GridLayout(2, 2, 24, 0));
+        final JPanel panel = createPanel("LANGUAGE PREFERENCES", LANGUAGE_PANEL_HEIGHT);
+        final JPanel languageRow = UIFactory.createPanel(new GridLayout(
+                GRID_SIZE, GRID_SIZE, LANGUAGE_COLUMN_GAP, ZERO_PADDING));
         languageRow.setBackground(panel.getBackground());
         languageRow.add(UIFactory.createLabel("Language you study:", UIConstants.FONT));
         languageRow.add(UIFactory.createLabel("Language you already know:", UIConstants.FONT));
@@ -126,19 +149,20 @@ public final class ConfigureProfilePanel extends JPanel {
     }
 
     private JPanel dailyGoalPanel() {
-        final JPanel panel = createPanel("DAILY GOAL", 135);
-        final JPanel wordsRow = UIFactory.createPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        final JPanel panel = createPanel("DAILY GOAL", DAILY_GOAL_PANEL_HEIGHT);
+        final JPanel wordsRow = UIFactory.createPanel(new FlowLayout(FlowLayout.CENTER, ZERO_PADDING, ZERO_PADDING));
         wordsRow.setBackground(panel.getBackground());
         wordsRow.add(UIFactory.createLabel("Words per day: ", UIConstants.FONT));
         wordsRow.add(this.dailyGoalValueLabel);
         panel.add(wordsRow);
-        panel.add(Box.createVerticalStrut(8));
+        panel.add(Box.createVerticalStrut(GOAL_SLIDER_TOP_GAP));
         panel.add(sliderPanel(panel.getBackground()));
         return panel;
     }
 
     private JPanel actionButtonsPanel() {
-        final JPanel actionsPanel = UIFactory.createPanel(new FlowLayout(FlowLayout.CENTER, 12, 0));
+        final JPanel actionsPanel = UIFactory.createPanel(
+                new FlowLayout(FlowLayout.CENTER, ACTION_SECTION_SPACING, ZERO_PADDING));
         actionsPanel.add(this.saveChangesButton);
         actionsPanel.add(this.deleteProfileButton);
         return actionsPanel;
@@ -147,8 +171,8 @@ public final class ConfigureProfilePanel extends JPanel {
     private JPanel sliderPanel(final Color background) {
         this.dailyGoalSlider.setBackground(background);
         this.dailyGoalSlider.setForeground(UIConstants.TEXT_COLOR);
-        this.dailyGoalSlider.setMajorTickSpacing(5);
-        this.dailyGoalSlider.setMinorTickSpacing(5);
+        this.dailyGoalSlider.setMajorTickSpacing(SLIDER_TICK_SPACING);
+        this.dailyGoalSlider.setMinorTickSpacing(SLIDER_TICK_SPACING);
         this.dailyGoalSlider.setPaintTicks(true);
 
         final JPanel panel = UIFactory.createPanel(new BorderLayout());
@@ -172,9 +196,10 @@ public final class ConfigureProfilePanel extends JPanel {
         panel.setMaximumSize(new Dimension(PANEL_WIDTH, height));
         panel.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(UIConstants.PANEL_BORDER),
-                new EmptyBorder(10, 20, 10, 20)));
+                new EmptyBorder(UIConstants.SPACING_SMALL, UIConstants.SPACING_LARGE,
+                        UIConstants.SPACING_SMALL, UIConstants.SPACING_LARGE)));
         panel.add(UIFactory.createLabel(title, UIConstants.FONT.deriveFont(Font.BOLD)));
-        panel.add(Box.createVerticalStrut(10));
+        panel.add(Box.createVerticalStrut(UIConstants.SPACING_SMALL));
         return panel;
     }
 

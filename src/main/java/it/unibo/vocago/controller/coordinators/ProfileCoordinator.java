@@ -13,6 +13,9 @@ import it.unibo.vocago.view.api.AppView;
 @SuppressWarnings("PMD.AvoidCatchingGenericException")
 public final class ProfileCoordinator {
 
+    private static final String PROFILE_ERROR_TITLE = "Profile Error";
+    private static final String INVALID_PROFILE_NAME_TITLE = "Profile Name Invalid";
+
     private final ProfileManager profileManager;
     private final AppView appView;
 
@@ -28,7 +31,7 @@ public final class ProfileCoordinator {
         try {
             return this.profileManager.getExistingProfiles();
         } catch (final RuntimeException exception) {
-            this.appView.showError("Profile Error", "Could not load saved profiles.");
+            this.appView.showError(PROFILE_ERROR_TITLE, "Could not load saved profiles.");
             return List.of();
         }
         // CHECKSTYLE: IllegalCatch ON
@@ -37,7 +40,7 @@ public final class ProfileCoordinator {
     public boolean createProfile(final String profileName, final String firstLanguage, final String secondLanguage) {
         if (profileName == null || profileName.isBlank()) {
             this.appView.showWarning(
-                    "Profile Name Invalid",
+                    INVALID_PROFILE_NAME_TITLE,
                     "Please enter a valid profile name.");
             return false;
         }
@@ -46,7 +49,7 @@ public final class ProfileCoordinator {
         try {
             if (this.profileManager.profileExists(profileName)) {
                 this.appView.showError(
-                        "Profile Name Invalid",
+                        INVALID_PROFILE_NAME_TITLE,
                         "This profile already exists!");
                 return false;
             }
@@ -54,7 +57,7 @@ public final class ProfileCoordinator {
             return true;
         } catch (final RuntimeException exception) {
             this.appView.showError(
-                    "Profile Error",
+                    PROFILE_ERROR_TITLE,
                     "Could not create profile, try again!");
             return false;
         }
@@ -111,7 +114,7 @@ public final class ProfileCoordinator {
             if (this.profileManager.profileExists(normalizedProfileName)
                     && !normalizedProfileName.equals(originalProfileName)) {
                 this.appView.showError(
-                        "Profile Name Invalid",
+                        INVALID_PROFILE_NAME_TITLE,
                         "This profile already exists!");
                 return false;
             }
@@ -126,7 +129,7 @@ public final class ProfileCoordinator {
             return true;
         } catch (final RuntimeException exception) {
             this.appView.showError(
-                    "Profile Error",
+                    PROFILE_ERROR_TITLE,
                     "Could not change profile configuration, try again!");
             return false;
         }

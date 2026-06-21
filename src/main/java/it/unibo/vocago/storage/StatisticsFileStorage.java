@@ -18,6 +18,7 @@ public class StatisticsFileStorage implements StatisticsRepository {
     private static final int CURRENT_STREAK_INDEX = 1;
     private static final int TOTAL_STUDY_TIME_INDEX = 2;
     private static final int DAILY_GOAL_INDEX = 3;
+    private static final int STATISTICS_LINE_COUNT = DAILY_GOAL_INDEX + 1;
 
     @Override
     public void createStatisticsFile(final String userName) {
@@ -117,7 +118,7 @@ public class StatisticsFileStorage implements StatisticsRepository {
         try {
 
             final List<String> lines = Files.readAllLines(fileFor(userName), StandardCharsets.UTF_8);
-            if (lines.size() != 4) {
+            if (lines.size() != STATISTICS_LINE_COUNT) {
                 resetStatisticsFile(userName);
                 return Files.readAllLines(fileFor(userName), StandardCharsets.UTF_8);
             }

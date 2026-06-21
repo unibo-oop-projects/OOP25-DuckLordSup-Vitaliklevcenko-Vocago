@@ -19,6 +19,9 @@ import it.unibo.vocago.service.learning.api.LearningEngine;
 
 public class LearningEngineImpl implements LearningEngine {
 
+    private static final int MAX_RECENT_ITEMS = 20;
+    private static final double MAX_SELECTION_WEIGHT = 0.99;
+
     private final Queue<VocabularyItem> lastItems;
     private final Random random = new Random();
 
@@ -59,7 +62,7 @@ public class LearningEngineImpl implements LearningEngine {
                 .filter(VocabularyItem::isValid)
                 .count();
 
-        final int maxRemembered = Math.min(20, validItemCount / 2);
+        final int maxRemembered = Math.min(MAX_RECENT_ITEMS, validItemCount / 2);
 
         while (this.lastItems.size() > maxRemembered) {
             this.lastItems.remove();
@@ -104,7 +107,8 @@ public class LearningEngineImpl implements LearningEngine {
             final int correctAnswers = progress.getCorrectAnswers();
             final int wrongAnswers = progress.getWrongAnswers();
 
-            final double weight = Math.min(0.99, correctAnswers * progress.getMasteryLevel().getMultiplier()
+            final double weight = Math.min(MAX_SELECTION_WEIGHT,
+                    correctAnswers * progress.getMasteryLevel().getMultiplier()
                     / (correctAnswers + wrongAnswers + 1));
 
             if (weight < lowestWeight) {

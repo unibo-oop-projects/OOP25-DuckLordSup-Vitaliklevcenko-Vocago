@@ -18,6 +18,10 @@ public final class StartPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
     private static final int MAX_USERS = 4;
+    private static final int TITLE_PANEL_HEIGHT = 100;
+    private static final int PROFILE_BUTTON_ICON_SIZE = 60;
+    private static final int PROFILE_BUTTON_HEIGHT = 90;
+    private static final int PROFILE_BUTTON_WIDTH = 400;
     private static final String ADD_ICON = "data/resources/pictures/plus.png";
     private static final String[] PROFILE_ICONS = {
             "data/resources/pictures/bunny.png",
@@ -42,14 +46,14 @@ public final class StartPanel extends JPanel {
         final JPanel titlePanel = UIFactory.createPanel(new BorderLayout());
         titlePanel.add(UIFactory.createLabel("Welcome to VocaGo!", UIConstants.TITLE_FONT));
         UIFactory.highlight(titlePanel);
-        titlePanel.setPreferredSize(new Dimension(Integer.MAX_VALUE, 100));
+        titlePanel.setPreferredSize(new Dimension(Integer.MAX_VALUE, TITLE_PANEL_HEIGHT));
         add(titlePanel);
 
         final JPanel contentPanel = UIFactory.createPanel();
         UIFactory.brighter(contentPanel);
-        contentPanel.add(Box.createVerticalStrut(15));
+        contentPanel.add(Box.createVerticalStrut(UIConstants.SPACING_MEDIUM));
         contentPanel.add(UIFactory.createLabel("Select your profile:", UIConstants.FONT));
-        contentPanel.add(Box.createVerticalStrut(15));
+        contentPanel.add(Box.createVerticalStrut(UIConstants.SPACING_MEDIUM));
 
         final JPanel profilesPanel = UIFactory.createPanel();
         UIFactory.brighter(profilesPanel);
@@ -58,12 +62,12 @@ public final class StartPanel extends JPanel {
 
         for (int index = 0; index < visibleProfiles; index++) {
             profilesPanel.add(createProfileSelectionButton(profiles.get(index), PROFILE_ICONS[index]));
-            profilesPanel.add(Box.createVerticalStrut(10));
+            profilesPanel.add(Box.createVerticalStrut(UIConstants.SPACING_SMALL));
         }
 
         for (int index = visibleProfiles; index < MAX_USERS; index++) {
             profilesPanel.add(createAddProfileButton());
-            profilesPanel.add(Box.createVerticalStrut(10));
+            profilesPanel.add(Box.createVerticalStrut(UIConstants.SPACING_SMALL));
         }
 
         contentPanel.add(profilesPanel);
@@ -74,7 +78,7 @@ public final class StartPanel extends JPanel {
                     UIConstants.FONT));
         }
 
-        contentPanel.add(Box.createVerticalStrut(20));
+        contentPanel.add(Box.createVerticalStrut(UIConstants.SPACING_LARGE));
         add(contentPanel);
     }
 
@@ -93,8 +97,9 @@ public final class StartPanel extends JPanel {
     }
 
     private JButton createProfileButton(final String text, final String iconPath) {
-        final JButton button = UIFactory.createButton(text, iconPath, 60, UIConstants.BUTTON_BACKGROUND, 90,
-                400, true, true, true, UIConstants.FONT);
+        final JButton button = UIFactory.createButton(text, iconPath, PROFILE_BUTTON_ICON_SIZE,
+                UIConstants.BUTTON_BACKGROUND, PROFILE_BUTTON_HEIGHT, PROFILE_BUTTON_WIDTH,
+                true, true, true, UIConstants.FONT);
         button.setBorderPainted(true);
         return button;
     }

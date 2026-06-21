@@ -28,6 +28,8 @@ import it.unibo.vocago.storage.api.UserRepository;
 public class ProfileManagerImpl implements ProfileManager {
 
     private static final Logger LOGGER = Logger.getLogger(ProfileManagerImpl.class.getName());
+    private static final double PERCENT_FACTOR = 100.0;
+    private static final long MILLISECONDS_PER_SECOND = 1000L;
 
     private final UserRepository userRepository;
     private final StatisticsRepository statisticsRepository;
@@ -169,7 +171,7 @@ public class ProfileManagerImpl implements ProfileManager {
         }
 
         if (countWrongAnswers > 0 || countCorrectAnswers > 0) {
-            correctRatio = countCorrectAnswers * 100.0 / (countWrongAnswers + countCorrectAnswers);
+            correctRatio = countCorrectAnswers * PERCENT_FACTOR / (countWrongAnswers + countCorrectAnswers);
         }
 
         return new ProfileStatistics(
@@ -214,7 +216,7 @@ public class ProfileManagerImpl implements ProfileManager {
                 today,
                 streak,
                 this.statisticsRepository.getTotalStudyTime(profileName)
-                        + (System.currentTimeMillis() - session.getStartTime()) / 1000);
+                        + (System.currentTimeMillis() - session.getStartTime()) / MILLISECONDS_PER_SECOND);
     }
 
     @Override

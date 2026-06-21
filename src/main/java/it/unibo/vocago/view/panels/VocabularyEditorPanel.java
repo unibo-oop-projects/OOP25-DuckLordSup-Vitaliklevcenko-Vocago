@@ -46,8 +46,11 @@ public final class VocabularyEditorPanel extends JPanel {
     private static final int MASTERY_COLUMN_WIDTH = 160;
     private static final int HEADER_HEIGHT = 60;
     private static final int FOOTER_HEIGHT = 60;
-    private static final int ZERO = 0;
+    private static final int SIZE_ZERO = 0;
     private static final int WORD_COLUMN_WIDTH = 280;
+    private static final int SEARCH_ICON_SIZE = 25;
+    private static final int SEARCH_BUTTON_SIZE = 40;
+    private static final int SEARCH_HORIZONTAL_GAP = 5;
 
     private final DefaultTableModel model;
     private final JTable table;
@@ -64,17 +67,25 @@ public final class VocabularyEditorPanel extends JPanel {
         this.controller = controller;
         this.model = new DefaultTableModel();
         this.table = UIFactory.createTable(this.model);
-        this.addRowButton = UIFactory.createButton("ADD A ROW", "", 0, UIConstants.BUTTON_BACKGROUND, 0, 0, true,
+        this.addRowButton = UIFactory.createButton("ADD A ROW", "", 
+                SIZE_ZERO, UIConstants.BUTTON_BACKGROUND, 
+                SIZE_ZERO, 
+                SIZE_ZERO, true,
                 true, true, UIConstants.FONT);
-        this.deleteRowButton = UIFactory.createButton("DELETE SELECTED ROWS", "", 0, UIConstants.BUTTON_BACKGROUND,
-                0, 0, true, true, true, UIConstants.FONT);
-        this.saveChangesButton = UIFactory.createButton("SAVE CHANGES", "", 0, UIConstants.BUTTON_BACKGROUND, 0, 0,
+        this.deleteRowButton = UIFactory.createButton("DELETE SELECTED ROWS", "", 
+                SIZE_ZERO, UIConstants.BUTTON_BACKGROUND,
+                SIZE_ZERO, SIZE_ZERO, true, true, true, UIConstants.FONT);
+        this.saveChangesButton = UIFactory.createButton("SAVE CHANGES", "", 
+                SIZE_ZERO, UIConstants.BUTTON_BACKGROUND, 
+                SIZE_ZERO, 
+                SIZE_ZERO,
                 true, true, true, UIConstants.FONT);
-        this.goBackButton = UIFactory.createButton("", "data/resources/pictures/back.png", 60, UIConstants.BACKGROUND,
-                60, 70, false, true, false, UIConstants.FONT);
+        this.goBackButton = UIFactory.createButton("", "data/resources/pictures/back.png",
+                UIConstants.BACK_BUTTON_ICON_SIZE, UIConstants.BACKGROUND, UIConstants.BACK_BUTTON_HEIGHT,
+                UIConstants.BACK_BUTTON_WIDTH, false, true, false, UIConstants.FONT);
         this.searchTextField = UIFactory.createTextField();
-        this.findButton = UIFactory.createButton("", "data/resources/pictures/search.png", 25, UIConstants.BACKGROUND,
-                40, 40, false, true, false, UIConstants.FONT);
+        this.findButton = UIFactory.createButton("", "data/resources/pictures/search.png", SEARCH_ICON_SIZE,
+                UIConstants.BACKGROUND, SEARCH_BUTTON_SIZE, SEARCH_BUTTON_SIZE, false, true, false, UIConstants.FONT);
 
         buildLayout();
         UIFactory.stylePanel(this);
@@ -101,7 +112,8 @@ public final class VocabularyEditorPanel extends JPanel {
                 "My " + this.controller.getCurrentProfile().getSecondLanguage() + " Vocabulary",
                 UIConstants.TITLE_FONT));
 
-        final JPanel rightPanel = UIFactory.createPanel(new FlowLayout(FlowLayout.RIGHT, 5, 10));
+        final JPanel rightPanel = UIFactory.createPanel(
+                new FlowLayout(FlowLayout.RIGHT, SEARCH_HORIZONTAL_GAP, UIConstants.SPACING_SMALL));
         rightPanel.add(this.searchTextField);
         rightPanel.add(this.findButton);
         upperButtonsPanel.add(rightPanel);
@@ -154,10 +166,10 @@ public final class VocabularyEditorPanel extends JPanel {
     }
 
     private void hideColumn(final int columnIndex) {
-        this.table.getColumnModel().getColumn(columnIndex).setMinWidth(ZERO);
-        this.table.getColumnModel().getColumn(columnIndex).setMaxWidth(ZERO);
-        this.table.getColumnModel().getColumn(columnIndex).setPreferredWidth(ZERO);
-        this.table.getColumnModel().getColumn(columnIndex).setWidth(ZERO);
+        this.table.getColumnModel().getColumn(columnIndex).setMinWidth(SIZE_ZERO);
+        this.table.getColumnModel().getColumn(columnIndex).setMaxWidth(SIZE_ZERO);
+        this.table.getColumnModel().getColumn(columnIndex).setPreferredWidth(SIZE_ZERO);
+        this.table.getColumnModel().getColumn(columnIndex).setWidth(SIZE_ZERO);
     }
 
     private void actionRegister() {
@@ -293,25 +305,25 @@ public final class VocabularyEditorPanel extends JPanel {
         };
     }
 
-    private Vocabulary toVocabulary(final DefaultTableModel model) {
+    private Vocabulary toVocabulary(final DefaultTableModel tableModel) {
         final List<VocabularyItem> vocabularyItems = new ArrayList<>();
 
-        for (int row = 0; row < model.getRowCount(); row++) {
+        for (int row = 0; row < tableModel.getRowCount(); row++) {
 
-            final String firstText = cellToText(model.getValueAt(row, FIRST_WORDS_COLUMN));
-            final String secondText = cellToText(model.getValueAt(row, SECOND_WORDS_COLUMN));
+            final String firstText = cellToText(tableModel.getValueAt(row, FIRST_WORDS_COLUMN));
+            final String secondText = cellToText(tableModel.getValueAt(row, SECOND_WORDS_COLUMN));
             if (firstText.isBlank() && secondText.isBlank()) {
                 continue;
             }
 
-            final MasteryLevel firstMasteryLevel = masteryLevelAt(model, row, MEMORIZATION_COLUMN);
-            final MasteryLevel secondMasteryLevel = masteryLevelAt(model, row, RECOGNITION_COLUMN);
+            final MasteryLevel firstMasteryLevel = masteryLevelAt(tableModel, row, MEMORIZATION_COLUMN);
+            final MasteryLevel secondMasteryLevel = masteryLevelAt(tableModel, row, RECOGNITION_COLUMN);
 
             vocabularyItems.add(new DictionaryEntry(
                     parseWordEntries(firstText),
                     parseWordEntries(secondText),
-                    progressWithMastery(model.getValueAt(row, FIRST_PROGRESS_COLUMN), firstMasteryLevel),
-                    progressWithMastery(model.getValueAt(row, SECOND_PROGRESS_COLUMN), secondMasteryLevel)));
+                    progressWithMastery(tableModel.getValueAt(row, FIRST_PROGRESS_COLUMN), firstMasteryLevel),
+                    progressWithMastery(tableModel.getValueAt(row, SECOND_PROGRESS_COLUMN), secondMasteryLevel)));
         }
 
         return new Dictionary(vocabularyItems);
@@ -332,8 +344,8 @@ public final class VocabularyEditorPanel extends JPanel {
         return entries;
     }
 
-    private MasteryLevel masteryLevelAt(final DefaultTableModel model, final int row, final int column) {
-        return model.getValueAt(row, column) instanceof MasteryLevel masteryLevel ? masteryLevel : MasteryLevel.NEW;
+    private MasteryLevel masteryLevelAt(final DefaultTableModel tableModel, final int row, final int column) {
+        return tableModel.getValueAt(row, column) instanceof MasteryLevel masteryLevel ? masteryLevel : MasteryLevel.NEW;
     }
 
     private Progress progressWithMastery(final Object value, final MasteryLevel masteryLevel) {

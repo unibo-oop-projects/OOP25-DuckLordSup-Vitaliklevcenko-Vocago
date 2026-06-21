@@ -7,6 +7,9 @@ import it.unibo.vocago.model.types.MasteryLevel;
 
 public class WordProgress implements Progress {
 
+    private static final int MEDIUM_PROMOTION_THRESHOLD = 3;
+    private static final int GOOD_PROMOTION_THRESHOLD = 5;
+
     private MasteryLevel masteryLevel;
     private int correctAnswers;
     private int wrongAnswers;
@@ -46,8 +49,8 @@ public class WordProgress implements Progress {
     @Override
     public void registerCorrectAnswer() {
         this.correctAnswers++;
-        if (this.masteryLevel == MasteryLevel.MEDIUM && correctAnswers < 3
-                || this.masteryLevel == MasteryLevel.GOOD && correctAnswers < 5) {
+        if (this.masteryLevel == MasteryLevel.MEDIUM && correctAnswers < MEDIUM_PROMOTION_THRESHOLD
+                || this.masteryLevel == MasteryLevel.GOOD && correctAnswers < GOOD_PROMOTION_THRESHOLD) {
             return;
         }
         this.masteryLevel = this.masteryLevel.next();
