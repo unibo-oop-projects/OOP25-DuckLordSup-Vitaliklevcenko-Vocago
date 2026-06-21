@@ -23,12 +23,12 @@ import it.unibo.vocago.model.types.DailyGoalSettings;
 import it.unibo.vocago.view.util.UIConstants;
 import it.unibo.vocago.view.util.UIFactory;
 
-public final class ConfigureProfilePanel extends JPanel{
+public final class ConfigureProfilePanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
     private static final String[] LANGUAGES = {
             "English", "Italian", "German", "French", "Spanish",
-            "Portuguese", "Dutch", "Polish", "Japanese", "Chinese"
+            "Portuguese", "Dutch", "Polish", "Japanese", "Chinese",
     };
     private static final int PANEL_WIDTH = 660;
     private static final int BUTTON_WIDTH = 70;

@@ -58,7 +58,7 @@ public final class AppFrame extends JFrame implements AppView {
 
         this.addWindowListener(new WindowAdapter() {
             @Override
-            public void windowClosing(java.awt.event.WindowEvent e) {
+            public void windowClosing(final java.awt.event.WindowEvent e) {
                 controller.closeApp();
             }
         });

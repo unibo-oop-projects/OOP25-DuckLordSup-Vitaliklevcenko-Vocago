@@ -25,7 +25,7 @@ import it.unibo.vocago.storage.UserCsvStorage;
 import it.unibo.vocago.storage.api.StatisticsRepository;
 import it.unibo.vocago.storage.api.UserRepository;
 
-public class ProfileManagerImpl implements ProfileManager{
+public class ProfileManagerImpl implements ProfileManager {
 
     private static final Logger LOGGER = Logger.getLogger(ProfileManagerImpl.class.getName());
 
@@ -53,7 +53,7 @@ public class ProfileManagerImpl implements ProfileManager{
 
         try {
             this.statisticsRepository.createStatisticsFile(profile.getUserName());
-        } catch (UncheckedIOException exception) {
+        } catch (final UncheckedIOException exception) {
             //can continue with the default values
             LOGGER.log(
                     Level.WARNING,
@@ -125,7 +125,7 @@ public class ProfileManagerImpl implements ProfileManager{
 
         try {
             this.statisticsRepository.deleteStatistics(profileName);
-        } catch (UncheckedIOException exception) {
+        } catch (final UncheckedIOException exception) {
             // The profile was deleted; leftover statistics should not block deletion.
             LOGGER.log(
                     Level.WARNING,
@@ -174,7 +174,7 @@ public class ProfileManagerImpl implements ProfileManager{
 
         return new ProfileStatistics(
                 countMasteryItems,
-                countCorrectAnswers,//for future use
+                countCorrectAnswers, //for future use
                 countWrongAnswers,
                 wordCount,
                 correctRatio,
@@ -202,8 +202,8 @@ public class ProfileManagerImpl implements ProfileManager{
 
         if (today.equals(lastStudyDate)) {
             streak = Math.max(streak, 1);
-        } else if (lastStudyDate != null && lastStudyDate.equals(today.minusDays(1)) &&
-        session.getCorrectAnsweredQuestions() >= getDailyGoal()) {
+        } else if (lastStudyDate != null && lastStudyDate.equals(today.minusDays(1))
+                && session.getCorrectAnsweredQuestions() >= getDailyGoal()) {
             streak++;
         } else {
             streak = 0;

@@ -14,7 +14,7 @@ public class Profile implements User {
     private final String secondLanguage;
     private final Vocabulary vocabulary;
 
-    public Profile(final String userName, final String firstLanguage, final String secondLanguage){
+    public Profile(final String userName, final String firstLanguage, final String secondLanguage) {
         this(userName, new Dictionary(), firstLanguage, secondLanguage);
     }
 
@@ -36,7 +36,9 @@ public class Profile implements User {
     }
 
     @Override
-    @SuppressFBWarnings(value = "EI", justification = "The profile intentionally exposes its mutable vocabulary, needs the live vocabulary and not a copy.")
+    @SuppressFBWarnings(
+            value = "EI",
+            justification = "The profile intentionally exposes its mutable vocabulary, needs the live vocabulary and not a copy.")
     public Vocabulary getVocabulary() {
         return this.vocabulary;
     }

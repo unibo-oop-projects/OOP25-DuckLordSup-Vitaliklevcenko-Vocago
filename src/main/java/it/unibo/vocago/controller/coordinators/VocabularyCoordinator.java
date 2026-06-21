@@ -22,7 +22,7 @@ public final class VocabularyCoordinator {
         // CHECKSTYLE: IllegalCatch OFF
         try {
             this.profileManager.saveVocabulary(vocabulary);
-        } catch (RuntimeException exception) {
+        } catch (final RuntimeException exception) {
             this.appView.showError("Save Failed", "Could not save changes, try again!");
         }
         // CHECKSTYLE: IllegalCatch ON

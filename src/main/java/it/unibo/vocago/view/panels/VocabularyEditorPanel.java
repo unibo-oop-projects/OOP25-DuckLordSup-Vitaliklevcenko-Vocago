@@ -34,7 +34,7 @@ import it.unibo.vocago.model.vocabulary.api.Word;
 import it.unibo.vocago.view.util.UIConstants;
 import it.unibo.vocago.view.util.UIFactory;
 
-public final class VocabularyEditorPanel extends JPanel{
+public final class VocabularyEditorPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
     private static final int FIRST_WORDS_COLUMN = 0;
@@ -267,7 +267,7 @@ public final class VocabularyEditorPanel extends JPanel{
                 item.getProgress(Direction.FIRST_TO_SECOND).getMasteryLevel(),
                 item.getProgress(Direction.SECOND_TO_FIRST).getMasteryLevel(),
                 item.getProgress(Direction.FIRST_TO_SECOND),
-                item.getProgress(Direction.SECOND_TO_FIRST)
+                item.getProgress(Direction.SECOND_TO_FIRST),
         };
     }
 
@@ -289,7 +289,7 @@ public final class VocabularyEditorPanel extends JPanel{
                 MasteryLevel.NEW,
                 MasteryLevel.NEW,
                 new WordProgress(),
-                new WordProgress()
+                new WordProgress(),
         };
     }
 

@@ -13,7 +13,7 @@ public final class UIConstants {
     public static final Color SCROLLBAR_TRACK = new Color(60, 60, 60);
     public static final Color TABLE_HEADER = new Color(50, 50, 50);
 
-    public static final Color GREEN = new Color(50, 130, 50);// green
+    public static final Color GREEN = new Color(50, 130, 50); // green
     public static final Color RED = new Color(160, 50, 50); // red
     public static final Color BLUE = new Color(90, 130, 170); // blue
     public static final Color TEAL = new Color(65, 130, 125);
@@ -22,7 +22,7 @@ public final class UIConstants {
     // grey
     public static final Color TEXT_FIELD_BACKGROUND = new Color(110, 110, 110);
     public static final Color COMBOBOX_BACKGROUND = new Color(110, 110, 110);
-    public static final Color COMBOBOX_BRIGHT_BACKGROUND = new Color(110, 110, 110);// 163, 184, 204
+    public static final Color COMBOBOX_BRIGHT_BACKGROUND = new Color(110, 110, 110); // 163, 184, 204
     public static final Color SCROLLBAR_THUMB = new Color(110, 110, 110);
 
     // bright grey

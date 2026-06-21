@@ -27,6 +27,7 @@ public class UserCsvStorage implements UserRepository {
     private static final Path USERS_DIRECTORY = Path.of("data", "users");
     private static final String WORD_SEPARATOR = ",";
     private static final Logger LOGGER = Logger.getLogger(UserCsvStorage.class.getName());
+
     @Override
     public void save(final User user) {
         try {
@@ -40,7 +41,7 @@ public class UserCsvStorage implements UserRepository {
             }
 
             Files.write(fileFor(user.getUserName()), lines, StandardCharsets.UTF_8);
-        } catch (IOException exception) {
+        } catch (final IOException exception) {
             throw new UncheckedIOException("Could not save user: " + user.getUserName(), exception);
         }
     }
@@ -54,7 +55,7 @@ public class UserCsvStorage implements UserRepository {
     public boolean deleteUser(final String userName) {
         try {
             return Files.deleteIfExists(fileFor(userName));
-        } catch (IOException exception) {
+        } catch (final IOException exception) {
             throw new UncheckedIOException("Could not delete user: " + userName, exception);
         }
     }
@@ -83,7 +84,7 @@ public class UserCsvStorage implements UserRepository {
                 }
             }
             return users;
-        } catch (IOException exception) {
+        } catch (final IOException exception) {
             throw new UncheckedIOException("Could not load users", exception);
         }
     }

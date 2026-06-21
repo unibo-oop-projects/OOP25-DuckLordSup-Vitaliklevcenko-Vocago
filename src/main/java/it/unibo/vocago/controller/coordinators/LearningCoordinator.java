@@ -91,7 +91,7 @@ public final class LearningCoordinator {
             // CHECKSTYLE: IllegalCatch OFF
             try {
                 this.profileManager.saveLearningStatistics(learningSession);
-            } catch (RuntimeException exception) {
+            } catch (final RuntimeException exception) {
                 this.appView.showWarning(
                         "Save statistics failed",
                         "Could not save statistics file");

@@ -208,6 +208,4 @@ public class ControllerImpl implements Controller {
     private AppView view() {
         return this.appView;
     }
-
-
 }

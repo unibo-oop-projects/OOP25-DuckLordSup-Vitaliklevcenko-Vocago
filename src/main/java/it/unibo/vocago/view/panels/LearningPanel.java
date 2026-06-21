@@ -12,9 +12,16 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import javax.swing.*;
+import javax.swing.Box;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 
-public final class LearningPanel extends JPanel{
+public final class LearningPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
     private static final int HEADER_HEIGHT = 60;
@@ -23,21 +30,19 @@ public final class LearningPanel extends JPanel{
     private static final int LANGUAGE_PANEL_HEIGHT = 260;
 
     private final transient Controller controller;
-    private final JButton nextWordButton;
-    private final JButton revealAnswerButton;
-    private final JButton goBackButton;
-    private JButton switchLanguageButton;
     private final JLabel answerLabel;
     private final JTextField userAnswer;
     private final JPanel answerPanel;
     private final JLabel timerLabel;
-    private Timer timer;
     private final long startTime;
-
+    private final JButton nextWordButton;
+    private final JButton revealAnswerButton;
+    private final JButton goBackButton;
+    private JButton switchLanguageButton;
+    private Timer timer;
+    
     @SuppressFBWarnings(value = "EI2", justification = "The panel intentionally shares the app controller.")
     public LearningPanel(final Controller controller) {
-
-
 
         this.controller = controller;
         this.startTime = controller.getLearningStartTime();
@@ -231,7 +236,8 @@ public final class LearningPanel extends JPanel{
         if (this.controller.evaluateAnswer(answer)) {
             showFeedback(UIConstants.GREEN, "Correct! Press Enter for the next word.");
         } else {
-            showFeedback(UIConstants.RED, "the correct answer is: (" + this.controller.getCorrectAnswer() + "), Press Enter for the next word." );
+            showFeedback(UIConstants.RED,
+                    "the correct answer is: (" + this.controller.getCorrectAnswer() + "), Press Enter for the next word.");
         }
         this.controller.saveVocabulary(this.controller.getCurrentProfile().getVocabulary());
         this.controller.dailyGoalAchieved();

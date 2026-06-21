@@ -16,8 +16,7 @@ public class DictionaryEntry implements VocabularyItem {
     private final Progress firstProgress;
     private final Progress secondProgress;
 
-     public DictionaryEntry(final List<Word> firstLanguageWords, final List<Word> secondLanguageWords)
-    {
+     public DictionaryEntry(final List<Word> firstLanguageWords, final List<Word> secondLanguageWords) {
         this(firstLanguageWords, secondLanguageWords, new WordProgress(), new WordProgress());
     }
 

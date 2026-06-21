@@ -27,7 +27,7 @@ public class StatisticsFileStorage implements StatisticsRepository {
             if (!Files.exists(file)) {
                 saveStatistics(userName, LocalDate.now(), 0, 0L, DailyGoalSettings.DEFAULT);
             }
-        } catch (IOException exception) {
+        } catch (final IOException exception) {
             throw new UncheckedIOException("Could not create statistics file for user: " + userName, exception);
         }
     }
@@ -58,7 +58,7 @@ public class StatisticsFileStorage implements StatisticsRepository {
                     Integer.toString(normalizedCurrentStreak),
                     Long.toString(normalizedTotalStudyTime),
                     Integer.toString(DailyGoalSettings.normalize(dailyGoal))), StandardCharsets.UTF_8);
-        } catch (IOException exception) {
+        } catch (final IOException exception) {
             throw new UncheckedIOException("Could not save statistics for user: " + userName, exception);
         }
     }
@@ -87,7 +87,7 @@ public class StatisticsFileStorage implements StatisticsRepository {
     public boolean deleteStatistics(final String userName) {
         try {
             return Files.deleteIfExists(fileFor(userName));
-        } catch (IOException exception) {
+        } catch (final IOException exception) {
             throw new UncheckedIOException("Could not delete statistics for user: " + userName, exception);
         }
     }
@@ -106,7 +106,7 @@ public class StatisticsFileStorage implements StatisticsRepository {
                 Files.move(fileFor(currentProfileName), fileFor(targetProfileName));
             }
             saveStatistics(targetProfileName, lastStudyDate, currentStreak, totalStudyTime, dailyGoal);
-        } catch (IOException exception) {
+        } catch (final IOException exception) {
             throw new UncheckedIOException("Could not save statistics configuration for profile: " + currentProfileName,
                     exception);
         }
@@ -129,38 +129,38 @@ public class StatisticsFileStorage implements StatisticsRepository {
 
             try {
                 lastStudyDate = LocalDate.parse(lines.get(LAST_STUDY_DATE_INDEX));
-            } catch (DateTimeParseException exception) {
+            } catch (final DateTimeParseException exception) {
                 lastStudyDate = LocalDate.now();
             }
             try {
                 currentStreak = Integer.parseInt(lines.get(CURRENT_STREAK_INDEX));
-            } catch (NumberFormatException exception) {
+            } catch (final NumberFormatException exception) {
                 currentStreak = 0;
             }
             try {
                 totalStudyTime = Long.parseLong(lines.get(TOTAL_STUDY_TIME_INDEX));
-            } catch (NumberFormatException exception) {
+            } catch (final NumberFormatException exception) {
                 totalStudyTime = 0L;
             }
             try {
                 dailyGoal = Integer.parseInt(lines.get(DAILY_GOAL_INDEX));
                 dailyGoal = DailyGoalSettings.normalize(dailyGoal);
-            } catch (NumberFormatException exception) {
+            } catch (final NumberFormatException exception) {
                 dailyGoal = DailyGoalSettings.DEFAULT;
             }
             saveStatistics(userName, lastStudyDate, currentStreak, totalStudyTime, dailyGoal);
             return Files.readAllLines(fileFor(userName), StandardCharsets.UTF_8);
 
-        } catch (IOException exception) {
+        } catch (final IOException exception) {
             throw new UncheckedIOException("Could not load statistics for user: " + userName, exception);
         }
     }
 
     private void resetStatisticsFile(final String userName) {
-        try{
+        try {
             Files.deleteIfExists(fileFor(userName));
             saveStatistics(userName, LocalDate.now(), 0, 0L, DailyGoalSettings.DEFAULT);
-        } catch (IOException exception) {
+        } catch (final IOException exception) {
             throw new UncheckedIOException("Could not reset statistics for user: " + userName, exception);
         }
     }
@@ -172,7 +172,7 @@ public class StatisticsFileStorage implements StatisticsRepository {
     private int dailyGoalOrDefault(final String userName) {
         try {
             return getDailyGoal(userName);
-        } catch (UncheckedIOException | NumberFormatException | IndexOutOfBoundsException exception) {
+        } catch (final UncheckedIOException | NumberFormatException | IndexOutOfBoundsException exception) {
             return DailyGoalSettings.DEFAULT;
         }
     }

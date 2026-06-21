@@ -5,7 +5,7 @@ import java.util.Objects;
 import it.unibo.vocago.model.progress.api.Progress;
 import it.unibo.vocago.model.types.MasteryLevel;
 
-public class WordProgress implements Progress{
+public class WordProgress implements Progress {
 
     private MasteryLevel masteryLevel;
     private int correctAnswers;
@@ -46,8 +46,8 @@ public class WordProgress implements Progress{
     @Override
     public void registerCorrectAnswer() {
         this.correctAnswers++;
-        if ((this.masteryLevel == MasteryLevel.MEDIUM && correctAnswers < 3)
-                || (this.masteryLevel == MasteryLevel.GOOD && correctAnswers < 5)) {
+        if (this.masteryLevel == MasteryLevel.MEDIUM && correctAnswers < 3
+                || this.masteryLevel == MasteryLevel.GOOD && correctAnswers < 5) {
             return;
         }
         this.masteryLevel = this.masteryLevel.next();

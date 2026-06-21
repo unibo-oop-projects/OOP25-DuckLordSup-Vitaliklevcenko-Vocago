@@ -27,7 +27,7 @@ public final class ProfileCoordinator {
         // CHECKSTYLE: IllegalCatch OFF
         try {
             return this.profileManager.getExistingProfiles();
-        } catch (RuntimeException exception) {
+        } catch (final RuntimeException exception) {
             this.appView.showError("Profile Error", "Could not load saved profiles.");
             return List.of();
         }
@@ -52,7 +52,7 @@ public final class ProfileCoordinator {
             }
             this.profileManager.createProfile(profileName, firstLanguage, secondLanguage);
             return true;
-        } catch (RuntimeException exception) {
+        } catch (final RuntimeException exception) {
             this.appView.showError(
                     "Profile Error",
                     "Could not create profile, try again!");
@@ -72,7 +72,7 @@ public final class ProfileCoordinator {
         // CHECKSTYLE: IllegalCatch OFF
         try {
             return this.profileManager.deleteCurrentProfile();
-        } catch (RuntimeException exception) {
+        } catch (final RuntimeException exception) {
             this.appView.showError("Delete Failed", "The profile could not be deleted, try again!");
             return false;
         }
@@ -92,7 +92,7 @@ public final class ProfileCoordinator {
         // CHECKSTYLE: IllegalCatch OFF
         try {
             return this.profileManager.getDailyGoal();
-        } catch (RuntimeException exception) {
+        } catch (final RuntimeException exception) {
             return DailyGoalSettings.DEFAULT;
         }
         // CHECKSTYLE: IllegalCatch ON
@@ -124,7 +124,7 @@ public final class ProfileCoordinator {
                     "Profile saved",
                     "Profile configuration has been saved successfully!");
             return true;
-        } catch (RuntimeException exception) {
+        } catch (final RuntimeException exception) {
             this.appView.showError(
                     "Profile Error",
                     "Could not change profile configuration, try again!");

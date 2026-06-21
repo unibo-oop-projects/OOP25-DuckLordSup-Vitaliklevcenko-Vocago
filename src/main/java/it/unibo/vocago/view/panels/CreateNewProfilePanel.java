@@ -14,7 +14,7 @@ import it.unibo.vocago.controller.api.Controller;
 import it.unibo.vocago.view.util.UIConstants;
 import it.unibo.vocago.view.util.UIFactory;
 
-public final class CreateNewProfilePanel extends JPanel{
+public final class CreateNewProfilePanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
     private final transient Controller controller;
@@ -35,12 +35,12 @@ public final class CreateNewProfilePanel extends JPanel{
         this.usernameTextField = UIFactory.createTextField();
         this.firstLanguageComboBox = UIFactory.createComboBox(new String[] {
                 "English", "Italian", "German", "French", "Spanish",
-                "Portuguese", "Dutch", "Polish", "Japanese", "Chinese"
+                "Portuguese", "Dutch", "Polish", "Japanese", "Chinese",
         });
 
         this.secondLanguageComboBox = UIFactory.createComboBox(new String[] {
                 "Italian", "English", "German", "French", "Spanish",
-                "Portuguese", "Dutch", "Polish", "Japanese", "Chinese"
+                "Portuguese", "Dutch", "Polish", "Japanese", "Chinese",
         });
 
         buildLayout();

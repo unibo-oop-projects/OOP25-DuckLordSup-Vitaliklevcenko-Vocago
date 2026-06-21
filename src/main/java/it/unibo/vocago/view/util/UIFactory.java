@@ -102,12 +102,12 @@ public final class UIFactory {
     public static void buttonListener(final JButton button) {
         final MouseAdapter hoverListener = new MouseAdapter() {
             @Override
-            public void mouseEntered(MouseEvent e) {
+            public void mouseEntered(final MouseEvent e) {
                 button.setBackground(button.getBackground().brighter());
             }
 
             @Override
-            public void mouseExited(MouseEvent e) {
+            public void mouseExited(final MouseEvent e) {
                 button.setBackground(button.getBackground().darker());
             }
         };
@@ -128,14 +128,14 @@ public final class UIFactory {
 
         button.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseEntered(MouseEvent e) {
+            public void mouseEntered(final MouseEvent e) {
                 final Image scaledImage = icon.getImage().getScaledInstance(
                         (int) (width * SCALE), (int) (height * SCALE), Image.SCALE_SMOOTH);
                 button.setIcon(new ImageIcon(scaledImage));
             }
 
             @Override
-            public void mouseExited(MouseEvent e) {
+            public void mouseExited(final MouseEvent e) {
                 final Image scaledImage = icon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
                 button.setIcon(new ImageIcon(scaledImage));
             }
@@ -147,12 +147,12 @@ public final class UIFactory {
         final Font hoverFont = normalFont.deriveFont((float) (normalFont.getSize() * SCALE));
         button.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseEntered(MouseEvent e) {
+            public void mouseEntered(final MouseEvent e) {
                 button.setFont(hoverFont);
             }
 
             @Override
-            public void mouseExited(MouseEvent e) {
+            public void mouseExited(final MouseEvent e) {
                 button.setFont(normalFont);
             }
         });

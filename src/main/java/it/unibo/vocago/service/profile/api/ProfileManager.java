@@ -38,6 +38,4 @@ public interface ProfileManager {
 
     void saveProfileConfigurations(String profileName, String firstLanguage,
             String secondLanguage, int dailyGoal);
-
-
 }

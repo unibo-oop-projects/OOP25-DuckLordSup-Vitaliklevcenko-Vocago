@@ -27,7 +27,7 @@ public final class StatisticsCoordinator {
         // CHECKSTYLE: IllegalCatch OFF
         try {
             return this.profileManager.getDashboardStatistics();
-        } catch (RuntimeException exception) {
+        } catch (final RuntimeException exception) {
             this.appView.showError("Statistics Error", "Your statistics have been corrupted");
             return new ProfileStatistics(
                     0,
@@ -57,7 +57,7 @@ public final class StatisticsCoordinator {
             this.profileManager.resetStatistics();
             this.appView.showInfo("Statistics Reset", "Your statistics have been reset");
             return true;
-        } catch (RuntimeException exception) {
+        } catch (final RuntimeException exception) {
             this.appView.showError("Statistics Error", "Failed to reset your statistics, try again!");
             return false;
         }

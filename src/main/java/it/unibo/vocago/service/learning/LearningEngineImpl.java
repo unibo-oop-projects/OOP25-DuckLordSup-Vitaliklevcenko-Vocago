@@ -17,10 +17,11 @@ import it.unibo.vocago.model.vocabulary.api.VocabularyItem;
 import it.unibo.vocago.model.vocabulary.api.Word;
 import it.unibo.vocago.service.learning.api.LearningEngine;
 
-public class LearningEngineImpl implements LearningEngine{
+public class LearningEngineImpl implements LearningEngine {
 
     private final Queue<VocabularyItem> lastItems;
     private final Random random = new Random();
+
     public LearningEngineImpl() {
         this.lastItems = new ArrayDeque<>();
     }
@@ -103,7 +104,7 @@ public class LearningEngineImpl implements LearningEngine{
             final int correctAnswers = progress.getCorrectAnswers();
             final int wrongAnswers = progress.getWrongAnswers();
 
-            final double weight = Math.min(0.99,correctAnswers * progress.getMasteryLevel().getMultiplier()
+            final double weight = Math.min(0.99, correctAnswers * progress.getMasteryLevel().getMultiplier()
                     / (correctAnswers + wrongAnswers + 1));
 
             if (weight < lowestWeight) {

@@ -14,7 +14,7 @@ import it.unibo.vocago.model.user.api.User;
 import it.unibo.vocago.view.util.UIConstants;
 import it.unibo.vocago.view.util.UIFactory;
 
-public final class StartPanel extends JPanel{
+public final class StartPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
     private static final int MAX_USERS = 4;
@@ -23,7 +23,7 @@ public final class StartPanel extends JPanel{
             "data/resources/pictures/bunny.png",
             "data/resources/pictures/owl.png",
             "data/resources/pictures/fox.png",
-            "data/resources/pictures/bear.png"
+            "data/resources/pictures/bear.png",
     };
     private final transient Controller controller;
 
@@ -93,7 +93,7 @@ public final class StartPanel extends JPanel{
     }
 
     private JButton createProfileButton(final String text, final String iconPath) {
-        final JButton button = UIFactory.createButton(text,iconPath,60,UIConstants.BUTTON_BACKGROUND,90,
+        final JButton button = UIFactory.createButton(text, iconPath, 60, UIConstants.BUTTON_BACKGROUND, 90,
                 400, true, true, true, UIConstants.FONT);
         button.setBorderPainted(true);
         return button;
