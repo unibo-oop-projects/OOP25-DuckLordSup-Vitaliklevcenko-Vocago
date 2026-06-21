@@ -73,12 +73,13 @@ public class UserCsvStorage implements UserRepository {
                 if (isCsvFile(file)) {
                     try {
                         users.add(loadUser(file));
+                        // can use runtimeexception but will require suppress
                     } catch (IllegalArgumentException | IndexOutOfBoundsException | IOException exception) {
                         LOGGER.log(
                                 Level.WARNING,
                                 "Skipping corrupted profile file: " + file,
                                 exception);
-                    }
+                    } 
                 }
             }
             return users;

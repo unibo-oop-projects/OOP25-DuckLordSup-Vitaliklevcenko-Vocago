@@ -2,6 +2,7 @@ package it.unibo.vocago.service.profile;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.io.UncheckedIOException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
@@ -46,14 +47,13 @@ public class ProfileManagerImpl implements ProfileManager{
     }
 
     @Override
-    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public void createProfile(final String profileName, final String firstLanguage, final String secondLanguage) {
         final User profile = new Profile(profileName, firstLanguage, secondLanguage);
         this.userRepository.save(profile);
 
         try {
             this.statisticsRepository.createStatisticsFile(profile.getUserName());
-        } catch (RuntimeException exception) {
+        } catch (UncheckedIOException exception) {
             //can continue with the default values
             LOGGER.log(
                     Level.WARNING,
@@ -113,7 +113,6 @@ public class ProfileManagerImpl implements ProfileManager{
     }
 
     @Override
-    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public boolean deleteCurrentProfile() {
         if (!hasCurrentProfile()) {
             return false;
@@ -126,7 +125,7 @@ public class ProfileManagerImpl implements ProfileManager{
 
         try {
             this.statisticsRepository.deleteStatistics(profileName);
-        } catch (RuntimeException exception) {
+        } catch (UncheckedIOException exception) {
             // The profile was deleted; leftover statistics should not block deletion.
             LOGGER.log(
                     Level.WARNING,
