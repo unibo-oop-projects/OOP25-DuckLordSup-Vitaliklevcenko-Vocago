@@ -4,6 +4,9 @@ import java.time.LocalDate;
 
 import it.unibo.vocago.model.statistics.api.Statistics;
 
+/**
+ * Implementation of {@link Statistics}.
+ */
 public final class ProfileStatistics implements Statistics {
 
     private final int masteredItems;
@@ -15,8 +18,19 @@ public final class ProfileStatistics implements Statistics {
     private final int currentStreak;
     private final long totalStudyTime;
 
+    /**
+     * Creates a statistics snapshot.
+     *
+     * @param masteredItems   the number of mastered items
+     * @param correctAnswers  the total number of correct answers
+     * @param wrongAnswers    the total number of wrong answers
+     * @param totalWords      the total number of words in the vocabulary
+     * @param accuracyPercent the overall accuracy, between 0 and 100
+     * @param lastStudyDate   the date of the last study session
+     * @param currentStreak   the current consecutive-day study streak
+     * @param totalStudyTime  the total study time, in milliseconds
+     */
     public ProfileStatistics(
-
             final int masteredItems,
             final int correctAnswers,
             final int wrongAnswers,

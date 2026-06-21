@@ -2,17 +2,25 @@ package it.unibo.vocago.model.learning;
 
 import java.util.List;
 import java.util.Objects;
-
 import it.unibo.vocago.model.learning.api.Question;
 import it.unibo.vocago.model.types.Direction;
 import it.unibo.vocago.model.vocabulary.api.VocabularyItem;
 import it.unibo.vocago.model.vocabulary.api.Word;
 
+/**
+ * Default implementation of {@link Question}.
+ */
 public final class QuestionImpl implements Question {
 
     private final VocabularyItem item;
     private final Direction direction;
 
+    /**
+     * Creates a question for the given item and translation direction.
+     *
+     * @param item      the vocabulary item the question is based on; must not be {@code null}
+     * @param direction the translation direction; must not be {@code null}
+     */
     public QuestionImpl(final VocabularyItem item, final Direction direction) {
         this.item = Objects.requireNonNull(item, "item must not be null");
         this.direction = Objects.requireNonNull(direction, "direction must not be null");
@@ -43,5 +51,4 @@ public final class QuestionImpl implements Question {
             case SECOND_TO_FIRST -> this.item.getFirstLanguageWords();
         };
     }
-
 }

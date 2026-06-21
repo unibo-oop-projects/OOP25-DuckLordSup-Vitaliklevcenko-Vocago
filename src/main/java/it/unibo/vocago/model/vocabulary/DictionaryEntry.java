@@ -9,6 +9,10 @@ import it.unibo.vocago.model.types.Direction;
 import it.unibo.vocago.model.vocabulary.api.VocabularyItem;
 import it.unibo.vocago.model.vocabulary.api.Word;
 
+/**
+ * Default implementation of {@link VocabularyItem}, the word
+ * lists are stored as immutable copies.
+ */
 public final class DictionaryEntry implements VocabularyItem {
 
     private final List<Word> firstLanguageWords;
@@ -16,10 +20,28 @@ public final class DictionaryEntry implements VocabularyItem {
     private final Progress firstProgress;
     private final Progress secondProgress;
 
-     public DictionaryEntry(final List<Word> firstLanguageWords, final List<Word> secondLanguageWords) {
+    /**
+     * Creates an entry with fresh, empty progress for both directions.
+     *
+     * @param firstLanguageWords  the words in the first language
+     * @param secondLanguageWords the words in the second language
+     */
+    public DictionaryEntry(final List<Word> firstLanguageWords, final List<Word> secondLanguageWords) {
         this(firstLanguageWords, secondLanguageWords, new WordProgress(), new WordProgress());
     }
 
+    /**
+     * Creates an entry with the given words and progress for each direction.
+     *
+     * @param firstLanguageWords  the words in the first language; must not be
+     *                            {@code null} nor contain {@code null}
+     * @param secondLanguageWords the words in the second language; must not be
+     *                            {@code null} nor contain {@code null}
+     * @param firstProgress       the progress for the first-to-second direction
+     * @param secondProgress      the progress for the second-to-first direction
+     * @throws IllegalArgumentException if either word list is {@code null} or
+     *                                  contains {@code null} values
+     */
     public DictionaryEntry(final List<Word> firstLanguageWords, final List<Word> secondLanguageWords,
             final Progress firstProgress, final Progress secondProgress) {
         if (firstLanguageWords == null || firstLanguageWords.stream().anyMatch(Objects::isNull)) {
@@ -29,7 +51,7 @@ public final class DictionaryEntry implements VocabularyItem {
             throw new IllegalArgumentException("Second language words cannot be null or contain null values");
         }
 
-        this.firstLanguageWords = List.copyOf(firstLanguageWords); //copy because of safety
+        this.firstLanguageWords = List.copyOf(firstLanguageWords); // copy because of safety
         this.secondLanguageWords = List.copyOf(secondLanguageWords); // copy because of safety
         this.firstProgress = firstProgress != null ? firstProgress : new WordProgress();
         this.secondProgress = secondProgress != null ? secondProgress : new WordProgress();
@@ -37,7 +59,7 @@ public final class DictionaryEntry implements VocabularyItem {
 
     @Override
     public List<Word> getFirstLanguageWords() {
-        return this.firstLanguageWords; //already stored as copy, no need for extra copy
+        return this.firstLanguageWords; // already stored as copy, no need for extra copy
     }
 
     @Override

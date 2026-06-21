@@ -7,16 +7,29 @@ import java.util.Objects;
 import it.unibo.vocago.model.vocabulary.api.Vocabulary;
 import it.unibo.vocago.model.vocabulary.api.VocabularyItem;
 
+/**
+ * Default implementation of {@link Vocabulary}, copies are used on input and output so the
+ * internal list cannot be modified from outside.
+ */
 public final class Dictionary implements Vocabulary {
 
     private final List<VocabularyItem> items;
 
-    // new vocabulary with empty list of words(vocabularyItems)
+    /**
+     * Creates an empty vocabulary.
+     */
     public Dictionary() {
         this.items = new ArrayList<>();
     }
 
-    // in case we already have the whole vocabulary and we want to add it with all the words and progresses
+    /**
+     * Creates a vocabulary initialised with the given items, for example when
+     * loading an existing vocabulary together with its words and progress.
+     *
+     * @param items the initial items; must not be {@code null} nor contain
+     *              {@code null} values
+     * @throws IllegalArgumentException if the list contains a {@code null} item
+     */
     public Dictionary(final List<VocabularyItem> items) {
         Objects.requireNonNull(items, "items cannot be null");
         if (items.stream().anyMatch(Objects::isNull)) {
