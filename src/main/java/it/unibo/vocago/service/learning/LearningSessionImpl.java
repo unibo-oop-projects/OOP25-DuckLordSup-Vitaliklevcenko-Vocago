@@ -12,7 +12,7 @@ import it.unibo.vocago.model.vocabulary.api.Word;
 import it.unibo.vocago.service.learning.api.LearningEngine;
 import it.unibo.vocago.service.learning.api.LearningSession;
 
-public class LearningSessionImpl implements LearningSession {
+public final class LearningSessionImpl implements LearningSession {
 
     private final Vocabulary vocabulary;
     private final LearningEngine learningEngine;

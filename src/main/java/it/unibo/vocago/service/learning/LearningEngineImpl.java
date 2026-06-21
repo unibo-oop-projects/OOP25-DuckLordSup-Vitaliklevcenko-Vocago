@@ -17,7 +17,7 @@ import it.unibo.vocago.model.vocabulary.api.VocabularyItem;
 import it.unibo.vocago.model.vocabulary.api.Word;
 import it.unibo.vocago.service.learning.api.LearningEngine;
 
-public class LearningEngineImpl implements LearningEngine {
+public final class LearningEngineImpl implements LearningEngine {
 
     private static final int MAX_RECENT_ITEMS = 20;
     private static final double MAX_SELECTION_WEIGHT = 0.99;

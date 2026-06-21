@@ -5,7 +5,7 @@ import java.util.Objects;
 import it.unibo.vocago.model.progress.api.Progress;
 import it.unibo.vocago.model.types.MasteryLevel;
 
-public class WordProgress implements Progress {
+public final class WordProgress implements Progress {
 
     private static final int MEDIUM_PROMOTION_THRESHOLD = 3;
     private static final int GOOD_PROMOTION_THRESHOLD = 5;

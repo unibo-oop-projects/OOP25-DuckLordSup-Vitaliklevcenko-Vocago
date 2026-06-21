@@ -22,7 +22,7 @@ import it.unibo.vocago.model.vocabulary.api.VocabularyItem;
 import it.unibo.vocago.model.vocabulary.api.Word;
 import it.unibo.vocago.storage.api.UserRepository;
 
-public class UserCsvStorage implements UserRepository {
+public final class UserCsvStorage implements UserRepository {
 
     private static final Path USERS_DIRECTORY = Path.of("data", "users");
     private static final String WORD_SEPARATOR = ",";

@@ -9,7 +9,7 @@ import it.unibo.vocago.model.types.Direction;
 import it.unibo.vocago.model.vocabulary.api.VocabularyItem;
 import it.unibo.vocago.model.vocabulary.api.Word;
 
-public class DictionaryEntry implements VocabularyItem {
+public final class DictionaryEntry implements VocabularyItem {
 
     private final List<Word> firstLanguageWords;
     private final List<Word> secondLanguageWords;

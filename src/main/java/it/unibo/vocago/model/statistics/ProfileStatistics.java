@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 import it.unibo.vocago.model.statistics.api.Statistics;
 
-public class ProfileStatistics implements Statistics {
+public final class ProfileStatistics implements Statistics {
 
     private final int masteredItems;
     private final int correctAnswers;

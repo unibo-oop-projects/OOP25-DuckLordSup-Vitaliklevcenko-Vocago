@@ -11,7 +11,7 @@ import java.util.List;
 import it.unibo.vocago.model.types.DailyGoalSettings;
 import it.unibo.vocago.storage.api.StatisticsRepository;
 
-public class StatisticsFileStorage implements StatisticsRepository {
+public final class StatisticsFileStorage implements StatisticsRepository {
 
     private static final Path USERS_DIRECTORY = Path.of("data", "users");
     private static final int LAST_STUDY_DATE_INDEX = 0;

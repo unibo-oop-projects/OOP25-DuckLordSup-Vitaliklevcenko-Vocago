@@ -7,7 +7,7 @@ import java.util.Objects;
 import it.unibo.vocago.model.vocabulary.api.Vocabulary;
 import it.unibo.vocago.model.vocabulary.api.VocabularyItem;
 
-public class Dictionary implements Vocabulary {
+public final class Dictionary implements Vocabulary {
 
     private final List<VocabularyItem> items;
 

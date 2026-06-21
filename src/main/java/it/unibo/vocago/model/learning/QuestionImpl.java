@@ -8,7 +8,7 @@ import it.unibo.vocago.model.types.Direction;
 import it.unibo.vocago.model.vocabulary.api.VocabularyItem;
 import it.unibo.vocago.model.vocabulary.api.Word;
 
-public class QuestionImpl implements Question {
+public final class QuestionImpl implements Question {
 
     private final VocabularyItem item;
     private final Direction direction;

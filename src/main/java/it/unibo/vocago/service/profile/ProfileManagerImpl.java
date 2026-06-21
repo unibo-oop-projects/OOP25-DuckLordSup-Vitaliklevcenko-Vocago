@@ -25,7 +25,7 @@ import it.unibo.vocago.storage.UserCsvStorage;
 import it.unibo.vocago.storage.api.StatisticsRepository;
 import it.unibo.vocago.storage.api.UserRepository;
 
-public class ProfileManagerImpl implements ProfileManager {
+public final class ProfileManagerImpl implements ProfileManager {
 
     private static final Logger LOGGER = Logger.getLogger(ProfileManagerImpl.class.getName());
     private static final double PERCENT_FACTOR = 100.0;

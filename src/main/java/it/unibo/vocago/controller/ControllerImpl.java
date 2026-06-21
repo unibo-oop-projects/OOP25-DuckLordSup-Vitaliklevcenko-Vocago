@@ -16,7 +16,7 @@ import it.unibo.vocago.service.profile.api.ProfileManager;
 import it.unibo.vocago.view.AppFrame;
 import it.unibo.vocago.view.api.AppView;
 
-public class ControllerImpl implements Controller {
+public final class ControllerImpl implements Controller {
 
     private final AppView appView;
     private final ProfileManager profileManager;

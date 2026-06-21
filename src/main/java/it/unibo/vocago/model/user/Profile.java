@@ -7,7 +7,7 @@ import it.unibo.vocago.model.user.api.User;
 import it.unibo.vocago.model.vocabulary.Dictionary;
 import it.unibo.vocago.model.vocabulary.api.Vocabulary;
 
-public class Profile implements User {
+public final class Profile implements User {
 
     private final String userName;
     private final String firstLanguage;
