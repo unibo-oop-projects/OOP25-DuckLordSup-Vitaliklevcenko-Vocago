@@ -408,7 +408,6 @@ public final class UIFactory {
         scrollPane.setBorder(BorderFactory.createMatteBorder(PADDING, ZERO,
                 PADDING, ZERO, UIConstants.PANEL_BORDER));
         styleScrollBar(scrollPane.getVerticalScrollBar());
-        // styleScrollBar(scrollPane.getHorizontalScrollBar());
         return scrollPane;
     }
 

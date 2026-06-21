@@ -39,7 +39,6 @@ public final class LearningEngineImpl implements LearningEngine {
     public boolean checkAnswer(final Question question, final String userAnswer) {
         Objects.requireNonNull(question, "question must not be null");
 
-        // check that the user enter a valid answer
         if (userAnswer == null || userAnswer.isBlank()) {
             return false;
         }
@@ -62,8 +61,8 @@ public final class LearningEngineImpl implements LearningEngine {
         return selectNextQuestion(validCandidates(vocabulary), direction);
     }
 
+    //make it possible to repeat a word that already been tested after a while, depends on how big the vocabulary
     private void trimSeenItems(final Vocabulary vocabulary) {
-        // already asked items can be removed after a while
         final int validItemCount = (int) vocabulary.getItems().stream()
                 .filter(VocabularyItem::isValid)
                 .count();
@@ -82,8 +81,6 @@ public final class LearningEngineImpl implements LearningEngine {
                 .toList();
     }
 
-    // can add selectNextQuestionByMastery
-    // based on the sm2 algorithm
     private Question selectNextQuestion(final List<VocabularyItem> candidates, final Direction direction) {
         Objects.requireNonNull(direction, "direction must not be null");
         Objects.requireNonNull(candidates, "candidates must not be null");

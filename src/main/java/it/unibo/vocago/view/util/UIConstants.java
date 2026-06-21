@@ -16,34 +16,29 @@ public final class UIConstants {
     public static final int SPACING_MEDIUM = 15;
     public static final int SPACING_LARGE = 20;
 
-    // dark grey theme
     public static final Color BACKGROUND = new Color(50, 50, 50);
     public static final Color BUTTON_BACKGROUND = new Color(80, 80, 80);
     public static final Color SCROLLBAR_TRACK = new Color(60, 60, 60);
     public static final Color TABLE_HEADER = new Color(50, 50, 50);
 
-    public static final Color GREEN = new Color(50, 130, 50); // green
-    public static final Color RED = new Color(160, 50, 50); // red
-    public static final Color BLUE = new Color(90, 130, 170); // blue
+    public static final Color GREEN = new Color(50, 130, 50);
+    public static final Color RED = new Color(160, 50, 50);
+    public static final Color BLUE = new Color(90, 130, 170);
     public static final Color TEAL = new Color(65, 130, 125);
     public static final Color AMBER = new Color(170, 120, 45);
 
-    // grey
     public static final Color TEXT_FIELD_BACKGROUND = new Color(110, 110, 110);
     public static final Color COMBOBOX_BACKGROUND = new Color(110, 110, 110);
-    public static final Color COMBOBOX_BRIGHT_BACKGROUND = new Color(110, 110, 110); // 163, 184, 204
+    public static final Color COMBOBOX_BRIGHT_BACKGROUND = new Color(110, 110, 110);
     public static final Color SCROLLBAR_THUMB = new Color(110, 110, 110);
 
-    // bright grey
     public static final Color TEXT_FIELD_BORDER = new Color(130, 130, 130);
     public static final Color COMBOBOX_BORDER = new Color(130, 130, 130);
     public static final Color BUTTON_BORDER = new Color(130, 130, 130);
     public static final Color SCROLLBAR_THUMB_HOVER = new Color(130, 130, 130);
     public static final Color BACKGROUND_HOVER = new Color(110, 110, 110);
-    // grey border
     public static final Color PANEL_BORDER = new Color(110, 110, 110);
     public static final Color TABLE_GRID = new Color(110, 110, 110);
-    // white border
     public static final Color BRIGHT_PANEL_BORDER = new Color(200, 200, 200);
 
     public static final Color DARK_TEXT_COLOR = new Color(50, 50, 50);

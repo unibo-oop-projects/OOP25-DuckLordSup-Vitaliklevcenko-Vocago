@@ -72,7 +72,7 @@ public final class ProfileManagerImpl implements ProfileManager {
         try {
             this.statisticsRepository.createStatisticsFile(profile.getUserName());
         } catch (final UncheckedIOException exception) {
-            //can continue with the default values
+            // Profile creation can continue with in-memory default statistics.
             LOGGER.log(
                     Level.WARNING,
                     "Could not create statistics file for profile: " + profileName,
@@ -192,7 +192,7 @@ public final class ProfileManagerImpl implements ProfileManager {
 
         return new ProfileStatistics(
                 countMasteryItems,
-                countCorrectAnswers, //for future use
+                countCorrectAnswers,
                 countWrongAnswers,
                 wordCount,
                 correctRatio,

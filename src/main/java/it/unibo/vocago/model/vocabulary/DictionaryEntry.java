@@ -51,20 +51,20 @@ public final class DictionaryEntry implements VocabularyItem {
             throw new IllegalArgumentException("Second language words cannot be null or contain null values");
         }
 
-        this.firstLanguageWords = List.copyOf(firstLanguageWords); // copy because of safety
-        this.secondLanguageWords = List.copyOf(secondLanguageWords); // copy because of safety
+        this.firstLanguageWords = List.copyOf(firstLanguageWords);
+        this.secondLanguageWords = List.copyOf(secondLanguageWords);
         this.firstProgress = firstProgress != null ? firstProgress : new WordProgress();
         this.secondProgress = secondProgress != null ? secondProgress : new WordProgress();
     }
 
     @Override
     public List<Word> getFirstLanguageWords() {
-        return this.firstLanguageWords; // already stored as copy, no need for extra copy
+        return this.firstLanguageWords;
     }
 
     @Override
     public List<Word> getSecondLanguageWords() {
-        return this.secondLanguageWords; // already stored as copy, no need for extra copy
+        return this.secondLanguageWords;
     }
 
     @Override

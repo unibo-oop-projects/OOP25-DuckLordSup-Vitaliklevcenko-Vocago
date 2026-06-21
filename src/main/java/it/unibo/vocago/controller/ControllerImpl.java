@@ -125,7 +125,6 @@ public final class ControllerImpl implements Controller {
         return this.learningCoordinator.getCorrectAnsweredQuestions();
     }
 
-    // profile Manager getters and setters //
     @Override
     public List<User> getExistingProfiles() {
         return this.profileCoordinator.getExistingProfiles();
