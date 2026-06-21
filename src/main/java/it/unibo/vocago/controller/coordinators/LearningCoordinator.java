@@ -84,6 +84,7 @@ public final class LearningCoordinator {
         }
     }
 
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public void saveLearningStatistics() {
         if (this.learningSession != null) {
             try {

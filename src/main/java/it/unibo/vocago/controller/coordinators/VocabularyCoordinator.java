@@ -16,6 +16,7 @@ public final class VocabularyCoordinator {
         this.appView = appView;
     }
 
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public void saveVocabulary(final Vocabulary vocabulary) {
         try {
             this.profileManager.saveVocabulary(vocabulary);

@@ -10,6 +10,7 @@ import it.unibo.vocago.model.user.api.User;
 import it.unibo.vocago.service.profile.api.ProfileManager;
 import it.unibo.vocago.view.api.AppView;
 
+@SuppressWarnings("PMD.AvoidCatchingGenericException")
 public final class ProfileCoordinator {
 
     private final ProfileManager profileManager;

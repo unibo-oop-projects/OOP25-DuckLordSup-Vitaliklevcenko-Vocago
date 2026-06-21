@@ -21,6 +21,7 @@ public final class StatisticsCoordinator {
         this.appView = appView;
     }
 
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public Statistics getDashboardStatistics() {
         try {
             return this.profileManager.getDashboardStatistics();
@@ -38,6 +39,7 @@ public final class StatisticsCoordinator {
         }
     }
 
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public boolean resetStatistics() {
         final int answer = this.appView.askConfirmationWithCancel(
                 "Reset Statistics",
