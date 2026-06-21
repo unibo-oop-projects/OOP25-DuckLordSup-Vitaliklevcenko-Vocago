@@ -36,7 +36,7 @@ public final class ProfileManagerImpl implements ProfileManager {
     private static final Logger LOGGER = Logger.getLogger(ProfileManagerImpl.class.getName());
     private static final double PERCENT_FACTOR = 100.0;
     private static final long MILLISECONDS_PER_SECOND = 1000L;
-
+    private static final int MIN_DAYS = 1;
     private final UserRepository userRepository;
     private final StatisticsRepository statisticsRepository;
     private User currentProfile;
@@ -217,19 +217,22 @@ public final class ProfileManagerImpl implements ProfileManager {
         final LocalDate today = LocalDate.now();
         final LocalDate lastStudyDate = this.statisticsRepository.getLastStudyDate(profileName);
         int streak = this.statisticsRepository.getCurrentStreak(profileName);
+        LocalDate updatedLastStudyDate = lastStudyDate;
 
-        if (today.equals(lastStudyDate)) {
-            streak = Math.max(streak, 1);
-        } else if (lastStudyDate != null && lastStudyDate.equals(today.minusDays(1))
-                && session.getCorrectAnsweredQuestions() >= getDailyGoal()) {
-            streak++;
-        } else {
-            streak = 0;
+        if (session.getCorrectAnsweredQuestions() >= getDailyGoal()) {
+            updatedLastStudyDate = today;
+            if (today.equals(lastStudyDate)) {
+                streak = Math.max(streak, MIN_DAYS);
+            } else if (today.minusDays(MIN_DAYS).equals(lastStudyDate)) {
+                streak++;
+            } else {
+                streak = MIN_DAYS;
+            }
         }
 
         this.statisticsRepository.saveStatistics(
                 profileName,
-                today,
+                updatedLastStudyDate,
                 streak,
                 this.statisticsRepository.getTotalStudyTime(profileName)
                         + (System.currentTimeMillis() - session.getStartTime()) / MILLISECONDS_PER_SECOND);
