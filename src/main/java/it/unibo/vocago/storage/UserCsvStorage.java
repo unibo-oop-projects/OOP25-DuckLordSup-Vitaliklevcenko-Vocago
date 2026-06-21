@@ -29,7 +29,7 @@ import it.unibo.vocago.storage.api.UserRepository;
  */
 public final class UserCsvStorage implements UserRepository {
 
-    private static final Path USERS_DIRECTORY = Path.of("data", "users");
+    private static final Path USERS_DIRECTORY = Path.of("data", "profiles");
     private static final String WORD_SEPARATOR = ",";
     private static final String QUOTE = "\"";
     private static final String ESCAPED_QUOTE = "\"\"";

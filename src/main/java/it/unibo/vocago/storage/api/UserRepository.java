@@ -11,7 +11,7 @@ import it.unibo.vocago.model.user.api.User;
 public interface UserRepository {
 
     /** The directory where user data is stored. */
-    Path USERS_DIRECTORY = Path.of("data", "users");
+    Path USERS_DIRECTORY = Path.of("data", "profiles");
 
     /**
      * Saves the given user, creating or overwriting its stored data.

@@ -17,7 +17,7 @@ import it.unibo.vocago.storage.api.StatisticsRepository;
  */
 public final class StatisticsFileStorage implements StatisticsRepository {
 
-    private static final Path USERS_DIRECTORY = Path.of("data", "users");
+    private static final Path USERS_DIRECTORY = Path.of("data", "profiles");
     private static final int LAST_STUDY_DATE_INDEX = 0;
     private static final int CURRENT_STREAK_INDEX = 1;
     private static final int TOTAL_STUDY_TIME_INDEX = 2;
