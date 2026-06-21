@@ -11,6 +11,10 @@ import java.util.List;
 import it.unibo.vocago.model.types.DailyGoalSettings;
 import it.unibo.vocago.storage.api.StatisticsRepository;
 
+/**
+ * File based implementation of {@link StatisticsRepository}. The statistics of
+ * each user are stored in a dedicated file, one value per line.
+ */
 public final class StatisticsFileStorage implements StatisticsRepository {
 
     private static final Path USERS_DIRECTORY = Path.of("data", "users");

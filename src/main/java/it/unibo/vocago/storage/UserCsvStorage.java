@@ -22,6 +22,11 @@ import it.unibo.vocago.model.vocabulary.api.VocabularyItem;
 import it.unibo.vocago.model.vocabulary.api.Word;
 import it.unibo.vocago.storage.api.UserRepository;
 
+/**
+ * CSV-based implementation of {@link UserRepository}. Each user profile is
+ * stored as a CSV file under {@link UserRepository#USERS_DIRECTORY}, including
+ * its vocabulary items and their learning progress.
+ */
 public final class UserCsvStorage implements UserRepository {
 
     private static final Path USERS_DIRECTORY = Path.of("data", "users");
