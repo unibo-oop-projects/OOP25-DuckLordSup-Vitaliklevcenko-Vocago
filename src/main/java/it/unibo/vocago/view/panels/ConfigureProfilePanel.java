@@ -32,7 +32,7 @@ public final class ConfigureProfilePanel extends JPanel{
     };
     private static final int PANEL_WIDTH = 660;
     private static final int BUTTON_WIDTH = 70;
-    private final Controller controller;
+    private final transient Controller controller;
     private final JButton saveChangesButton;
     private final JButton deleteProfileButton;
     private final JTextField usernameTextField;

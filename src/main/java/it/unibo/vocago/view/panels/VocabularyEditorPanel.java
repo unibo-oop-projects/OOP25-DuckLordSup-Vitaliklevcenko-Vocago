@@ -57,7 +57,7 @@ public final class VocabularyEditorPanel extends JPanel{
     private final JButton saveChangesButton;
     private final JTextField searchTextField;
     private final JButton findButton;
-    private final Controller controller;
+    private final transient Controller controller;
 
     @SuppressFBWarnings(value = "EI2", justification = "The panel intentionally shares the app controller.")
     public VocabularyEditorPanel(final Controller controller) {

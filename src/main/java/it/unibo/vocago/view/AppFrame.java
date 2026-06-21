@@ -26,7 +26,7 @@ public final class AppFrame extends JFrame implements AppView {
 
     private final JPanel mainPanel;
     private final CardLayout cardLayout;
-    private final Controller controller;
+    private final transient Controller controller;
 
     private StartPanel startPanel;
     private ProfileDashboardPanel profileDashboardPanel;

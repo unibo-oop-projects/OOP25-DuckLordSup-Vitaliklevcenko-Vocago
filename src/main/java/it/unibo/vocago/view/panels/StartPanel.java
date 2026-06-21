@@ -25,7 +25,7 @@ public final class StartPanel extends JPanel{
             "data/resources/pictures/fox.png",
             "data/resources/pictures/bear.png"
     };
-    private final Controller controller;
+    private final transient  Controller controller;
     
     @SuppressFBWarnings(value = "EI2", justification = "The panel intentionally shares the app controller.")
     public StartPanel(final Controller controller) {

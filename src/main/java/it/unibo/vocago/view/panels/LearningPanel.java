@@ -22,7 +22,7 @@ public final class LearningPanel extends JPanel{
     private static final int BUTTON_PANEL_HEIGHT = 50;
     private static final int LANGUAGE_PANEL_HEIGHT = 260;
 
-    private final Controller controller;
+    private final transient Controller controller;
     private final JButton nextWordButton;
     private final JButton revealAnswerButton;
     private final JButton goBackButton;

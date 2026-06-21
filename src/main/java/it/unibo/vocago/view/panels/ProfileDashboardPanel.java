@@ -21,7 +21,7 @@ import java.awt.Image;
 public final class ProfileDashboardPanel extends JPanel{
 
         private static final long serialVersionUID = 1L;
-        private final Controller controller;
+        private final transient Controller controller;
         private final JButton switchProfileButton;
         private final JButton startButton;
         private final JButton editVocabularyButton;
