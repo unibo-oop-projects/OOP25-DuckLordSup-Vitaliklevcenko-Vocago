@@ -31,6 +31,10 @@ public final class ControllerImpl implements Controller {
     private final StatisticsCoordinator statisticsCoordinator;
     private final VocabularyCoordinator vocabularyCoordinator;
 
+    /**
+     * Creates the controller, building the view, the profile manager and the
+     * coordinators, then showing the initial screen.
+     */
     public ControllerImpl() {
         this.appView = new AppFrame(this);
         this.profileManager = new ProfileManagerImpl();

@@ -17,7 +17,6 @@ import it.unibo.vocago.model.vocabulary.api.VocabularyItem;
 import it.unibo.vocago.model.vocabulary.api.Word;
 import it.unibo.vocago.service.learning.api.LearningEngine;
 
-
 /**
  * Default implementation of {@link LearningEngine}.
  */

@@ -8,6 +8,9 @@ import it.unibo.vocago.controller.ControllerImpl;
  */
 public final class VocagoApp {
 
+    private VocagoApp() {
+    }
+
     /**
      * Starts the application.
      *
@@ -16,6 +19,4 @@ public final class VocagoApp {
     public static void main(final String[] args) {
         new ControllerImpl();
     }
-
-    private VocagoApp(){}
 }
