@@ -16,23 +16,13 @@ repositories {
 }
 
 dependencies {
-
     compileOnly("com.github.spotbugs:spotbugs-annotations:4.9.8")
-
     testImplementation("org.junit.jupiter:junit-jupiter:5.10.3")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 application {
     mainClass.set("it.unibo.vocago.VocagoApp")
-}
-
-sourceSets {
-    main {
-        resources {
-            setSrcDirs(listOf("src/main/data"))
-        }
-    }
 }
 
 tasks.test {
