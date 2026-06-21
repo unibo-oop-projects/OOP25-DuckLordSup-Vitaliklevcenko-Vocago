@@ -26,12 +26,12 @@ public final class StartPanel extends JPanel {
     private static final int PROFILE_BUTTON_ICON_SIZE = 60;
     private static final int PROFILE_BUTTON_HEIGHT = 90;
     private static final int PROFILE_BUTTON_WIDTH = 400;
-    private static final String ADD_ICON = "data/resources/pictures/plus.png";
+    private static final String ADD_ICON = "pictures/plus.png";
     private static final String[] PROFILE_ICONS = {
-            "data/resources/pictures/bunny.png",
-            "data/resources/pictures/owl.png",
-            "data/resources/pictures/fox.png",
-            "data/resources/pictures/bear.png",
+            "pictures/bunny.png",
+            "pictures/owl.png",
+            "pictures/fox.png",
+            "pictures/bear.png",
     };
     private final transient Controller controller;
 

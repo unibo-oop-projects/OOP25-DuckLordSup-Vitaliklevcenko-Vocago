@@ -88,11 +88,11 @@ public final class VocabularyEditorPanel extends JPanel {
                 SIZE_ZERO,
                 SIZE_ZERO,
                 true, true, true, UIConstants.FONT);
-        this.goBackButton = UIFactory.createButton("", "data/resources/pictures/back.png",
+        this.goBackButton = UIFactory.createButton("", "pictures/back.png",
                 UIConstants.BACK_BUTTON_ICON_SIZE, UIConstants.BACKGROUND, UIConstants.BACK_BUTTON_HEIGHT,
                 UIConstants.BACK_BUTTON_WIDTH, false, true, false, UIConstants.FONT);
         this.searchTextField = UIFactory.createTextField();
-        this.findButton = UIFactory.createButton("", "data/resources/pictures/search.png", SEARCH_ICON_SIZE,
+        this.findButton = UIFactory.createButton("", "pictures/search.png", SEARCH_ICON_SIZE,
                 UIConstants.BACKGROUND, SEARCH_BUTTON_SIZE, SEARCH_BUTTON_SIZE, false, true, false, UIConstants.FONT);
 
         buildLayout();

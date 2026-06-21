@@ -65,20 +65,20 @@ public final class ProfileDashboardPanel extends JPanel {
         public ProfileDashboardPanel(final Controller controller) {
                 this.controller = controller;
                 this.editVocabularyButton = UIFactory.createButton("Edit Vocabulary",
-                                "data/resources/pictures/edit.png",
+                                "pictures/edit.png",
                                 EDIT_BUTTON_ICON_SIZE, UIConstants.BLUE, EDIT_BUTTON_HEIGHT, DASHBOARD_CONTENT_WIDTH,
                                 true, true, true, UIConstants.PROMPT_FONT);
-                this.startButton = UIFactory.createButton("START LEARNING", "data/resources/pictures/start.png",
+                this.startButton = UIFactory.createButton("START LEARNING", "pictures/start.png",
                                 START_BUTTON_ICON_SIZE, UIConstants.GREEN, START_BUTTON_HEIGHT, DASHBOARD_CONTENT_WIDTH,
                                 true, true, true, UIConstants.TITLE_FONT);
-                this.resetStatisticsButton = UIFactory.createButton("Reset Statistics", "data/resources/pictures/reset.png",
+                this.resetStatisticsButton = UIFactory.createButton("Reset Statistics", "pictures/reset.png",
                                 RESET_BUTTON_ICON_SIZE, UIConstants.RED, RESET_BUTTON_HEIGHT, RESET_BUTTON_WIDTH,
                                 true, true, true, UIConstants.FONT);
                 this.configureProfileButton = UIFactory.createButton("Settings",
-                                "data/resources/pictures/settings.png",
+                                "pictures/settings.png",
                                 SETTINGS_BUTTON_ICON_SIZE, UIConstants.AMBER, PROFILE_ACTION_BUTTON_HEIGHT,
                                 PROFILE_ACTION_BUTTON_WIDTH, true, true, true, UIConstants.FONT);
-                this.switchProfileButton = UIFactory.createButton("Switch Profile", "data/resources/pictures/profile.png",
+                this.switchProfileButton = UIFactory.createButton("Switch Profile", "pictures/profile.png",
                                 SWITCH_PROFILE_BUTTON_ICON_SIZE, UIConstants.TEAL, PROFILE_ACTION_BUTTON_HEIGHT,
                                 PROFILE_ACTION_BUTTON_WIDTH, true, true, true, UIConstants.FONT);
                 buildLayout();
@@ -122,15 +122,15 @@ public final class ProfileDashboardPanel extends JPanel {
 
                 final Statistics dashboardStatistics = this.controller.getDashboardStatistics();
                 statisticsPanel.add(createStatisticPanel("Mastered", dashboardStatistics.getMasteredItems() + " Words",
-                                "data/resources/pictures/star.png"));
+                                "pictures/star.png"));
                 statisticsPanel.add(createStatisticPanel("Accuracy",
                                 String.format("%.1f%%", dashboardStatistics.getAccuracyPercent()),
-                                "data/resources/pictures/graph.png"));
+                                "pictures/graph.png"));
                 statisticsPanel.add(createStatisticPanel("Streak", dashboardStatistics.getCurrentStreak() + " Days",
-                                "data/resources/pictures/streak.png"));
+                                "pictures/streak.png"));
                 statisticsPanel.add(createStatisticPanel("Time Study",
                                 formatStudyTime(dashboardStatistics.getTotalStudyTime()),
-                                "data/resources/pictures/clock.png"));
+                                "pictures/clock.png"));
                 leftPanel.add(statisticsPanel);
 
                 leftPanel.add(Box.createVerticalStrut(SECTION_GAP));

@@ -45,7 +45,7 @@ public final class CreateNewProfilePanel extends JPanel {
         this.controller = controller;
         UIFactory.stylePanel(this);
         this.createNewProfileButton = UIFactory.createButton("Create");
-        this.goBackButton = UIFactory.createButton("", "data/resources/pictures/back.png",
+        this.goBackButton = UIFactory.createButton("", "pictures/back.png",
                 UIConstants.BACK_BUTTON_ICON_SIZE, UIConstants.BACKGROUND,
                 UIConstants.BACK_BUTTON_HEIGHT, UIConstants.BACK_BUTTON_WIDTH,
                 true, true, true, UIConstants.FONT);

@@ -76,10 +76,10 @@ public final class ConfigureProfilePanel extends JPanel {
                 ICON_SIZE,
                 UIConstants.BLUE, ACTION_BUTTON_HEIGHT, SAVE_BUTTON_WIDTH,
                 true, false, true, UIConstants.FONT);
-        this.deleteProfileButton = UIFactory.createButton("Delete Profile", "data/resources/pictures/bin.png",
+        this.deleteProfileButton = UIFactory.createButton("Delete Profile", "pictures/bin.png",
                 DELETE_ICON_SIZE, UIConstants.RED, ACTION_BUTTON_HEIGHT, DELETE_BUTTON_WIDTH,
                 true, true, true, UIConstants.FONT);
-        this.goBackButton = UIFactory.createButton("", "data/resources/pictures/back.png",
+        this.goBackButton = UIFactory.createButton("", "pictures/back.png",
                 UIConstants.BACK_BUTTON_ICON_SIZE, UIConstants.BACKGROUND,
                 UIConstants.BACK_BUTTON_HEIGHT,
                 UIConstants.BACK_BUTTON_WIDTH,

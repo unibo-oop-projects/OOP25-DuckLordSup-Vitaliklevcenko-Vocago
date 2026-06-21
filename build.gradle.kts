@@ -27,14 +27,19 @@ application {
     mainClass.set("it.unibo.vocago.VocagoApp")
 }
 
+sourceSets {
+    main {
+        resources {
+            setSrcDirs(listOf("src/main/data"))
+        }
+    }
+}
+
 tasks.test {
     useJUnitPlatform()
 }
 
 tasks.shadowJar {
-    from("data/resources") {
-        into("data/resources")
-    }
     manifest {
         attributes["Main-Class"] = application.mainClass.get()
     }

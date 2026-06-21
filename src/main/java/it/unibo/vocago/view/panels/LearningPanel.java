@@ -77,7 +77,7 @@ public final class LearningPanel extends JPanel {
 
         this.switchLanguageButton = UIFactory.createButton(
                 "SWITCH LANGUAGE",
-                "data/resources/pictures/arrow.png",
+                "pictures/arrow.png",
                 SWITCH_LANGUAGE_ICON_SIZE,
                 UIConstants.BACKGROUND,
                 LEARNING_ACTION_BUTTON_HEIGHT,
@@ -113,7 +113,7 @@ public final class LearningPanel extends JPanel {
 
         this.goBackButton = UIFactory.createButton(
                 "",
-                "data/resources/pictures/back.png",
+                "pictures/back.png",
                 UIConstants.BACK_BUTTON_ICON_SIZE,
                 UIConstants.BACKGROUND,
                 LEARNING_BACK_BUTTON_HEIGHT,
@@ -190,7 +190,7 @@ public final class LearningPanel extends JPanel {
             UIFactory.brighter(labelPanel);
             firstLanguagePanel.add(labelPanel);
             secondLanguagePanel.add(textFieldPanel);
-            this.switchLanguageButton = UIFactory.createButton("Switch Language", "data/resources/pictures/arrow.png",
+            this.switchLanguageButton = UIFactory.createButton("Switch Language", "pictures/arrow.png",
                     SWITCH_LANGUAGE_ICON_SIZE, UIConstants.BACKGROUND, LEARNING_ACTION_BUTTON_HEIGHT,
                     SWITCH_LANGUAGE_BUTTON_WIDTH, false, true, true, UIConstants.FONT);
         } else {
@@ -199,7 +199,7 @@ public final class LearningPanel extends JPanel {
             labelPanel.add(UIFactory.createLabel(this.controller.getNextQuestion(), UIConstants.BIG_PROMT_FONT));
             UIFactory.brighter(labelPanel);
             secondLanguagePanel.add(labelPanel);
-            this.switchLanguageButton = UIFactory.createButton("Switch Language", "data/resources/pictures/back.png",
+            this.switchLanguageButton = UIFactory.createButton("Switch Language", "pictures/back.png",
                     SWITCH_LANGUAGE_ICON_SIZE, UIConstants.BACKGROUND, LEARNING_ACTION_BUTTON_HEIGHT,
                     SWITCH_LANGUAGE_BUTTON_WIDTH, false, true, true, UIConstants.FONT);
         }

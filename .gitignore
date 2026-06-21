@@ -3,4 +3,4 @@ build/
 bin/
 out/
 *.class
-data/
+/data/
