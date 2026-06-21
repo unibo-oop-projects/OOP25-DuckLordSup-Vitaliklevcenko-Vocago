@@ -72,7 +72,7 @@ public final class ConfigureProfilePanel extends JPanel {
     public ConfigureProfilePanel(final Controller controller) {
         this.controller = controller;
         UIFactory.stylePanel(this);
-        this.saveChangesButton = UIFactory.createButton("Save Changes", "", 
+        this.saveChangesButton = UIFactory.createButton("Save Changes", "",
                 ICON_SIZE,
                 UIConstants.BLUE, ACTION_BUTTON_HEIGHT, SAVE_BUTTON_WIDTH,
                 true, false, true, UIConstants.FONT);

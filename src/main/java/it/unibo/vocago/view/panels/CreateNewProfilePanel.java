@@ -69,7 +69,7 @@ public final class CreateNewProfilePanel extends JPanel {
     private void buildLayout() {
         setLayout(new BorderLayout());
         final JLabel titleLabel = UIFactory.createLabel("Create New Profile", UIConstants.TITLE_FONT);
-        final JPanel titlePanel = UIFactory.createPanel(new FlowLayout(FlowLayout.CENTER, 
+        final JPanel titlePanel = UIFactory.createPanel(new FlowLayout(FlowLayout.CENTER,
                 ZERO_GAP, TITLE_VERTICAL_GAP));
         titlePanel.add(titleLabel);
         add(titlePanel, BorderLayout.NORTH);

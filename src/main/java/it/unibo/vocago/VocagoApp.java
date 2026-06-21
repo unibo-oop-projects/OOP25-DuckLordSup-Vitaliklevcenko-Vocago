@@ -16,4 +16,6 @@ public final class VocagoApp {
     public static void main(final String[] args) {
         new ControllerImpl();
     }
+
+    private VocagoApp(){}
 }

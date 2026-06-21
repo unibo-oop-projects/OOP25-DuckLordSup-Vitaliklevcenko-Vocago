@@ -3,6 +3,10 @@ package it.unibo.vocago.view.util;
 import java.awt.Color;
 import java.awt.Font;
 
+/**
+ * Holds the visual constants used across the user interface, such as colors,
+ * fonts and spacing values, defining the application's dark-grey theme.
+ */
 public final class UIConstants {
 
     public static final int BACK_BUTTON_ICON_SIZE = 60;
@@ -57,5 +61,7 @@ public final class UIConstants {
     public static final Font BIG_PROMT_FONT = new Font(UIConstants.FONT_NAME, Font.PLAIN, 46);
 
     private static final String FONT_NAME = "Roboto";
-    
+
+    private UIConstants() {
+    }
 }

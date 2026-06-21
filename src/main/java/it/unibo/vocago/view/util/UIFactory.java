@@ -31,6 +31,11 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import java.awt.event.MouseEvent;
 
+/**
+ * Factory of styled Swing components, centralising the creation and theming of
+ * the widgets used throughout the user interface so the panels do not repeat
+ * styling logic.
+ */
 public final class UIFactory {
 
     private static final double SCALE = 1.13;
@@ -45,6 +50,24 @@ public final class UIFactory {
     private static final int SCROLL_THUMB_INSET = 2;
     private static final int SCROLL_THUMB_ARC_SIZE = 10;
 
+    private UIFactory() {
+    }
+
+    /**
+     * Creates a fully configurable styled button.
+     *
+     * @param text             the button text
+     * @param iconPath         the path of the icon to display, or blank for none
+     * @param iconSize         the icon size in pixels
+     * @param backGround       the background color
+     * @param height           the preferred height, or non-positive to leave unset
+     * @param width            the preferred width, or non-positive to leave unset
+     * @param addListener      whether to add the default hover listener
+     * @param addIconHighlight whether the icon should enlarge on hover
+     * @param addFontHighlight whether the font should enlarge on hover
+     * @param font             the button font
+     * @return the configured button
+     */
     public static JButton createButton(final String text, final String iconPath,
             final int iconSize, final Color backGround, final int height, final int width,
             final boolean addListener, final boolean addIconHighlight, final boolean addFontHighlight,
@@ -90,11 +113,24 @@ public final class UIFactory {
         return button;
     }
 
+    /**
+     * Creates a styled button with default styling and the given text.
+     *
+     * @param text the button text
+     * @return the configured button
+     */
     public static JButton createButton(final String text) {
         return createButton(text, "", 1, UIConstants.BUTTON_BACKGROUND,
                 ZERO, ZERO, true, false, false, UIConstants.FONT);
     }
 
+    /**
+     * Loads an image icon from the given path, returning an empty icon if the
+     * path is blank or the resource cannot be found.
+     *
+     * @param iconPath the path of the icon
+     * @return the loaded icon, or an empty icon
+     */
     public static ImageIcon loadIcon(final String iconPath) {
         if (iconPath == null || iconPath.isBlank()) {
             return new ImageIcon();
@@ -108,6 +144,11 @@ public final class UIFactory {
         return new ImageIcon(iconPath);
     }
 
+    /**
+     * Adds a hover listener that brightens the button while the pointer is over it.
+     *
+     * @param button the button to decorate
+     */
     public static void buttonListener(final JButton button) {
         final MouseAdapter hoverListener = new MouseAdapter() {
             @Override
@@ -123,6 +164,12 @@ public final class UIFactory {
         button.addMouseListener(hoverListener);
     }
 
+    /**
+     * Adds a hover effect that enlarges the button's icon while the pointer is
+     * over it.
+     *
+     * @param button the button to decorate
+     */
     public static void highlightIcon(final JButton button) {
 
         if (!(button.getIcon() instanceof ImageIcon icon)) {
@@ -151,6 +198,12 @@ public final class UIFactory {
         });
     }
 
+    /**
+     * Adds a hover effect that enlarges the button's font while the pointer is
+     * over it.
+     *
+     * @param button the button to decorate
+     */
     public static void highlightFont(final JButton button) {
         final Font normalFont = button.getFont();
         final Font hoverFont = normalFont.deriveFont((float) (normalFont.getSize() * SCALE));
@@ -167,6 +220,13 @@ public final class UIFactory {
         });
     }
 
+    /**
+     * Creates a styled, centered label.
+     *
+     * @param text the label text
+     * @param font the label font
+     * @return the configured label
+     */
     public static JLabel createLabel(final String text, final Font font) {
         final JLabel label = new JLabel(text);
         label.setBackground(UIConstants.BACKGROUND);
@@ -179,6 +239,12 @@ public final class UIFactory {
         return label;
     }
 
+    /**
+     * Creates a styled text field with the given font.
+     *
+     * @param font the field font
+     * @return the configured text field
+     */
     public static JTextField createTextField(final Font font) {
         final JTextField field = new JTextField(TEXT_SIZE);
         field.setFont(font);
@@ -189,10 +255,21 @@ public final class UIFactory {
         return field;
     }
 
+    /**
+     * Creates a styled text field with the default font.
+     *
+     * @return the configured text field
+     */
     public static JTextField createTextField() {
         return createTextField(UIConstants.FONT);
     }
 
+    /**
+     * Creates a styled panel using the given layout.
+     *
+     * @param layout the layout manager
+     * @return the configured panel
+     */
     public static JPanel createPanel(final LayoutManager layout) {
 
         final JPanel panel = new JPanel();
@@ -201,6 +278,11 @@ public final class UIFactory {
         return panel;
     }
 
+    /**
+     * Creates a styled panel with a vertical box layout.
+     *
+     * @return the configured panel
+     */
     public static JPanel createPanel() {
         final JPanel panel = createPanel(new FlowLayout());
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -208,19 +290,41 @@ public final class UIFactory {
         return panel;
     }
 
+    /**
+     * Applies the standard background and foreground colors to a panel.
+     *
+     * @param panel the panel to style
+     */
     public static void stylePanel(final JPanel panel) {
         panel.setBackground(UIConstants.BACKGROUND);
         panel.setForeground(UIConstants.TEXT_COLOR);
     }
 
+    /**
+     * Brightens the background color of the given component.
+     *
+     * @param component the component to brighten
+     */
     public static void brighter(final Component component) {
         component.setBackground(component.getBackground().brighter());
     }
 
+    /**
+     * Adds a border to the given component to highlight it.
+     *
+     * @param component the component to highlight
+     */
     public static void highlight(final JComponent component) {
         component.setBorder(BorderFactory.createLineBorder(UIConstants.PANEL_BORDER));
     }
 
+    /**
+     * Creates a styled combo box containing the given items.
+     *
+     * @param <T>   the type of the items
+     * @param items the items to display
+     * @return the configured combo box
+     */
     public static <T> JComboBox<T> createComboBox(final T[] items) {
         final JComboBox<T> comboBox = new JComboBox<>(items);
         comboBox.setFont(UIConstants.FONT);
@@ -230,6 +334,13 @@ public final class UIFactory {
         return comboBox;
     }
 
+    /**
+     * Creates a styled table with a given model, including alternating
+     * row colors and a themed header.
+     *
+     * @param model the table model
+     * @return the configured table
+     */
     public static JTable createTable(final DefaultTableModel model) {
         final JTable table = new JTable(model);
         final JTableHeader tableHeader = table.getTableHeader();
@@ -264,24 +375,30 @@ public final class UIFactory {
             public Component getTableCellRendererComponent(
                     final JTable table, final Object value, final boolean isSelected, final boolean hasFocus,
                     final int row, final int column) {
-                        final Component cell = super.getTableCellRendererComponent(
+                final Component cell = super.getTableCellRendererComponent(
                         table, value, isSelected, hasFocus, row, column);
 
-                        if (isSelected) {
-                            cell.setBackground(UIConstants.TABLE_SELECTION);
-                            cell.setForeground(UIConstants.DARK_TEXT_COLOR);
-                        } else {
-                            cell.setBackground(row % 2 == 0 ? UIConstants.TABLE_ROW_EVEN : UIConstants.TABLE_ROW_ODD);
-                            cell.setForeground(UIConstants.TEXT_COLOR);
-                        }
+                if (isSelected) {
+                    cell.setBackground(UIConstants.TABLE_SELECTION);
+                    cell.setForeground(UIConstants.DARK_TEXT_COLOR);
+                } else {
+                    cell.setBackground(row % 2 == 0 ? UIConstants.TABLE_ROW_EVEN : UIConstants.TABLE_ROW_ODD);
+                    cell.setForeground(UIConstants.TEXT_COLOR);
+                }
 
-                        return cell;
+                return cell;
             }
         });
 
         return table;
     }
 
+    /**
+     * Creates a styled scroll pane wrapping the given table.
+     *
+     * @param table the table to wrap
+     * @return the configured scroll pane
+     */
     public static JScrollPane createScrollPane(final JTable table) {
         final JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setBackground(UIConstants.BACKGROUND);
@@ -295,6 +412,11 @@ public final class UIFactory {
         return scrollPane;
     }
 
+    /**
+     * Applies the custom dark theme to the given scroll bar.
+     *
+     * @param scrollBar the scroll bar to style
+     */
     public static void styleScrollBar(final JScrollBar scrollBar) {
         scrollBar.setBackground(UIConstants.SCROLLBAR_TRACK);
         scrollBar.setUnitIncrement(SCROLL_UNIT_INCREMENT);
@@ -349,6 +471,12 @@ public final class UIFactory {
         });
     }
 
+    /**
+     * Converts a color to its hexadecimal string representation.
+     *
+     * @param color the color to convert
+     * @return the color as a {@code #rrggbb} string
+     */
     public static String toHex(final Color color) {
         return String.format("#%02x%02x%02x",
                 color.getRed(),

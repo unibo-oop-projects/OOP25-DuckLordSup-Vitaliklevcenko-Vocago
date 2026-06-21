@@ -75,17 +75,17 @@ public final class VocabularyEditorPanel extends JPanel {
         this.controller = controller;
         this.model = new DefaultTableModel();
         this.table = UIFactory.createTable(this.model);
-        this.addRowButton = UIFactory.createButton("ADD A ROW", "", 
-                SIZE_ZERO, UIConstants.BUTTON_BACKGROUND, 
-                SIZE_ZERO, 
+        this.addRowButton = UIFactory.createButton("ADD A ROW", "",
+                SIZE_ZERO, UIConstants.BUTTON_BACKGROUND,
+                SIZE_ZERO,
                 SIZE_ZERO, true,
                 true, true, UIConstants.FONT);
-        this.deleteRowButton = UIFactory.createButton("DELETE SELECTED ROWS", "", 
+        this.deleteRowButton = UIFactory.createButton("DELETE SELECTED ROWS", "",
                 SIZE_ZERO, UIConstants.BUTTON_BACKGROUND,
                 SIZE_ZERO, SIZE_ZERO, true, true, true, UIConstants.FONT);
-        this.saveChangesButton = UIFactory.createButton("SAVE CHANGES", "", 
-                SIZE_ZERO, UIConstants.BUTTON_BACKGROUND, 
-                SIZE_ZERO, 
+        this.saveChangesButton = UIFactory.createButton("SAVE CHANGES", "",
+                SIZE_ZERO, UIConstants.BUTTON_BACKGROUND,
+                SIZE_ZERO,
                 SIZE_ZERO,
                 true, true, true, UIConstants.FONT);
         this.goBackButton = UIFactory.createButton("", "data/resources/pictures/back.png",
