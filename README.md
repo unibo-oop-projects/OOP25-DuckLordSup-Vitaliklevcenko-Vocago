@@ -1,4 +1,4 @@
-# VocaGo
+# Vocago
 
 A vocabulary-learning desktop application (Java 21, Swing).
 
