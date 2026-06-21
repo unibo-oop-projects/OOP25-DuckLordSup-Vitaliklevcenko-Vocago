@@ -23,6 +23,10 @@ import it.unibo.vocago.model.types.DailyGoalSettings;
 import it.unibo.vocago.view.util.UIConstants;
 import it.unibo.vocago.view.util.UIFactory;
 
+/**
+ * Panel for configuring the current profile, such as renaming it, changing the
+ * languages and setting the daily study goal.
+ */
 public final class ConfigureProfilePanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
@@ -59,6 +63,11 @@ public final class ConfigureProfilePanel extends JPanel {
     private final JSlider dailyGoalSlider;
     private final JLabel dailyGoalValueLabel;
 
+    /**
+     * Creates the panel, wiring it to the given controller.
+     *
+     * @param controller the controller user actions are forwarded to
+     */
     @SuppressFBWarnings(value = "EI2", justification = "The panel intentionally shares the app controller.")
     public ConfigureProfilePanel(final Controller controller) {
         this.controller = controller;

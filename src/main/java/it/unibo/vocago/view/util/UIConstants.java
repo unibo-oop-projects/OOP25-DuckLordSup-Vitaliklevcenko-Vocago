@@ -57,7 +57,5 @@ public final class UIConstants {
     public static final Font BIG_PROMT_FONT = new Font(UIConstants.FONT_NAME, Font.PLAIN, 46);
 
     private static final String FONT_NAME = "Roboto";
-
-    private UIConstants() {
-    }
+    
 }

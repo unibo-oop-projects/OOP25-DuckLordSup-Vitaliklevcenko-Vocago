@@ -9,7 +9,6 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -34,6 +33,10 @@ import it.unibo.vocago.model.vocabulary.api.Word;
 import it.unibo.vocago.view.util.UIConstants;
 import it.unibo.vocago.view.util.UIFactory;
 
+/**
+ * Panel for editing the current profile's vocabulary, allowing the user to add,
+ * modify and remove vocabulary items.
+ */
 public final class VocabularyEditorPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
@@ -62,6 +65,11 @@ public final class VocabularyEditorPanel extends JPanel {
     private final JButton findButton;
     private final transient Controller controller;
 
+    /**
+     * Creates the panel, wiring it to the given controller.
+     *
+     * @param controller the controller user actions are forwarded to
+     */
     @SuppressFBWarnings(value = "EI2", justification = "The panel intentionally shares the app controller.")
     public VocabularyEditorPanel(final Controller controller) {
         this.controller = controller;

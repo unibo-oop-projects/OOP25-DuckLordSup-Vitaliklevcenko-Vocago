@@ -14,6 +14,10 @@ import it.unibo.vocago.model.user.api.User;
 import it.unibo.vocago.view.util.UIConstants;
 import it.unibo.vocago.view.util.UIFactory;
 
+/**
+ * Panel showing the start screen, where the user selects an existing profile or
+ * chooses to create a new one, in case of absence of profiles, it will start from create new profile panel.
+ */
 public final class StartPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
@@ -31,6 +35,11 @@ public final class StartPanel extends JPanel {
     };
     private final transient Controller controller;
 
+    /**
+     * Creates the panel, wiring it to the given controller.
+     *
+     * @param controller the controller user actions are forwarded to
+     */
     @SuppressFBWarnings(value = "EI2", justification = "The panel intentionally shares the app controller.")
     public StartPanel(final Controller controller) {
         this.controller = controller;

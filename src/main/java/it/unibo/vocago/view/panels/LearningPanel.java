@@ -21,6 +21,11 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
+/**
+ * Panel for a learning session, showing the current question and collecting the
+ * user's answer, with controls to reveal the answer, skip, and switch
+ * direction.
+ */
 public final class LearningPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
@@ -53,6 +58,11 @@ public final class LearningPanel extends JPanel {
     private JButton switchLanguageButton;
     private Timer timer;
 
+    /**
+     * Creates the panel, wiring it to the given controller.
+     *
+     * @param controller the controller user actions are forwarded to
+     */
     @SuppressFBWarnings(value = "EI2", justification = "The panel intentionally shares the app controller.")
     public LearningPanel(final Controller controller) {
 
@@ -276,6 +286,9 @@ public final class LearningPanel extends JPanel {
         this.answerLabel.setText(text);
     }
 
+    /**
+     * Stops the session timer when the panel is removed from the window.
+     */
     @Override
     public void removeNotify() {
         if (this.timer != null) {

@@ -14,6 +14,10 @@ import it.unibo.vocago.controller.api.Controller;
 import it.unibo.vocago.view.util.UIConstants;
 import it.unibo.vocago.view.util.UIFactory;
 
+/**
+ * Panel for creating a new profile, collecting the profile name and the two
+ * languages.
+ */
 public final class CreateNewProfilePanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
@@ -30,6 +34,11 @@ public final class CreateNewProfilePanel extends JPanel {
     private final JComboBox<String> secondLanguageComboBox;
     private final JButton goBackButton;
 
+    /**
+     * Creates the panel, wiring it to the given controller.
+     *
+     * @param controller the controller user actions are forwarded to
+     */
     @SuppressFBWarnings(value = "EI2", justification = "The panel intentionally shares the app controller.")
     public CreateNewProfilePanel(final Controller controller) {
 

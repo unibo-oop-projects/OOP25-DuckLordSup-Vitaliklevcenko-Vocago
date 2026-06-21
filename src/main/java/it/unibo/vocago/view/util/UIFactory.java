@@ -45,9 +45,6 @@ public final class UIFactory {
     private static final int SCROLL_THUMB_INSET = 2;
     private static final int SCROLL_THUMB_ARC_SIZE = 10;
 
-    private UIFactory() {
-    }
-
     public static JButton createButton(final String text, final String iconPath,
             final int iconSize, final Color backGround, final int height, final int width,
             final boolean addListener, final boolean addIconHighlight, final boolean addFontHighlight,

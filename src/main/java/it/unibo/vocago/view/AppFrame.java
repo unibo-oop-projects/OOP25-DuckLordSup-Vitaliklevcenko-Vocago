@@ -18,6 +18,11 @@ import it.unibo.vocago.view.panels.StartPanel;
 import it.unibo.vocago.view.panels.VocabularyEditorPanel;
 import it.unibo.vocago.view.util.UIFactory;
 
+/**
+ * Swing implementation of {@link AppView}, based on a {@link JFrame}. Holds the
+ * application's panels and switches between them, and shows the dialogs used to
+ * give feedback to the user.
+ */
 public final class AppFrame extends JFrame implements AppView {
 
     private static final long serialVersionUID = 1L;
@@ -35,6 +40,11 @@ public final class AppFrame extends JFrame implements AppView {
     private CreateNewProfilePanel createNewProfilePanel;
     private ConfigureProfilePanel configureProfilePanel;
 
+    /**
+     * Creates the main application window for the given controller.
+     *
+     * @param controller the controller the view forwards user actions to
+     */
     @SuppressFBWarnings(value = "EI2", justification = "The view intentionally shares the app controller.")
     public AppFrame(final Controller controller) {
 

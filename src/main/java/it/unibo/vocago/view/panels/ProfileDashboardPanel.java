@@ -18,6 +18,10 @@ import it.unibo.vocago.view.util.UIConstants;
 import it.unibo.vocago.view.util.UIFactory;
 import java.awt.Image;
 
+/**
+ * Panel showing the dashboard of the current profile, including its statistics
+ * and the entry points to studying and editing the vocabulary.
+ */
 public final class ProfileDashboardPanel extends JPanel {
 
         private static final long serialVersionUID = 1L;
@@ -52,6 +56,11 @@ public final class ProfileDashboardPanel extends JPanel {
         private final JButton resetStatisticsButton;
         private final JButton configureProfileButton;
 
+        /**
+         * Creates the panel, wiring it to the given controller.
+         *
+         * @param controller the controller user actions are forwarded to
+         */
         @SuppressFBWarnings(value = "EI2", justification = "The panel intentionally shares the app controller.")
         public ProfileDashboardPanel(final Controller controller) {
                 this.controller = controller;
