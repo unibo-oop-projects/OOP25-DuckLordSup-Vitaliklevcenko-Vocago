@@ -46,6 +46,7 @@ public class ProfileManagerImpl implements ProfileManager{
     }
 
     @Override
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public void createProfile(final String profileName, final String firstLanguage, final String secondLanguage) {
         final User profile = new Profile(profileName, firstLanguage, secondLanguage);
         this.userRepository.save(profile);
@@ -112,6 +113,7 @@ public class ProfileManagerImpl implements ProfileManager{
     }
 
     @Override
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public boolean deleteCurrentProfile() {
         if (!hasCurrentProfile()) {
             return false;
