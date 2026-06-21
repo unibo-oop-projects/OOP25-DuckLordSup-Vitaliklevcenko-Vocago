@@ -23,6 +23,8 @@ public final class StatisticsCoordinator {
 
     @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public Statistics getDashboardStatistics() {
+        // Final UI boundary: convert unexpected failures into user feedback and safe data.
+        // CHECKSTYLE: IllegalCatch OFF
         try {
             return this.profileManager.getDashboardStatistics();
         } catch (RuntimeException exception) {
@@ -37,6 +39,7 @@ public final class StatisticsCoordinator {
                     0,
                     0L);
         }
+        // CHECKSTYLE: IllegalCatch ON
     }
 
     @SuppressWarnings("PMD.AvoidCatchingGenericException")
@@ -48,6 +51,8 @@ public final class StatisticsCoordinator {
             return false;
         }
 
+        // Final UI boundary: convert unexpected failures into user feedback.
+        // CHECKSTYLE: IllegalCatch OFF
         try {
             this.profileManager.resetStatistics();
             this.appView.showInfo("Statistics Reset", "Your statistics have been reset");
@@ -56,5 +61,6 @@ public final class StatisticsCoordinator {
             this.appView.showError("Statistics Error", "Failed to reset your statistics, try again!");
             return false;
         }
+        // CHECKSTYLE: IllegalCatch ON
     }
 }

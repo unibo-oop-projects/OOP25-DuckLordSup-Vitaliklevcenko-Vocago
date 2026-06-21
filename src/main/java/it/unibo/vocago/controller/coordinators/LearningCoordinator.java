@@ -87,6 +87,8 @@ public final class LearningCoordinator {
     @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public void saveLearningStatistics() {
         if (this.learningSession != null) {
+            // Final UI boundary: IllegalCatch - intentional catch convert unexpected failures into user feedback.
+            // CHECKSTYLE: IllegalCatch OFF
             try {
                 this.profileManager.saveLearningStatistics(learningSession);
             } catch (RuntimeException exception) {
@@ -94,6 +96,7 @@ public final class LearningCoordinator {
                         "Save statistics failed",
                         "Could not save statistics file");
             }
+            // CHECKSTYLE: IllegalCatch ON
         }
     }
 

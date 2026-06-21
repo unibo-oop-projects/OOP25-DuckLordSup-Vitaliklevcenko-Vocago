@@ -23,12 +23,15 @@ public final class ProfileCoordinator {
     }
 
     public List<User> getExistingProfiles() {
+        // Final UI boundary: IllegalCatch - intentional catch convert unexpected failures into user feedback.
+        // CHECKSTYLE: IllegalCatch OFF
         try {
             return this.profileManager.getExistingProfiles();
         } catch (RuntimeException exception) {
             this.appView.showError("Profile Error", "Could not load saved profiles.");
             return List.of();
         }
+        // CHECKSTYLE: IllegalCatch ON
     }
 
     public boolean createProfile(final String profileName, final String firstLanguage, final String secondLanguage) {
@@ -38,6 +41,8 @@ public final class ProfileCoordinator {
                     "Please enter a valid profile name.");
             return false;
         }
+        // Final UI boundary: IllegalCatch - intentional catch convert unexpected failures into user feedback.
+        // CHECKSTYLE: IllegalCatch OFF
         try {
             if (this.profileManager.profileExists(profileName)) {
                 this.appView.showError(
@@ -53,6 +58,7 @@ public final class ProfileCoordinator {
                     "Could not create profile, try again!");
             return false;
         }
+        // CHECKSTYLE: IllegalCatch ON
     }
 
     public boolean deleteProfile() {
@@ -62,12 +68,15 @@ public final class ProfileCoordinator {
         if (answer != JOptionPane.YES_OPTION) {
             return false;
         }
+        // Final UI boundary: IllegalCatch - intentional catch convert unexpected failures into user feedback.
+        // CHECKSTYLE: IllegalCatch OFF
         try {
             return this.profileManager.deleteCurrentProfile();
         } catch (RuntimeException exception) {
             this.appView.showError("Delete Failed", "The profile could not be deleted, try again!");
             return false;
         }
+        // CHECKSTYLE: IllegalCatch ON
     }
 
     public void chooseProfile(final User profile) {
@@ -79,15 +88,20 @@ public final class ProfileCoordinator {
     }
 
     public int getDailyGoal() {
+        // Final UI boundary: IllegalCatch - intentional catch convert unexpected failures into user feedback.
+        // CHECKSTYLE: IllegalCatch OFF
         try {
             return this.profileManager.getDailyGoal();
         } catch (RuntimeException exception) {
             return DailyGoalSettings.DEFAULT;
         }
+        // CHECKSTYLE: IllegalCatch ON
     }
 
     public boolean saveProfileConfigurations(final String profileName, final String firstLanguage,
             final String secondLanguage, final int dailyGoal) {
+        // Final UI boundary: IllegalCatch - intentional catch convert unexpected failures into user feedback.
+        // CHECKSTYLE: IllegalCatch OFF
         try {
             final String originalProfileName = this.profileManager.getCurrentProfile().getUserName();
             final String normalizedProfileName = (profileName == null || profileName.isBlank())
@@ -116,6 +130,7 @@ public final class ProfileCoordinator {
                     "Could not change profile configuration, try again!");
             return false;
         }
+        // CHECKSTYLE: IllegalCatch ON
     }
 
     public void updateExpiredStreak() {

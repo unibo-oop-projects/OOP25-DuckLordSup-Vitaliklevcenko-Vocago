@@ -18,11 +18,14 @@ public final class VocabularyCoordinator {
 
     @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public void saveVocabulary(final Vocabulary vocabulary) {
+        // Final UI boundary: convert unexpected failures into user feedback.
+        // CHECKSTYLE: IllegalCatch OFF
         try {
             this.profileManager.saveVocabulary(vocabulary);
         } catch (RuntimeException exception) {
             this.appView.showError("Save Failed", "Could not save changes, try again!");
         }
+        // CHECKSTYLE: IllegalCatch ON
     }
 
     public boolean vocabularyIsValid() {
