@@ -62,7 +62,7 @@ public final class AppFrame extends JFrame implements AppView {
                 controller.closeApp();
             }
         });
-        
+
         this.setVisible(true);
     }
 

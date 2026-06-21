@@ -26,13 +26,13 @@ public final class StartPanel extends JPanel{
             "data/resources/pictures/bear.png"
     };
     private final transient Controller controller;
-    
+
     @SuppressFBWarnings(value = "EI2", justification = "The panel intentionally shares the app controller.")
     public StartPanel(final Controller controller) {
         this.controller = controller;
         buildLayout();
     }
-    
+
     private void buildLayout() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         UIFactory.stylePanel(this);

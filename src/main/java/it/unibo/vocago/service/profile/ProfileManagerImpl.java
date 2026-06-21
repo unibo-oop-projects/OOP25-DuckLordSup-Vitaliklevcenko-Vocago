@@ -182,7 +182,7 @@ public class ProfileManagerImpl implements ProfileManager{
                 this.statisticsRepository.getCurrentStreak(profileName),
                 this.statisticsRepository.getTotalStudyTime(profileName));
     }
-    
+
     @Override
     public void resetStatistics() {
         if (hasCurrentProfile()) {
@@ -221,7 +221,7 @@ public class ProfileManagerImpl implements ProfileManager{
     public int getDailyGoal() {
         return this.statisticsRepository.getDailyGoal(getCurrentProfile().getUserName());
     }
-    
+
     @Override
     public void saveProfileConfigurations(final String newProfileName, final String firstLanguage,
             final String secondLanguage, final int dailyGoal) {

@@ -100,5 +100,5 @@ public final class CreateNewProfilePanel extends JPanel{
                 (String) this.firstLanguageComboBox.getSelectedItem(),
                 (String) this.secondLanguageComboBox.getSelectedItem());
     }
-    
+
 }

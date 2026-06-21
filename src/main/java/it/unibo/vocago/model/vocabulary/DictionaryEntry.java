@@ -16,7 +16,7 @@ public class DictionaryEntry implements VocabularyItem {
     private final Progress firstProgress;
     private final Progress secondProgress;
 
-     public DictionaryEntry(final List<Word> firstLanguageWords, final List<Word> secondLanguageWords) 
+     public DictionaryEntry(final List<Word> firstLanguageWords, final List<Word> secondLanguageWords)
     {
         this(firstLanguageWords, secondLanguageWords, new WordProgress(), new WordProgress());
     }
@@ -53,12 +53,12 @@ public class DictionaryEntry implements VocabularyItem {
             case SECOND_TO_FIRST -> this.secondProgress;
         };
     }
-    
+
     @Override
     public Boolean isValid() {
         return hasNonBlankWord(getFirstLanguageWords()) && hasNonBlankWord(getSecondLanguageWords());
     }
-    
+
     private boolean hasNonBlankWord(final List<Word> words) {
         for (final Word word : words) {
             if (!word.getWord().isBlank()) {

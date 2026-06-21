@@ -13,6 +13,6 @@ public interface Vocabulary {
     boolean isEmpty();
 
     Boolean isValid();
-    
+
     int size();
 }

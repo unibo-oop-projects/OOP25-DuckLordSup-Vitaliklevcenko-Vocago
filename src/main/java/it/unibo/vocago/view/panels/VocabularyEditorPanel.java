@@ -248,7 +248,7 @@ public final class VocabularyEditorPanel extends JPanel{
             }
         }
     }
-    
+
     private void askBeforeLeaving() {
         final int answer = this.controller.saveBeforeLeaving();
 
@@ -331,7 +331,7 @@ public final class VocabularyEditorPanel extends JPanel{
         }
         return entries;
     }
-    
+
     private MasteryLevel masteryLevelAt(final DefaultTableModel model, final int row, final int column) {
         return model.getValueAt(row, column) instanceof MasteryLevel masteryLevel ? masteryLevel : MasteryLevel.NEW;
     }

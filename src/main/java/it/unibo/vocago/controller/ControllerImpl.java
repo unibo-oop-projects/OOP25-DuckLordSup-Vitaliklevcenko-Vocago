@@ -42,12 +42,12 @@ public class ControllerImpl implements Controller {
             view().showStartPanel();
         }
     }
-    
+
     @Override
     public void showStartPanel() {
         init();
     }
-    
+
     @Override
     public void showCreateNewProfilePanel() {
         view().showCreateNewProfilePanel();
@@ -69,7 +69,7 @@ public class ControllerImpl implements Controller {
     public void showLearningPanel() {
         this.learningCoordinator.showLearningPanel();
     }
-    
+
     @Override
     public void showConfigureProfilePanel() {
         view().showConfigureProfilePanel();
@@ -120,7 +120,7 @@ public class ControllerImpl implements Controller {
     public List<User> getExistingProfiles() {
         return this.profileCoordinator.getExistingProfiles();
     }
-    
+
     @Override
     public void createProfile(final String profileName, final String firstLanguage, final String secondLanguage) {
         if (this.profileCoordinator.createProfile(profileName, firstLanguage, secondLanguage)) {
@@ -180,7 +180,7 @@ public class ControllerImpl implements Controller {
     public Statistics getDashboardStatistics() {
         return this.statisticsCoordinator.getDashboardStatistics();
     }
-    
+
     @Override
     public void resetStatistics() {
         if (this.statisticsCoordinator.resetStatistics()) {
@@ -194,7 +194,7 @@ public class ControllerImpl implements Controller {
             showProfileDashboardPanel();
         }
     }
-    
+
     @Override
     @SuppressFBWarnings(value = "DM_EXIT", justification = "Closing the desktop app intentionally exits the JVM.")
     public void closeApp() {
@@ -209,5 +209,5 @@ public class ControllerImpl implements Controller {
         return this.appView;
     }
 
-    
+
 }

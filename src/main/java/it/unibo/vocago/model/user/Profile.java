@@ -29,7 +29,7 @@ public class Profile implements User {
         this.firstLanguage = firstLanguage;
         this.secondLanguage = secondLanguage;
     }
-    
+
     @Override
     public String getUserName() {
         return this.userName;
@@ -40,12 +40,12 @@ public class Profile implements User {
     public Vocabulary getVocabulary() {
         return this.vocabulary;
     }
-    
+
     @Override
     public String getFirstLanguage() {
         return this.firstLanguage;
     }
-    
+
     @Override
     public String getSecondLanguage() {
         return this.secondLanguage;

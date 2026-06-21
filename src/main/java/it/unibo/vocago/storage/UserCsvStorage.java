@@ -79,7 +79,7 @@ public class UserCsvStorage implements UserRepository {
                                 Level.WARNING,
                                 "Skipping corrupted profile file: " + file,
                                 exception);
-                    } 
+                    }
                 }
             }
             return users;

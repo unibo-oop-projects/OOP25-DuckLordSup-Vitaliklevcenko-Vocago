@@ -85,7 +85,7 @@ public class LearningSessionImpl implements LearningSession {
     public boolean currentQuestionEvaluated() {
         return this.currentQuestionEvaluated;
     }
-    
+
     private void updateProgress(final boolean correct) {
         final Progress progress = this.question
                 .getItem()

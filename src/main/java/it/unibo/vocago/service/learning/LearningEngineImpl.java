@@ -51,7 +51,7 @@ public class LearningEngineImpl implements LearningEngine{
         trimSeenItems(vocabulary);
         return selectNextQuestion(validCandidates(vocabulary), direction);
     }
-    
+
     private void trimSeenItems(final Vocabulary vocabulary) {
         // already asked items can be removed after a while
         final int validItemCount = (int) vocabulary.getItems().stream()
@@ -88,7 +88,7 @@ public class LearningEngineImpl implements LearningEngine{
                 newItems.add(item);
             }
         }
-        
+
         if (!newItems.isEmpty()) {
             return createQuestion(newItems.get(this.random.nextInt(newItems.size())), direction);
         }

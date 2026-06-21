@@ -37,8 +37,8 @@ public final class LearningPanel extends JPanel{
     @SuppressFBWarnings(value = "EI2", justification = "The panel intentionally shares the app controller.")
     public LearningPanel(final Controller controller) {
 
-        
-        
+
+
         this.controller = controller;
         this.startTime = controller.getLearningStartTime();
         UIFactory.stylePanel(this);
@@ -101,7 +101,7 @@ public final class LearningPanel extends JPanel{
         startTimer();
         SwingUtilities.invokeLater(this.userAnswer::requestFocusInWindow);
     }
-    
+
     private void buildLayout() {
         setLayout(new BorderLayout());
 
@@ -109,7 +109,7 @@ public final class LearningPanel extends JPanel{
         add(createMainPanel(), BorderLayout.CENTER);
         add(createButtonsPanel(), BorderLayout.SOUTH);
     }
-    
+
     private JPanel createHeaderPanel() {
         final JPanel welcomPanel = UIFactory.createPanel(new GridLayout());
         welcomPanel.setPreferredSize(new Dimension(Integer.MAX_VALUE, HEADER_HEIGHT));
@@ -132,7 +132,7 @@ public final class LearningPanel extends JPanel{
         welcomPanel.add(rightPanel, BorderLayout.EAST);
         return welcomPanel;
     }
-    
+
     private JPanel createMainPanel() {
         final JPanel mainPanel = UIFactory.createPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
         mainPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, LANGUAGE_PANEL_HEIGHT));
@@ -188,7 +188,7 @@ public final class LearningPanel extends JPanel{
         centerPanel.add(this.answerPanel);
         return centerPanel;
     }
-    
+
     private JPanel createButtonsPanel() {
         final JPanel buttonsPanel = UIFactory.createPanel(new GridLayout());
         buttonsPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, BUTTON_PANEL_HEIGHT));
@@ -200,7 +200,7 @@ public final class LearningPanel extends JPanel{
         buttonsPanel.add(this.nextWordButton);
         return buttonsPanel;
     }
-    
+
     private void actionRegister() {
         this.goBackButton.addActionListener(e -> this.controller.showProfileDashboardPanel());
         this.userAnswer.addActionListener(e -> checkAnswer());
@@ -263,4 +263,3 @@ public final class LearningPanel extends JPanel{
         super.removeNotify();
     }
 }
-

@@ -150,7 +150,7 @@ public class StatisticsFileStorage implements StatisticsRepository {
             }
             saveStatistics(userName, lastStudyDate, currentStreak, totalStudyTime, dailyGoal);
             return Files.readAllLines(fileFor(userName), StandardCharsets.UTF_8);
-            
+
         } catch (IOException exception) {
             throw new UncheckedIOException("Could not load statistics for user: " + userName, exception);
         }

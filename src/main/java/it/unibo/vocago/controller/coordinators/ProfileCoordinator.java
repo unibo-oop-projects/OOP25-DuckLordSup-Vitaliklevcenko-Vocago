@@ -136,5 +136,5 @@ public final class ProfileCoordinator {
     public void updateExpiredStreak() {
         this.profileManager.updateExpiredStreak();
     }
-    
+
 }

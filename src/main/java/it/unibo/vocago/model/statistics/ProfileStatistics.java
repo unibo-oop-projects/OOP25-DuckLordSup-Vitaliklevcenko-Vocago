@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import it.unibo.vocago.model.statistics.api.Statistics;
 
 public class ProfileStatistics implements Statistics {
-    
+
     private final int masteredItems;
     private final int correctAnswers;
     private final int wrongAnswers;
@@ -14,14 +14,14 @@ public class ProfileStatistics implements Statistics {
     private final LocalDate lastStudyDate;
     private final int currentStreak;
     private final long totalStudyTime;
-    
+
     public ProfileStatistics(
-        
-            final int masteredItems, 
-            final int correctAnswers, 
-            final int wrongAnswers, 
-            final int totalWords, 
-            final double accuracyPercent, 
+
+            final int masteredItems,
+            final int correctAnswers,
+            final int wrongAnswers,
+            final int totalWords,
+            final double accuracyPercent,
             final LocalDate lastStudyDate,
             final int currentStreak,
             final long totalStudyTime) {
@@ -35,7 +35,7 @@ public class ProfileStatistics implements Statistics {
         this.lastStudyDate = lastStudyDate;
         this.totalStudyTime = totalStudyTime;
     }
-    
+
     @Override
     public int getMasteredItems() {
         return this.masteredItems;
@@ -60,7 +60,7 @@ public class ProfileStatistics implements Statistics {
     public double getAccuracyPercent() {
         return this.accuracyPercent;
     }
-    
+
     @Override
     public LocalDate getLastStudyDate() {
         return this.lastStudyDate;

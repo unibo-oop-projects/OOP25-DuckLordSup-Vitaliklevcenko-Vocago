@@ -7,9 +7,9 @@ public interface User {
     String getUserName();
 
     Vocabulary getVocabulary();
-    
+
     String getFirstLanguage();
 
     String getSecondLanguage();
-    
+
 }

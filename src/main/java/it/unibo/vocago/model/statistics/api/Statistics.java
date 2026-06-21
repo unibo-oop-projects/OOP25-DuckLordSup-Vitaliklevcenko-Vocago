@@ -13,7 +13,7 @@ public interface Statistics {
     int getTotalWords();
 
     double getAccuracyPercent();
-    
+
     LocalDate getLastStudyDate();
 
     int getCurrentStreak();

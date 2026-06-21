@@ -16,7 +16,7 @@ public enum MasteryLevel {
     public double getMultiplier() {
         return this.multiplier;
     }
-    
+
     public MasteryLevel next() {
         if (this == MASTER) {
             return this;

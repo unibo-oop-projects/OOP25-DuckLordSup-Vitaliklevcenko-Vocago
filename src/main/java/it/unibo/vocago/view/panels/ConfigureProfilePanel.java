@@ -184,7 +184,7 @@ public final class ConfigureProfilePanel extends JPanel{
             (String) this.firstLanguageComboBox.getSelectedItem(),
             (String) this.secondLanguageComboBox.getSelectedItem(),
             this.dailyGoalSlider.getValue()));
-            
+
         this.goBackButton.addActionListener(e -> this.controller.showProfileDashboardPanel());
         this.deleteProfileButton.addActionListener(e -> this.controller.deleteProfile());
         this.dailyGoalSlider.addChangeListener(

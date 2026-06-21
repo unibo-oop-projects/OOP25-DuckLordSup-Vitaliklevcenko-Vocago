@@ -60,7 +60,7 @@ public interface Controller {
     int getDailyGoal();
 
     void saveProfileConfigurations(String profileName, String firstLanguage, String secondLanguage, int dailyGoal);
-    
+
     void dailyGoalAchieved();
 
     void closeApp();
