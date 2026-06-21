@@ -17,6 +17,10 @@ import it.unibo.vocago.model.vocabulary.api.VocabularyItem;
 import it.unibo.vocago.model.vocabulary.api.Word;
 import it.unibo.vocago.service.learning.api.LearningEngine;
 
+
+/**
+ * Default implementation of {@link LearningEngine}.
+ */
 public final class LearningEngineImpl implements LearningEngine {
 
     private static final int MAX_RECENT_ITEMS = 20;
@@ -25,6 +29,9 @@ public final class LearningEngineImpl implements LearningEngine {
     private final Queue<VocabularyItem> lastItems;
     private final Random random = new Random();
 
+    /**
+     * Creates a learning engine.
+     */
     public LearningEngineImpl() {
         this.lastItems = new ArrayDeque<>();
     }

@@ -10,6 +10,12 @@ import it.unibo.vocago.model.user.api.User;
 import it.unibo.vocago.service.profile.api.ProfileManager;
 import it.unibo.vocago.view.api.AppView;
 
+/**
+ * Coordinates profile related operations on behalf of the controller: listing,
+ * creating, choosing, deleting and configuring profiles. Failures from the
+ * underlying {@link ProfileManager} are caught at this boundary and reported to
+ * the user through the {@link AppView}.
+ */
 @SuppressWarnings("PMD.AvoidCatchingGenericException")
 public final class ProfileCoordinator {
 
@@ -19,14 +25,27 @@ public final class ProfileCoordinator {
     private final ProfileManager profileManager;
     private final AppView appView;
 
+    /**
+     * Creates a profile coordinator.
+     *
+     * @param profileManager the profile manager that performs the operations
+     * @param appView        the view used to report feedback to the user
+     */
     @SuppressFBWarnings(value = "EI2", justification = "The coordinator intentionally shares the profile manager.")
     public ProfileCoordinator(final ProfileManager profileManager, final AppView appView) {
         this.profileManager = profileManager;
         this.appView = appView;
     }
 
+    /**
+     * Returns the list of existing profiles, or an empty list and an error
+     * message if they cannot be loaded.
+     *
+     * @return the existing profiles
+     */
     public List<User> getExistingProfiles() {
-        // Final UI boundary: IllegalCatch - intentional catch convert unexpected failures into user feedback.
+        // Final UI boundary: IllegalCatch - intentional catch convert unexpected
+        // failures into user feedback.
         // CHECKSTYLE: IllegalCatch OFF
         try {
             return this.profileManager.getExistingProfiles();
@@ -37,6 +56,15 @@ public final class ProfileCoordinator {
         // CHECKSTYLE: IllegalCatch ON
     }
 
+    /**
+     * Creates a new profile after validating the name and checking that it does
+     * not already exist.
+     *
+     * @param profileName    the requested profile name
+     * @param firstLanguage  the language already known by the user
+     * @param secondLanguage the language to study
+     * @return {@code true} if the profile was created
+     */
     public boolean createProfile(final String profileName, final String firstLanguage, final String secondLanguage) {
         if (profileName == null || profileName.isBlank()) {
             this.appView.showWarning(
@@ -64,6 +92,11 @@ public final class ProfileCoordinator {
         // CHECKSTYLE: IllegalCatch ON
     }
 
+    /**
+     * Asks the user to confirm and, if confirmed, deletes the current profile.
+     *
+     * @return {@code true} if the profile was deleted
+     */
     public boolean deleteProfile() {
         final int answer = this.appView.askConfirmationWithCancel(
                 "Delete Profile",
@@ -71,7 +104,8 @@ public final class ProfileCoordinator {
         if (answer != JOptionPane.YES_OPTION) {
             return false;
         }
-        // Final UI boundary: IllegalCatch - intentional catch convert unexpected failures into user feedback.
+        // Final UI boundary: IllegalCatch - intentional catch convert unexpected
+        // failures into user feedback.
         // CHECKSTYLE: IllegalCatch OFF
         try {
             return this.profileManager.deleteCurrentProfile();
@@ -82,16 +116,31 @@ public final class ProfileCoordinator {
         // CHECKSTYLE: IllegalCatch ON
     }
 
+    /**
+     * Selects the given profile as the current one.
+     *
+     * @param profile the profile to select
+     */
     public void chooseProfile(final User profile) {
         this.profileManager.chooseProfile(profile);
     }
 
+    /**
+     * @return {@code true} if a profile is currently selected
+     */
     public boolean hasCurrentProfile() {
         return this.profileManager.hasCurrentProfile();
     }
 
+    /**
+     * Returns the daily study goal of the current profile, or the default value
+     * if it cannot be retrieved.
+     *
+     * @return the daily study goal
+     */
     public int getDailyGoal() {
-        // Final UI boundary: IllegalCatch - intentional catch convert unexpected failures into user feedback.
+        // Final UI boundary: IllegalCatch - intentional catch convert unexpected
+        // failures into user feedback.
         // CHECKSTYLE: IllegalCatch OFF
         try {
             return this.profileManager.getDailyGoal();
@@ -101,6 +150,16 @@ public final class ProfileCoordinator {
         // CHECKSTYLE: IllegalCatch ON
     }
 
+    /**
+     * Saves the configuration of a profile, validating the (possibly changed)
+     * name before applying the changes.
+     *
+     * @param profileName    the new profile name, or blank to keep the current one
+     * @param firstLanguage  the language already known by the user
+     * @param secondLanguage the language to study
+     * @param dailyGoal      the daily study goal
+     * @return {@code true} if the configuration was saved
+     */
     public boolean saveProfileConfigurations(final String profileName, final String firstLanguage,
             final String secondLanguage, final int dailyGoal) {
         // Final UI boundary: IllegalCatch - intentional catch convert unexpected failures into user feedback.
@@ -136,8 +195,10 @@ public final class ProfileCoordinator {
         // CHECKSTYLE: IllegalCatch ON
     }
 
+    /**
+     * Updates the study streak if it has expired since the last session.
+     */
     public void updateExpiredStreak() {
         this.profileManager.updateExpiredStreak();
     }
-
 }

@@ -16,6 +16,12 @@ import it.unibo.vocago.service.profile.api.ProfileManager;
 import it.unibo.vocago.view.AppFrame;
 import it.unibo.vocago.view.api.AppView;
 
+/**
+ * Default implementation of {@link Controller}. Acts as a facade between the
+ * view and the application logic: it exposes a single interface
+ * to the view and delegates each group of operations to a dedicated
+ * coordinator (profile, vocabulary, learning and statistics).
+ */
 public final class ControllerImpl implements Controller {
 
     private final AppView appView;

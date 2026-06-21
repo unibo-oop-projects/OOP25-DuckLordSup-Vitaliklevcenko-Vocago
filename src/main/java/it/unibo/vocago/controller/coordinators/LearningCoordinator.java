@@ -7,6 +7,11 @@ import it.unibo.vocago.service.learning.api.LearningSession;
 import it.unibo.vocago.service.profile.api.ProfileManager;
 import it.unibo.vocago.view.api.AppView;
 
+/**
+ * Coordinates the learning flow on behalf of the controller. Owns the current
+ * {@link LearningSession}, creating it when a session starts and clearing it
+ * when it ends, and forwards each learning operation to that session.
+ */
 public final class LearningCoordinator {
 
     private final ProfileManager profileManager;
@@ -14,6 +19,12 @@ public final class LearningCoordinator {
     private LearningSession learningSession;
     private boolean dailyGoalNotified;
 
+    /**
+     * Creates a learning coordinator with no active session.
+     *
+     * @param profileManager the profile manager providing the current vocabulary
+     * @param appView        the view used to report feedback to the user
+     */
     @SuppressFBWarnings(value = "EI2", justification = "The coordinator intentionally shares the profile manager.")
     public LearningCoordinator(final ProfileManager profileManager, final AppView appView) {
         this.profileManager = profileManager;
@@ -22,6 +33,10 @@ public final class LearningCoordinator {
         this.dailyGoalNotified = false;
     }
 
+    /**
+     * Starts a new learning session if none is active and the vocabulary is
+     * valid, then shows the learning panel.
+     */
     public void showLearningPanel() {
         if (this.learningSession == null) {
             if (!this.profileManager.vocabularyIsValid()) {
@@ -36,43 +51,77 @@ public final class LearningCoordinator {
         this.appView.showLearningPanel();
     }
 
+    /**
+     * @return the prompt of the next question in the current session
+     */
     public String getNextQuestion() {
         return getLearningSession().getNextQuestion();
     }
 
+    /**
+     * Evaluates the user's answer to the current question.
+     *
+     * @param userAnswer the answer typed by the user
+     * @return {@code true} if the answer is correct
+     */
     public boolean evaluateAnswer(final String userAnswer) {
         return getLearningSession().evaluateAnswer(userAnswer);
     }
 
+    /**
+     * @return the correct answer to the current question
+     */
     public String getCorrectAnswer() {
         return getLearningSession().getCorrectAnswer();
     }
 
+    /**
+     * Switches the translation direction of the current session.
+     */
     public void switchDirection() {
         getLearningSession().switchDirection();
     }
 
+    /**
+     * @return {@code true} if the current question has already been evaluated
+     */
     public boolean currentQuestionEvaluated() {
         return getLearningSession().currentQuestionEvaluated();
     }
 
+    /**
+     * @return the current translation direction
+     */
     public Direction getDirection() {
         return getLearningSession().getDirection();
     }
 
+    /**
+     * @return the start time of the current session, in milliseconds
+     */
     public long getLearningStartTime() {
         return getLearningSession().getStartTime();
     }
 
+    /**
+     * @return the number of correctly answered questions in the current session
+     */
     public int getCorrectAnsweredQuestions() {
         return getLearningSession().getCorrectAnsweredQuestions();
     }
 
+    /**
+     * Discards the current session without saving.
+     */
     public void stopLearningSession() {
         this.learningSession = null;
         this.dailyGoalNotified = false;
     }
 
+    /**
+     * Saves the vocabulary and statistics of the current session, then discards
+     * it. Does nothing if no session is active.
+     */
     public void closeLearningSession() {
         if (this.learningSession != null) {
             if (this.profileManager.hasCurrentProfile()
@@ -84,10 +133,15 @@ public final class LearningCoordinator {
         }
     }
 
+    /**
+     * Saves the statistics of the current session, showing a warning if the
+     * save fails. Does nothing if no session is active.
+     */
     @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public void saveLearningStatistics() {
         if (this.learningSession != null) {
-            // Final UI boundary: IllegalCatch - intentional catch convert unexpected failures into user feedback.
+            // Final UI boundary: IllegalCatch - intentional catch convert unexpected
+            // failures into user feedback.
             // CHECKSTYLE: IllegalCatch OFF
             try {
                 this.profileManager.saveLearningStatistics(learningSession);
@@ -100,6 +154,12 @@ public final class LearningCoordinator {
         }
     }
 
+    /**
+     * Checks whether the daily goal has just been reached and, if so, asks the
+     * user whether to keep studying.
+     *
+     * @return {@code true} if studying should continue
+     */
     public boolean continueAfterDailyGoalIfReached() {
         if (this.learningSession == null || this.dailyGoalNotified
                 || this.learningSession.getCorrectAnsweredQuestions() < this.profileManager.getDailyGoal()) {

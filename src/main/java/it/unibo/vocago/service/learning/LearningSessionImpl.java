@@ -12,6 +12,11 @@ import it.unibo.vocago.model.vocabulary.api.Word;
 import it.unibo.vocago.service.learning.api.LearningEngine;
 import it.unibo.vocago.service.learning.api.LearningSession;
 
+/**
+ * Default implementation of {@link LearningSession}. Keeps the temporary state
+ * of the current session and delegates question selection and answer checking
+ * to a {@link LearningEngine}.
+ */
 public final class LearningSessionImpl implements LearningSession {
 
     private final Vocabulary vocabulary;
@@ -22,10 +27,21 @@ public final class LearningSessionImpl implements LearningSession {
     private boolean currentQuestionEvaluated;
     private int correctAnsweredQuestions;
 
+    /**
+     * Creates a session over the given vocabulary using the default engine.
+     *
+     * @param vocabulary the vocabulary to study
+     */
     public LearningSessionImpl(final Vocabulary vocabulary) {
         this(vocabulary, new LearningEngineImpl());
     }
 
+    /**
+     * Creates a session over the given vocabulary with the given engine.
+     *
+     * @param vocabulary     the vocabulary to study
+     * @param learningEngine the engine used to select questions and check answers
+     */
     @SuppressFBWarnings(value = "EI2", justification = "The session intentionally shares the profile vocabulary.")
     public LearningSessionImpl(final Vocabulary vocabulary, final LearningEngine learningEngine) {
         this.vocabulary = vocabulary;

@@ -25,6 +25,12 @@ import it.unibo.vocago.storage.UserCsvStorage;
 import it.unibo.vocago.storage.api.StatisticsRepository;
 import it.unibo.vocago.storage.api.UserRepository;
 
+/**
+ * Default implementation of {@link ProfileManager}. Coordinates profile logic
+ * and delegates persistence to the {@code UserRepository} and
+ * {@code StatisticsRepository}, keeping the rest of the application independent
+ * of the chosen storage mechanism.
+ */
 public final class ProfileManagerImpl implements ProfileManager {
 
     private static final Logger LOGGER = Logger.getLogger(ProfileManagerImpl.class.getName());
@@ -35,10 +41,20 @@ public final class ProfileManagerImpl implements ProfileManager {
     private final StatisticsRepository statisticsRepository;
     private User currentProfile;
 
+    /**
+     * Creates a manager using the default CSV and file-based storage.
+     */
     public ProfileManagerImpl() {
         this(new UserCsvStorage(), new StatisticsFileStorage());
     }
 
+    /**
+     * Creates a manager with the given repositories, allowing an alternative
+     * storage implementation to be injected.
+     *
+     * @param userRepository       the repository used to persist users
+     * @param statisticsRepository the repository used to persist statistics
+     */
     @SuppressFBWarnings(value = "EI2", justification = "The service intentionally shares its repositories.")
     public ProfileManagerImpl(
         final UserRepository userRepository,
